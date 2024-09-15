@@ -29,6 +29,13 @@ AMyCharacter::AMyCharacter()
 	fpsGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
 	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
+
+	secGun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Secondary Gun"));
+	check(secGun != nullptr);
+	secGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
+	secGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
+
+	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
 }
 
 // Called when the game starts or when spawned

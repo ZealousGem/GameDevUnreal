@@ -23,6 +23,11 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adding the gun mesh to player
 	USkeletalMeshComponent* fpsGun;
 
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
+	USkeletalMeshComponent* secGun;
+
+	// line of code
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
