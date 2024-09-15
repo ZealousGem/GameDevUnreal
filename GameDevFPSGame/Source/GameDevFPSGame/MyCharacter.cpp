@@ -9,6 +9,26 @@ AMyCharacter::AMyCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	// creates the camera component
+	FPSCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	check(FPSCameraComponent != nullptr);
+
+	// attaches the camera to the character pawn
+	FPSCameraComponent->SetupAttachment(CastChecked<USceneComponent, UCapsuleComponent>(GetCapsuleComponent()));
+
+	// Camera Position components
+	FPSCameraComponent->SetRelativeLocation(FVector(0.0f, 0.0f,  BaseEyeHeight));
+
+	FPSCameraComponent->bUsePawnControlRotation = true;
+
+	// creates primary weapon mesh component for the player
+	fpsGun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Primary Gun"));
+	check(fpsGun != nullptr);
+	fpsGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
+	fpsGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
+
+	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
 }
 
 // Called when the game starts or when spawned

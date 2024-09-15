@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
@@ -14,6 +16,12 @@ class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* FPSCameraComponent; // fps camera
+
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adding the gun mesh to player
+	USkeletalMeshComponent* fpsGun;
 
 protected:
 	// Called when the game starts or when spawned
