@@ -35,6 +35,9 @@ public:
 	UInputAction* ActionCrouch = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
+	UInputAction* ActionSwitch = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 
 
@@ -51,6 +54,8 @@ protected:
 	void HandleJump();
 
 	void HandleCrouch();
+
+	void HandleSwitch();
 	
 	
 private:

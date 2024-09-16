@@ -47,6 +47,11 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 		EnhancedInputComponent->BindAction(ActionCrouch, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleCrouch);
 	}
 
+	if(ActionSwitch)
+	{
+		EnhancedInputComponent->BindAction(ActionSwitch, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleSwitch);
+	}
+
 	
 	
 }
@@ -104,3 +109,25 @@ void APlayerControllerClass::HandleJump()
 		PlayerCharacter->UnCrouch();
 	}
 }
+
+void APlayerControllerClass::HandleSwitch()
+{
+	
+	if(PlayerCharacter)
+	{
+		
+		if(PlayerCharacter->fpsGun->IsVisible()) // sets secondary gun visible once input is done
+		{
+			PlayerCharacter->fpsGun->SetVisibility(false);
+			PlayerCharacter->secGun->SetVisibility(true);
+		}
+
+		else if(PlayerCharacter->secGun->IsVisible()) // sets primary gun visible one input is done
+		{
+
+			PlayerCharacter->fpsGun->SetVisibility(true);
+			PlayerCharacter->secGun->SetVisibility(false);	
+		}
+	}
+}
+

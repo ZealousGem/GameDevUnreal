@@ -42,6 +42,16 @@ AMyCharacter::AMyCharacter()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(fpsGun) // sets primary gun on when game runs
+	{
+		fpsGun->SetVisibility(true);
+	}
+
+	if(secGun)
+	{
+		secGun->SetVisibility(false);
+	}
 	
 }
 
