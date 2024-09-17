@@ -36,6 +36,7 @@ AMyCharacter::AMyCharacter()
 	secGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
 	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
+
 }
 
 // Called when the game starts or when spawned
@@ -59,6 +60,8 @@ void AMyCharacter::BeginPlay()
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+  
+	
 }
 
 // Called to bind functionality to input

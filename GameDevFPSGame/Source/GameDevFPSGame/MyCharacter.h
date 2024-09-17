@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+
 UCLASS()
 class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter
 {
@@ -17,6 +18,8 @@ public:
 	// Sets default values for this character's properties
 	AMyCharacter();
 
+	
+	
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* FPSCameraComponent; // fps camera
 
@@ -24,7 +27,7 @@ public:
 	USkeletalMeshComponent* fpsGun;
 
 	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
-	USkeletalMeshComponent* secGun;
+	USkeletalMeshComponent* secGun; 
 
 	// line of code
 

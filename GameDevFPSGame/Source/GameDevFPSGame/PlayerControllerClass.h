@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DrawDebugHelpers.h"
 #include "EnhancedInputSubsystems.h"
 //#include "Engine/Source/Runtime/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "MyCharacter.h"
@@ -38,7 +39,12 @@ public:
 	UInputAction* ActionSwitch = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
+	UInputAction* ActionFire = nullptr;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
+
+	
 
 
 protected:
@@ -56,6 +62,8 @@ protected:
 	void HandleCrouch();
 
 	void HandleSwitch();
+
+	void Tracing();
 	
 	
 private:

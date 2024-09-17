@@ -52,6 +52,11 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 		EnhancedInputComponent->BindAction(ActionSwitch, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleSwitch);
 	}
 
+	if(ActionFire)
+	{
+		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Triggered, this, &APlayerControllerClass::Tracing);
+	}
+
 	
 	
 }
@@ -130,4 +135,46 @@ void APlayerControllerClass::HandleSwitch()
 		}
 	}
 }
+
+void APlayerControllerClass::Tracing()
+{
+	if(PlayerCharacter)
+	{
+		FVector startPoint;
+        if(PlayerCharacter->fpsGun->IsVisible())
+       {
+	     startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
+        }
+		else if(PlayerCharacter->secGun->IsVisible())
+		{
+			startPoint = PlayerCharacter->secGun->GetComponentLocation();
+		}
+		
+		FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
+		FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
+		FCollisionQueryParams ColParams;
+
+		DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
+
+		/* if (EndHit.bBlockingHit)
+		{
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s"), *EndHit.GetActor()->GetName()));
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("Impact Point: %s"), *EndHit.ImpactPoint.ToString()));
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("Normal Point: %s"), *EndHit.ImpactNormal.ToString()));
+			}
+		}*/
+	}
+	//FHitResult EndHit;
+	
+
+
+
+/*	if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
+	{
+		
+	} */
+}
+
 
