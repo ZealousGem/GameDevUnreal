@@ -138,23 +138,39 @@ void APlayerControllerClass::HandleSwitch()
 
 void APlayerControllerClass::Tracing()
 {
+	
 	if(PlayerCharacter)
 	{
 		FVector startPoint;
         if(PlayerCharacter->fpsGun->IsVisible())
        {
 	     startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
+        	FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
+        	FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
+        	FCollisionQueryParams ColParams;
+        	DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
         }
 		else if(PlayerCharacter->secGun->IsVisible())
 		{
-			startPoint = PlayerCharacter->secGun->GetComponentLocation();
+			if(ammo >= 0)
+			{
+				startPoint = PlayerCharacter->secGun->GetComponentLocation();
+				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
+				FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
+				FCollisionQueryParams ColParams;
+				DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
+				ammo--;
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
+			}
+			
 		}
 		
-		FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
-		FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
-		FCollisionQueryParams ColParams;
+		
 
-		DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
+		
 
 		/* if (EndHit.bBlockingHit)
 		{

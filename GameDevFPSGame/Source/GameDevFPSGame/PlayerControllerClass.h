@@ -74,6 +74,8 @@ private:
 	UPROPERTY()
 	AMyCharacter* PlayerCharacter = nullptr;
 
+	int ammo = 12;
+
 	
 	GENERATED_BODY()
      
