@@ -148,6 +148,7 @@ void APlayerControllerClass::Tracing()
 		FVector startPoint;
         if(PlayerCharacter->fpsGun->IsVisible())
        {
+        	FHitResult EndHit;
 	     startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
         	FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
         	FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
@@ -160,13 +161,25 @@ void APlayerControllerClass::Tracing()
         		
         	}
         	
-        	DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
+        	//DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
+        	if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
+        	{
+        		if (EndHit.bBlockingHit)
+        		{
+        			if (GEngine)
+        			{
+        				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 10 damage"), *EndHit.GetActor()->GetName()));
+        			}
+        		}
+        	}
+        	
         }
 		else if(PlayerCharacter->secGun->IsVisible())
 		{
 			
 			if(PlayerCharacter->ammo > 0 && !fireinframe)
 			{
+				FHitResult EndHit;
 				PlayerCharacter->ammo--;
 				startPoint = PlayerCharacter->secGun->GetComponentLocation();
 				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
@@ -182,10 +195,21 @@ void APlayerControllerClass::Tracing()
         		
 				}
 				
-				DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
+				//DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
 				
 				FString message = FString::Printf(TEXT("Ammo: %d"), PlayerCharacter->ammo);
 				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, message);
+				if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
+				{
+					if (EndHit.bBlockingHit)
+					{
+						if (GEngine)
+						{
+							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 50 damage"), *EndHit.GetActor()->GetName()));
+						}
+					}
+				}
+				
 				
 			
 			}
