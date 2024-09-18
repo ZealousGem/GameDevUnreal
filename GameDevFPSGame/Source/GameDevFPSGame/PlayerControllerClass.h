@@ -66,6 +66,10 @@ protected:
 
 	void Tracing();
 
+	void HandleFire();
+
+	void Released();
+
 	
 	
 	
@@ -77,7 +81,9 @@ private:
 	UPROPERTY()
 	AMyCharacter* PlayerCharacter = nullptr;
 
-	int ammo = 12;
+	bool fireinframe = false;
+
+	
 
 	
 	

@@ -3,6 +3,8 @@
 
 #include "PlayerControllerClass.h"
 
+#include <string>
+
 #include "K2Node_GetSubsystem.h"
 #include "GameFramework/PawnMovementComponent.h"
 
@@ -54,7 +56,8 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 
 	if(ActionFire)
 	{
-		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Triggered, this, &APlayerControllerClass::Tracing);
+		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Started, this, &APlayerControllerClass::HandleFire);
+		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Completed, this, &APlayerControllerClass::Released);
 		
 	}
 
@@ -149,6 +152,7 @@ void APlayerControllerClass::Tracing()
         	FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
         	FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
         	FCollisionQueryParams ColParams;
+       
         	if(PlayerCharacter->fpsAffect)
         	{
         		PlayerCharacter->fpsAffect->Deactivate();
@@ -160,27 +164,36 @@ void APlayerControllerClass::Tracing()
         }
 		else if(PlayerCharacter->secGun->IsVisible())
 		{
-			if(ammo >= 0)
+			
+			if(PlayerCharacter->ammo > 0 && !fireinframe)
 			{
+				PlayerCharacter->ammo--;
 				startPoint = PlayerCharacter->secGun->GetComponentLocation();
 				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
-				FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
+				FVector EndPoint = ((ForwardPoint * 500.f) + startPoint);
 				FCollisionQueryParams ColParams;
 
+				
 				if(PlayerCharacter->secAffect)
 				{
 					PlayerCharacter->secAffect->Deactivate();
 					PlayerCharacter->secAffect->Activate();
+					
         		
 				}
 				
 				DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
-				ammo--;
+				
+				FString message = FString::Printf(TEXT("Ammo: %d"), PlayerCharacter->ammo);
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, message);
+				
+			
 			}
 			else
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
 			}
+			fireinframe = true;
 			
 		}
 		
@@ -207,6 +220,16 @@ void APlayerControllerClass::Tracing()
 	{
 		
 	} */
+}
+
+void APlayerControllerClass::HandleFire()
+{
+	Tracing();
+}
+
+void APlayerControllerClass::Released()
+{
+	fireinframe = false; // resets everytime key is hit
 }
 
 

@@ -36,6 +36,9 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
 	UParticleSystemComponent* secAffect;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Mesh")
+	int32 ammo;
+
 	// line of code
 
 protected:

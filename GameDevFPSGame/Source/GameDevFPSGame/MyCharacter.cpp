@@ -57,6 +57,7 @@ void AMyCharacter::BeginPlay()
 	Super::BeginPlay();
     fpsAffect->SetActive(false);
 	secAffect->SetActive(false);
+	ammo = 12;
 	if(fpsGun) // sets primary gun on when game runs
 	{
 		fpsGun->SetVisibility(true);
