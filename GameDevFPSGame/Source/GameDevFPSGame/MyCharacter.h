@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
@@ -27,7 +28,13 @@ public:
 	USkeletalMeshComponent* fpsGun;
 
 	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
-	USkeletalMeshComponent* secGun; 
+	USkeletalMeshComponent* secGun;
+
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
+	UParticleSystemComponent* fpsAffect;
+
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
+	UParticleSystemComponent* secAffect;
 
 	// line of code
 

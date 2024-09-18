@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputAction.h"
 #include "DrawDebugHelpers.h"
 #include "EnhancedInputSubsystems.h"
 //#include "Engine/Source/Runtime/EnhancedInput/Public/EnhancedInputComponent.h"
@@ -64,6 +65,8 @@ protected:
 	void HandleSwitch();
 
 	void Tracing();
+
+	
 	
 	
 private:
@@ -76,6 +79,7 @@ private:
 
 	int ammo = 12;
 
+	
 	
 	GENERATED_BODY()
      

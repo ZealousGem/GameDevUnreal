@@ -55,6 +55,7 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	if(ActionFire)
 	{
 		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Triggered, this, &APlayerControllerClass::Tracing);
+		
 	}
 
 	
@@ -148,6 +149,13 @@ void APlayerControllerClass::Tracing()
         	FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
         	FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
         	FCollisionQueryParams ColParams;
+        	if(PlayerCharacter->fpsAffect)
+        	{
+        		PlayerCharacter->fpsAffect->Deactivate();
+        		PlayerCharacter->fpsAffect->Activate();
+        		
+        	}
+        	
         	DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
         }
 		else if(PlayerCharacter->secGun->IsVisible())
@@ -158,6 +166,14 @@ void APlayerControllerClass::Tracing()
 				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
 				FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
 				FCollisionQueryParams ColParams;
+
+				if(PlayerCharacter->secAffect)
+				{
+					PlayerCharacter->secAffect->Deactivate();
+					PlayerCharacter->secAffect->Activate();
+        		
+				}
+				
 				DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
 				ammo--;
 			}
@@ -192,5 +208,7 @@ void APlayerControllerClass::Tracing()
 		
 	} */
 }
+
+
 
 

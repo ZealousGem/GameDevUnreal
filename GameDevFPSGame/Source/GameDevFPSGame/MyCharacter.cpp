@@ -28,12 +28,24 @@ AMyCharacter::AMyCharacter()
 	fpsGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
 	fpsGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
-	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
+	fpsAffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Primary affect"));
+	check(fpsAffect != nullptr);
+	fpsAffect-> SetOnlyOwnerSee(true); // only the player can see this mesh 
+	fpsAffect->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
+
 
 	secGun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Secondary Gun"));
 	check(secGun != nullptr);
 	secGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
 	secGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
+
+
+	secAffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Secondary affect"));
+	check(secAffect != nullptr);
+	secAffect-> SetOnlyOwnerSee(true); // only the player can see this mesh 
+	secAffect->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
+
+	
 
 	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
 
@@ -43,7 +55,8 @@ AMyCharacter::AMyCharacter()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
+    fpsAffect->SetActive(false);
+	secAffect->SetActive(false);
 	if(fpsGun) // sets primary gun on when game runs
 	{
 		fpsGun->SetVisibility(true);
