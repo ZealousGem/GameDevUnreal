@@ -16,6 +16,8 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	PlayerCharacter = Cast<AMyCharacter>(InPawn);
 	checkf(PlayerCharacter, TEXT("APlayerControllerB derived Class should only posses AMyCharacter derived Pawns"))
 
+	display = Cast<AHUDDisplayClass>(InPawn);
+
 	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
 	checkf(EnhancedInputComponent, TEXT("Uable to find a refernece to the EnchancecLocalPlayerSubsystem"))
 
@@ -143,7 +145,7 @@ void APlayerControllerClass::HandleSwitch()
 void APlayerControllerClass::Tracing()
 {
 	
-	if(PlayerCharacter)
+	if(PlayerCharacter) // look at secondaryweapon code to understand how this works
 	{
 		FVector startPoint;
         if(PlayerCharacter->fpsGun->IsVisible())
@@ -166,6 +168,7 @@ void APlayerControllerClass::Tracing()
         	{
         		if (EndHit.bBlockingHit)
         		{
+        		//	display->hit = true;
         			if (GEngine)
         			{
         				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 10 damage"), *EndHit.GetActor()->GetName()));
@@ -174,20 +177,20 @@ void APlayerControllerClass::Tracing()
         	}
         	
         }
-		else if(PlayerCharacter->secGun->IsVisible())
+		else if(PlayerCharacter->secGun->IsVisible()) // will only activate if the secondary weapon is displayed
 		{
 			
-			if(PlayerCharacter->ammo > 0 && !fireinframe)
+			if(PlayerCharacter->ammo > 0 && !fireinframe) // checks if ammo is less than 0 and if it has not fireed yet
 			{
-				FHitResult EndHit;
-				PlayerCharacter->ammo--;
-				startPoint = PlayerCharacter->secGun->GetComponentLocation();
-				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
-				FVector EndPoint = ((ForwardPoint * 500.f) + startPoint);
+				FHitResult EndHit; 
+				PlayerCharacter->ammo--; // decreases ammo 
+				startPoint = PlayerCharacter->secGun->GetComponentLocation(); // gets location of weapon where line will start
+				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector(); // will be used to move the line torwards the middle of the camera
+				FVector EndPoint = ((ForwardPoint * 500.f) + startPoint); // increases the distance of the line from the camera
 				FCollisionQueryParams ColParams;
 
 				
-				if(PlayerCharacter->secAffect)
+				if(PlayerCharacter->secAffect) // turns on gun blasting particles
 				{
 					PlayerCharacter->secAffect->Deactivate();
 					PlayerCharacter->secAffect->Activate();
@@ -199,7 +202,7 @@ void APlayerControllerClass::Tracing()
 				
 				FString message = FString::Printf(TEXT("Ammo: %d"), PlayerCharacter->ammo);
 				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, message);
-				if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
+				if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams)) // will activate if enpoint of line collides with an actor
 				{
 					if (EndHit.bBlockingHit)
 					{
@@ -217,7 +220,7 @@ void APlayerControllerClass::Tracing()
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
 			}
-			fireinframe = true;
+			fireinframe = true; // sets it to truwe to stop ammo from decreasing more than once
 			
 		}
 		
@@ -235,15 +238,7 @@ void APlayerControllerClass::Tracing()
 			}
 		}*/
 	}
-	//FHitResult EndHit;
 	
-
-
-
-/*	if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
-	{
-		
-	} */
 }
 
 void APlayerControllerClass::HandleFire()

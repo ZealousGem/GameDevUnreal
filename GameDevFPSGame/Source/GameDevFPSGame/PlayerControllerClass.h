@@ -12,6 +12,7 @@
 #include "EnhancedInputDeveloperSettings.h"
 #include "EnhancedInputSubsystems.h"
 #include  "EnhancedInputComponent.h"
+#include "HUDDisplayClass.h"
 #include "InputActionValue.h"
 #include "InputAction.h"
 #include "PlayerControllerClass.generated.h"
@@ -80,6 +81,8 @@ private:
 
 	UPROPERTY()
 	AMyCharacter* PlayerCharacter = nullptr;
+
+	AHUDDisplayClass* display = nullptr;
 
 	bool fireinframe = false;
 

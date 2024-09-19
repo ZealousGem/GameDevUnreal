@@ -12,11 +12,20 @@ void AHUDDisplayClass::BeginPlay()
 
 	if(mywidgetClass)
 	{
+		// allows unreal to access the class through blueprints 
 		CrossHair = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass);
+		CrossDamage = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass2);
 
-		if(CrossHair)
+		if(CrossHair) // checks if widget has been added
 		{
 		CrossHair->AddToViewport();	
 		}
+       
+		if(mywidgetClass2 && hit)
+		{
+			CrossDamage->AddToViewport();
+		}
+
+		
 	}
 }
