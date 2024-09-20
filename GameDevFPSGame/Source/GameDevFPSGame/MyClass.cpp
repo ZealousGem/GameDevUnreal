@@ -2,6 +2,7 @@
 
 
 #include "MyClass.h"
+// useless class ignore
 
 MyClass::MyClass()
 {

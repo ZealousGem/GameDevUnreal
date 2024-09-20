@@ -18,13 +18,13 @@ void AHUDDisplayClass::BeginPlay()
 
 		if(CrossHair) // checks if widget has been added
 		{
-		CrossHair->AddToViewport(2);	
+		CrossHair->AddToViewport(2);	// sets crosshair under the cross damage layer
 		}
        
-		if(mywidgetClass2)
+		if(mywidgetClass2) // same shit as the one before
 		{
-			CrossDamage->AddToViewport(1);
-			CrossDamage->SetVisibility(ESlateVisibility::Hidden);
+			CrossDamage->AddToViewport(1); // sets the wdiget layer above the crosshair
+			CrossDamage->SetVisibility(ESlateVisibility::Hidden); // hides the widget once the game starts
 			 // when the program starts it will amke the widget hidden
 		}
 
@@ -32,12 +32,12 @@ void AHUDDisplayClass::BeginPlay()
 	}
 }
 
-UUserWidget* AHUDDisplayClass::getCrossDamage() const
+UUserWidget* AHUDDisplayClass::getCrossDamage() const // useless function(i should get rid of this)
 {
 	return CrossDamage;
 }
 
-void AHUDDisplayClass::HideCorssDamage(bool hitt)
+void AHUDDisplayClass::HideCorssDamage(bool hitt) // hides and unhides the widget in the playercontroller class using a bool, true being unhidden and false being hidden
 {
 	if(CrossDamage)
 	{

@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
 #include "HUDDisplayClass.generated.h"
-
-
+// this class handles all the ui
+// max when you are working on the ui do it in here,
 
 /**
  * 
@@ -24,7 +24,7 @@ protected:
 	UUserWidget* CrossDamage; // makes the widget display through the hud
 
 public:
-	virtual void BeginPlay() override;
+	virtual void BeginPlay() override; // overrides default hud class with my amazing hud class
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass; // where you put the cross arm widget
@@ -32,14 +32,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass2; // where you put the cross arm widget
 
-	UUserWidget* getCrossDamage() const;
+	UUserWidget* getCrossDamage() const; // this is useless
 	
 		
 	
 
-	void HideCorssDamage(bool hitt);
+	void HideCorssDamage(bool hitt); // this hides and unhides the crossdamage widget
 
-	bool hit = false;
+	bool hit = false; // useless code, fuck i am messy when it comes to coding
 	
 private:
 	GENERATED_BODY()

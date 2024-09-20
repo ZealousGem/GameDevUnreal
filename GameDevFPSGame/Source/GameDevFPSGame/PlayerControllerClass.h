@@ -20,11 +20,14 @@
 /**
  * 
  */
+
+// handles all the player inputs in the program
 UCLASS(Abstract)
 class GAMEDEVFPSGAME_API APlayerControllerClass : public APlayerController
 {
 public: 
 
+	// this allows us to add the input actions in the controller class
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	UInputAction* ActionMovement = nullptr;
 
@@ -51,7 +54,7 @@ public:
 
 protected:
 
-	virtual  void OnPossess(APawn* InPawn) override;
+	virtual  void OnPossess(APawn* InPawn) override; // overrides the default pawn the with mycharacter class
 
 	virtual void OnUnPossess() override;
 
@@ -63,13 +66,13 @@ protected:
 
 	void HandleCrouch();
 
-	void HandleSwitch();
+	void HandleSwitch(); // switches the primary and secondary weapon
 
-	void Tracing();
+	void Tracing(); // creates the line trace and makes the gun go "pew" "pew"
 
-	void HandleFire();
+	void HandleFire(); // activates the tracing method through the keybinding
 
-	void Released();
+	void Released(); // will stop ammo counter to decreases
 
 	
 	
@@ -77,18 +80,18 @@ protected:
 private:
 
 	UPROPERTY()
-	UEnhancedInputComponent* EnhancedInputComponent = nullptr;
+	UEnhancedInputComponent* EnhancedInputComponent = nullptr; // used to allow the keybind function to become usable
 
 	UPROPERTY()
-	AMyCharacter* PlayerCharacter = nullptr;
+	AMyCharacter* PlayerCharacter = nullptr; // creates a mycharacter object
 
-	AHUDDisplayClass* display = nullptr;
+	AHUDDisplayClass* display = nullptr; // creates a hud object
 
-	bool fireinframe = false;
+	bool fireinframe = false; // use detect a shot has been made by a weapon
 
 	
- FTimerHandle TimerHandle_HideWidget;
-	void HidedamageWidget();
+ FTimerHandle TimerHandle_HideWidget; // a timer used for the crossdamage widget which will stay active until 0.5 seconds
+	void HidedamageWidget(); // calls the hud corssdamage function to make the bool false
 	
 	
 	GENERATED_BODY()

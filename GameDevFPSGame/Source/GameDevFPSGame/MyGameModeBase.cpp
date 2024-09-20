@@ -3,3 +3,4 @@
 
 #include "MyGameModeBase.h"
 
+// sets the gamemode, will use this for part 2

@@ -1,7 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PlayerControllerClass.h"
+#include "PlayerControllerClass.h" 
 
 #include <string>
 
@@ -33,6 +33,7 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	InputSubsystem->AddMappingContext(InputMappingContext, 0);
 
 
+	// conncets all the player inputs to the intended functions
 	if(ActionMovement)
 	{
 		EnhancedInputComponent->BindAction(ActionMovement, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleMove);
@@ -60,8 +61,8 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 
 	if(ActionFire)
 	{
-		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Started, this, &APlayerControllerClass::HandleFire);
-		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Completed, this, &APlayerControllerClass::Released);
+		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Started, this, &APlayerControllerClass::HandleFire); // will activate the handle fire method once keybidning is set
+		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Completed, this, &APlayerControllerClass::Released); // will actvate the realease method once fire method has been implemented to not let ammo decrease more than once 
 		
 	}
 
@@ -69,7 +70,7 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	
 }
 
-void APlayerControllerClass::OnUnPossess()
+void APlayerControllerClass::OnUnPossess() // will unposses character once program ends or changes scene
 {
 	EnhancedInputComponent->ClearActionBindings();
 
@@ -99,7 +100,7 @@ void APlayerControllerClass::HandleLookAround(const FInputActionValue& InputActi
 {
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2d>();
 
-	AddYawInput(LookAxisVector.X);
+	AddYawInput(LookAxisVector.X); // i dont understand this shit, I am retarded, thanks sir for the code :)
 	AddPitchInput(LookAxisVector.Y);
 }
 
@@ -109,8 +110,8 @@ void APlayerControllerClass::HandleMove(const FInputActionValue& InputActionValu
 
 	if(PlayerCharacter)
 	{
-		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorForwardVector(), MovementVector.Y);
-		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorRightVector(), MovementVector.X);
+		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorForwardVector(), MovementVector.Y); // will add a movement transformation to make the player go forward by setting the vector variable
+		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorRightVector(), MovementVector.X); // will add a movement transformation to make the player go side to side by setting the vector variable
 	}
 }
 
@@ -118,8 +119,8 @@ void APlayerControllerClass::HandleJump()
 {
 	if(PlayerCharacter)
 	{
-		PlayerCharacter->Jump();
-		PlayerCharacter->UnCrouch();
+		PlayerCharacter->Jump(); // uses jump function to lift player 
+		PlayerCharacter->UnCrouch(); //automatically uncrouches player if the pawn is set on crouch
 	}
 }
 
@@ -152,8 +153,8 @@ void APlayerControllerClass::Tracing()
 		FVector startPoint;
         if(PlayerCharacter->fpsGun->IsVisible())
        {
-        	FHitResult EndHit;
-	     startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
+        	FHitResult EndHit; // this will be the endpoint of the line trace that will be set once a collision is made
+	       startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
         	FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
         	FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
         	FCollisionQueryParams ColParams;
@@ -172,15 +173,15 @@ void APlayerControllerClass::Tracing()
         		{
         		//	display->hit = true;
         			
-        			if(display)
+        			if(display) // make sure the display object has been set
         			{
         				//display->getCrossDamage()->SetVisibility(ESlateVisibility::Visible);
                          
-        				display->HideCorssDamage(true);
-        				display->hit = true;
-        				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Visible")));
-        				GetWorld()->GetTimerManager().ClearTimer(TimerHandle_HideWidget);
-        				GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideWidget, this, &APlayerControllerClass::HidedamageWidget, 0.5f ,false);
+        				display->HideCorssDamage(true); // calls the public method to unhid the cross damage ui
+        				display->hit = true; // this is useless i should delete this lol
+        				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Visible"))); // debug to check if it working
+        				GetWorld()->GetTimerManager().ClearTimer(TimerHandle_HideWidget); // clears any timer  if the player is hitting an actor costantnly
+        				GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideWidget, this, &APlayerControllerClass::HidedamageWidget, 0.5f ,false); // if the player isn't colliding with actors constaly, the timer will be made to hide the widget for 0.5 seconds, after it reaches 0.5 seconds it will call a method to hide the crossdamage ui
         			}
         			if (GEngine)
         			{
@@ -219,7 +220,7 @@ void APlayerControllerClass::Tracing()
 				{
 					if (EndHit.bBlockingHit)
 					{
-						if(display)
+						if(display) // look at fps code to figure out how this works
 						{
 							//display->getCrossDamage()->SetVisibility(ESlateVisibility::Visible);
                          
@@ -243,30 +244,18 @@ void APlayerControllerClass::Tracing()
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
 			}
-			fireinframe = true; // sets it to truwe to stop ammo from decreasing more than once
+			fireinframe = true; // sets it to true to stop ammo from decreasing more than once
 			
 		}
 		
 		
-
-		
-
-		/* if (EndHit.bBlockingHit)
-		{
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s"), *EndHit.GetActor()->GetName()));
-				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("Impact Point: %s"), *EndHit.ImpactPoint.ToString()));
-				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("Normal Point: %s"), *EndHit.ImpactNormal.ToString()));
-			}
-		}*/
 	}
 	
 }
 
 void APlayerControllerClass::HandleFire()
 {
-	Tracing();
+	Tracing(); // calls the tracing function once the action binding is made
 }
 
 void APlayerControllerClass::Released()
@@ -276,10 +265,10 @@ void APlayerControllerClass::Released()
 
 void APlayerControllerClass::HidedamageWidget()
 {
-	if(display)
+	if(display) // checks if the display object has been set
 	{
-		display->HideCorssDamage(false);
-		display->hit = false;
+		display->HideCorssDamage(false); // will hide the crossdamage ui
+		display->hit = false; // again this thing is useless
 		
 	}
 }

@@ -28,18 +28,19 @@ AMyCharacter::AMyCharacter()
 	fpsGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
 	fpsGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
+	// creates gun affect particle component for the primary gun
 	fpsAffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Primary affect"));
 	check(fpsAffect != nullptr);
 	fpsAffect-> SetOnlyOwnerSee(true); // only the player can see this mesh 
 	fpsAffect->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
-
+	// creates secondary weapon mesh component for the player
 	secGun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Secondary Gun"));
 	check(secGun != nullptr);
 	secGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
 	secGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
-
+	// creates gun affect particle component for the secondary gun
 	secAffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Secondary affect"));
 	check(secAffect != nullptr);
 	secAffect-> SetOnlyOwnerSee(true); // only the player can see this mesh 
@@ -55,15 +56,15 @@ AMyCharacter::AMyCharacter()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-    fpsAffect->SetActive(false);
+    fpsAffect->SetActive(false); // turns off gun affect once the game starts
 	secAffect->SetActive(false);
-	ammo = 12;
+	ammo = 12; // sets the ammo to 12 because that is what the rubric wants
 	if(fpsGun) // sets primary gun on when game runs
 	{
 		fpsGun->SetVisibility(true);
 	}
 
-	if(secGun)
+	if(secGun) // sets secondary gun hidden when game runs
 	{
 		secGun->SetVisibility(false);
 	}

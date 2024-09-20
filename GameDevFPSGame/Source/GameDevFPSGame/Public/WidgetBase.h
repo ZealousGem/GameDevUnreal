@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class GAMEDEVFPSGAME_API UWidgetBase : public UUserWidget
+class GAMEDEVFPSGAME_API UWidgetBase : public UUserWidget // allows us to use the widget exstention in unreal 
 {
 public:
 #if WITH_EDITOR

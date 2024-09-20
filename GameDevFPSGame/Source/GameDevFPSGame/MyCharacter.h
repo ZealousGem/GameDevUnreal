@@ -9,7 +9,7 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
-
+// sets all the characters meshes and weapons in this class, also i would recommend to add the health here too.
 UCLASS()
 class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter
 {
@@ -27,16 +27,16 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adding the gun mesh to player
 	USkeletalMeshComponent* fpsGun;
 
-	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adds the seconadary gun mesh to player
 	USkeletalMeshComponent* secGun;
 
-	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adds the epic gun effect to the primary gun
 	UParticleSystemComponent* fpsAffect;
 
-	UPROPERTY(VisibleDefaultsOnly, Category= Mesh)
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adds the epic gun affect to the secondary gun
 	UParticleSystemComponent* secAffect;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Mesh")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Mesh") // the ammo variable that will be affected once the secondary weapon is shot
 	int32 ammo;
 
 	// line of code

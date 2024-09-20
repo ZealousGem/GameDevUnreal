@@ -2,7 +2,7 @@
 
 
 #include "HelpMe.h"
-
+// had troubling setting up, that is why this one exists ignore again
 HelpMe::HelpMe()
 {
 }
