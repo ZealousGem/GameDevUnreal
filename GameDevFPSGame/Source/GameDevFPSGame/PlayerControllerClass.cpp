@@ -16,7 +16,9 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	PlayerCharacter = Cast<AMyCharacter>(InPawn);
 	checkf(PlayerCharacter, TEXT("APlayerControllerB derived Class should only posses AMyCharacter derived Pawns"))
 
-	display = Cast<AHUDDisplayClass>(InPawn);
+	display = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	checkf(display, TEXT("not able to find the inteded HUD Class"))
+	
 
 	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
 	checkf(EnhancedInputComponent, TEXT("Uable to find a refernece to the EnchancecLocalPlayerSubsystem"))
@@ -169,6 +171,17 @@ void APlayerControllerClass::Tracing()
         		if (EndHit.bBlockingHit)
         		{
         		//	display->hit = true;
+        			
+        			if(display)
+        			{
+        				//display->getCrossDamage()->SetVisibility(ESlateVisibility::Visible);
+                         
+        				display->HideCorssDamage(true);
+        				display->hit = true;
+        				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Visible")));
+        				GetWorld()->GetTimerManager().ClearTimer(TimerHandle_HideWidget);
+        				GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideWidget, this, &APlayerControllerClass::HidedamageWidget, 0.5f ,false);
+        			}
         			if (GEngine)
         			{
         				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 10 damage"), *EndHit.GetActor()->GetName()));
@@ -206,6 +219,16 @@ void APlayerControllerClass::Tracing()
 				{
 					if (EndHit.bBlockingHit)
 					{
+						if(display)
+						{
+							//display->getCrossDamage()->SetVisibility(ESlateVisibility::Visible);
+                         
+							display->HideCorssDamage(true);
+							display->hit = true;
+							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Visible")));
+							GetWorld()->GetTimerManager().ClearTimer(TimerHandle_HideWidget);
+							GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideWidget, this, &APlayerControllerClass::HidedamageWidget, 0.5f ,false);
+						}
 						if (GEngine)
 						{
 							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 50 damage"), *EndHit.GetActor()->GetName()));
@@ -251,6 +274,12 @@ void APlayerControllerClass::Released()
 	fireinframe = false; // resets everytime key is hit
 }
 
-
-
-
+void APlayerControllerClass::HidedamageWidget()
+{
+	if(display)
+	{
+		display->HideCorssDamage(false);
+		display->hit = false;
+		
+	}
+}

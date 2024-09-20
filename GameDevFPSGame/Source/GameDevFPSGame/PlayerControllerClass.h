@@ -87,7 +87,8 @@ private:
 	bool fireinframe = false;
 
 	
-
+ FTimerHandle TimerHandle_HideWidget;
+	void HidedamageWidget();
 	
 	
 	GENERATED_BODY()

@@ -18,14 +18,31 @@ void AHUDDisplayClass::BeginPlay()
 
 		if(CrossHair) // checks if widget has been added
 		{
-		CrossHair->AddToViewport();	
+		CrossHair->AddToViewport(2);	
 		}
        
-		if(mywidgetClass2 && hit)
+		if(mywidgetClass2)
 		{
-			CrossDamage->AddToViewport();
+			CrossDamage->AddToViewport(1);
+			CrossDamage->SetVisibility(ESlateVisibility::Hidden);
+			 // when the program starts it will amke the widget hidden
 		}
 
 		
 	}
+}
+
+UUserWidget* AHUDDisplayClass::getCrossDamage() const
+{
+	return CrossDamage;
+}
+
+void AHUDDisplayClass::HideCorssDamage(bool hitt)
+{
+	if(CrossDamage)
+	{
+		CrossDamage->SetVisibility(hitt ? ESlateVisibility::Visible : ESlateVisibility::Hidden);	
+	}
+	
+	
 }

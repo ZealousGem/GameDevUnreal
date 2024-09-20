@@ -32,6 +32,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass2; // where you put the cross arm widget
 
+	UUserWidget* getCrossDamage() const;
+	
+		
+	
+
+	void HideCorssDamage(bool hitt);
+
 	bool hit = false;
 	
 private:
