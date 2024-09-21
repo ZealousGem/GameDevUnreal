@@ -19,6 +19,10 @@ public:
 	// Sets default values for this character's properties
 	AMyCharacter();
 
+	// Boolean to track if the player has picked up the secondary weapon
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pickup")
+	bool bHasPickedUpSecondWeapon;
+
 	
 	
 	UPROPERTY(VisibleAnywhere)

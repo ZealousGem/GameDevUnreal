@@ -133,7 +133,7 @@ void APlayerControllerClass::HandleJump()
 void APlayerControllerClass::HandleSwitch()
 {
 	
-	if(PlayerCharacter)
+	if(PlayerCharacter) //-> bHasPickedUpSecondWeapon)
 	{
 		
 		if(PlayerCharacter->fpsGun->IsVisible()) // sets secondary gun visible once input is done
@@ -148,6 +148,13 @@ void APlayerControllerClass::HandleSwitch()
 			PlayerCharacter->fpsGun->SetVisibility(true);
 			PlayerCharacter->secGun->SetVisibility(false);	
 		}
+	}
+	else
+	{
+		// If the player hasn't picked up the second weapon, keep only the primary weapon visible
+		//PlayerCharacter->fpsGun->SetVisibility(true);
+		//PlayerCharacter->secGun->SetVisibility(false);  // Ensure the secondary weapon stays hidden
+
 	}
 }
 

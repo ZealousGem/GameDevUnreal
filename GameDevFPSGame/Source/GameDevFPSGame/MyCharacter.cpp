@@ -7,6 +7,9 @@
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
+
+	bHasPickedUpSecondWeapon = false;  // Player hasn't picked up the weapon yet
+
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
