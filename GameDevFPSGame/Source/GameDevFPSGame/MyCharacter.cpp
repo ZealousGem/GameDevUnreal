@@ -50,6 +50,9 @@ AMyCharacter::AMyCharacter()
 
 	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
 
+	MaxHealth = 100.0f; // set max health
+	CurrentHealth = MaxHealth; //initialize current health
+
 }
 
 // Called when the game starts or when spawned

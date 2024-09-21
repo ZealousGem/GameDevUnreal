@@ -2,6 +2,8 @@
 
 
 #include "HUDDisplayClass.h"
+#include "PlayerControllerClass.h"
+#include "GameFrameWork/PlayerController.h"
 
 
 
@@ -46,3 +48,4 @@ void AHUDDisplayClass::HideCorssDamage(bool hitt) // hides and unhides the widge
 	
 	
 }
+

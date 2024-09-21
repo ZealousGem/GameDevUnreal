@@ -26,6 +26,10 @@ protected:
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my amazing hud class
 
+
+	
+	
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass; // where you put the cross arm widget
 
@@ -42,5 +46,8 @@ public:
 	bool hit = false; // useless code, fuck i am messy when it comes to coding
 	
 private:
+
+	
+
 	GENERATED_BODY()
 };

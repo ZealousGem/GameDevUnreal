@@ -11,10 +11,16 @@
 
 void APlayerControllerClass::OnPossess(APawn* InPawn)
 {
+
+
 	Super::OnPossess(InPawn);
 
 	PlayerCharacter = Cast<AMyCharacter>(InPawn);
 	checkf(PlayerCharacter, TEXT("APlayerControllerB derived Class should only posses AMyCharacter derived Pawns"))
+	
+
+
+
 
 	display = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
 	checkf(display, TEXT("not able to find the inteded HUD Class"))
