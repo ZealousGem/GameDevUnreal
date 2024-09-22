@@ -50,8 +50,8 @@ public:
 	float CurrentHealth;
 
 	// function to apply damage
-	UFUNCTION(BlueprintCallable, Category = "Health")
-	void ApplyDamage(float DamageAmount);
+	//UFUNCTION(BlueprintCallable, Category = "Health")
+	//void ApplyDamage(float DamageAmount);
 
 	// line of code
 

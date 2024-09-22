@@ -29,24 +29,50 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+
+
+
+
+
+
+
+
+
+    UPROPERTY(EditAnywhere)
+    USceneComponent* PickupRoot;
+
+    UPROPERTY(EditAnywhere)
+    UStaticMeshComponent* PickupMesh;
+
+    UPROPERTY(EditAnywhere)
+    UShapeComponent* PickupBox;
+
+
     // This is the function that will be triggered when the player overlaps the pickup
     UFUNCTION()
      virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
         class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+
+     // Amount of ammo to give
+     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Properties")
+     int32 AmmoAmount;
+
     // Collision component for detecting overlaps
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pickup")
-    class USphereComponent* CollisionComponent;
+    //UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pickup")
+    //class USphereComponent* CollisionComponent;
 
     // The mesh for the pickup item (e.g., a health pack)
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pickup")
-    UStaticMeshComponent* PickupMesh;
+    //UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pickup")
+    //UPROPERTY(EditAnywhere)
+    //UStaticMeshComponent* PickupMesh;
 
     // Determines what type of pickup it is (ammo, health, etc.)
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
-    FString PickupType;
+    //UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
+    //FString PickupType;
 
     // Amount of health or ammo to add
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
-    float PickupValue;
+    //UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
+    //float PickupValue;
 };
