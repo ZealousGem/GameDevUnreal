@@ -17,6 +17,7 @@ void AHUDDisplayClass::BeginPlay()
 		// allows unreal to access the class through blueprints 
 		CrossHair = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass);
 		CrossDamage = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass2);
+		Health = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass3);
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -28,6 +29,10 @@ void AHUDDisplayClass::BeginPlay()
 			CrossDamage->AddToViewport(1); // sets the wdiget layer above the crosshair
 			CrossDamage->SetVisibility(ESlateVisibility::Hidden); // hides the widget once the game starts
 			 // when the program starts it will amke the widget hidden
+		}
+		if (Health) // checks if widget has been added
+		{
+			Health->AddToViewport(3);	// sets crosshair under the cross damage layer
 		}
 
 		

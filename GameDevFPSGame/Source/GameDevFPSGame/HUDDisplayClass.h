@@ -21,7 +21,10 @@ protected:
 	UUserWidget* CrossHair; // makes the widget display through the hud
 
 	UPROPERTY()
-	UUserWidget* CrossDamage; // makes the widget display through the hud
+	UUserWidget* CrossDamage; // makes the widget display through the hu
+
+	UPROPERTY()
+	UUserWidget* Health;
 
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my amazing hud class
@@ -35,6 +38,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass2; // where you put the cross arm widget
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> mywidgetClass3; // where you put the cross arm wid
 
 	UUserWidget* getCrossDamage() const; // this is useless
 	
