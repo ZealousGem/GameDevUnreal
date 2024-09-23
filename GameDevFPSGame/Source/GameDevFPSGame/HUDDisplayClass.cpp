@@ -41,6 +41,7 @@ void AHUDDisplayClass::BeginPlay()
 		if(Ammo)
 		{
 			Ammo->AddToViewport(4);
+			Ammo->SetVisibility(ESlateVisibility::Hidden);
 		}
 
 		
@@ -51,6 +52,16 @@ void AHUDDisplayClass::BeginPlay()
 UUserWidget* AHUDDisplayClass::getCrossDamage() const // useless function(i should get rid of this)
 {
 	return CrossDamage;
+}
+
+void AHUDDisplayClass::AmmoDisplay()
+{
+	Ammo->SetVisibility(ESlateVisibility::Visible);
+}
+
+void AHUDDisplayClass::AmmoHide()
+{
+	Ammo->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void AHUDDisplayClass::UpdateAmmo(int32 ammoAmount)
