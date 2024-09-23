@@ -141,6 +141,7 @@ void APlayerControllerClass::HandleSwitch()
 			PlayerCharacter->fpsGun->SetVisibility(false);
 			PlayerCharacter->secGun->SetVisibility(true);
 			display->AmmoDisplay();
+			display->SecWeapon();
 		}
 
 		else if(PlayerCharacter->secGun->IsVisible()) // sets primary gun visible one input is done
@@ -149,6 +150,7 @@ void APlayerControllerClass::HandleSwitch()
 			PlayerCharacter->fpsGun->SetVisibility(true);
 			PlayerCharacter->secGun->SetVisibility(false);
 			display->AmmoHide();
+			display->MainWeapon();
 		}
 	}
 	else

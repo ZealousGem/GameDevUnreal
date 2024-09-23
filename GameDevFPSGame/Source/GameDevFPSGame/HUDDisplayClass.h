@@ -29,6 +29,9 @@ protected:
 	UPROPERTY()
 	UUserWidget* Ammo;
 
+	UPROPERTY()
+	UUserWidget* WeaponType;
+
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my amazing hud class
 
@@ -45,6 +48,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass4; // where you put the cross arm wid
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> mywidgetClass5; // where you put the cross arm wid
+
 	UUserWidget* getCrossDamage() const; // this is useless
 
 	void AmmoDisplay();
@@ -58,9 +64,11 @@ public:
 	bool hit = false; // useless code, fuck i am messy when it comes to coding
 	
 	void UpdateHealthBar(float HealthPercentage);
-private:
 
-	
+	void MainWeapon();
+
+	void SecWeapon();
+private:
 
 	GENERATED_BODY()
 };

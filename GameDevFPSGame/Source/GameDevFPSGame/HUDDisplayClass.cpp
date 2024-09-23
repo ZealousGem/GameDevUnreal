@@ -21,6 +21,7 @@ void AHUDDisplayClass::BeginPlay()
 		CrossDamage = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass2);
 		Health = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass3);
 		Ammo = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass4);
+		WeaponType = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass5);
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -42,6 +43,13 @@ void AHUDDisplayClass::BeginPlay()
 		{
 			Ammo->AddToViewport(4);
 			Ammo->SetVisibility(ESlateVisibility::Hidden);
+		}
+
+		if(WeaponType)
+		{
+			WeaponType->AddToViewport(5);
+			
+		
 		}
 
 		
@@ -100,6 +108,30 @@ void AHUDDisplayClass::UpdateHealthBar(float HealthPercentage)
 		if (HealthText)
 		{
 			HealthText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::RoundToInt(HealthPercentage * 100))));
+		}
+	}
+}
+
+void AHUDDisplayClass::MainWeapon()
+{
+	if(WeaponType)
+	{
+		UTextBlock* primaryWep = Cast<UTextBlock>(WeaponType->GetWidgetFromName(TEXT("Weapon")));
+		if(primaryWep)
+		{
+			primaryWep->SetText(FText::FromString(FString::Printf(TEXT("Primary Weapon"))));
+		}
+	}
+}
+
+void AHUDDisplayClass::SecWeapon()
+{
+	if(WeaponType)
+	{
+		UTextBlock* secWep = Cast<UTextBlock>(WeaponType->GetWidgetFromName(TEXT("Weapon")));
+		if(secWep)
+		{
+			secWep->SetText(FText::FromString(FString::Printf(TEXT("Secondary Weapon"))));
 		}
 	}
 }
