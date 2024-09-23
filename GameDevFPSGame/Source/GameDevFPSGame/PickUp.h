@@ -31,14 +31,6 @@ public:
 
 
 
-
-
-
-
-
-
-
-
     UPROPERTY(EditAnywhere)
     USceneComponent* PickupRoot;
 

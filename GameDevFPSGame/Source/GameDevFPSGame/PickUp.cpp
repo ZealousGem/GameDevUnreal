@@ -75,11 +75,16 @@ void APickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
     {
         // Cast the overlapping actor to the player character class (AMyCharacter)
         AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor);
+        AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
 
         if (PlayerCharacter)
         {
             // If the cast succeeds and it's the player character, give ammo
             PlayerCharacter->ammo += AmmoAmount;
+            if(HUD)
+            {
+                HUD->UpdateAmmo(PlayerCharacter->ammo);
+            }
 
             // Optional: Debug message
             GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Visible"))); // debug to check if it working

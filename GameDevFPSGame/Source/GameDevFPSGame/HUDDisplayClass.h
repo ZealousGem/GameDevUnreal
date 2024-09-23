@@ -26,6 +26,9 @@ protected:
 	UPROPERTY()
 	UUserWidget* Health;
 
+	UPROPERTY()
+	UUserWidget* Ammo;
+
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my amazing hud class
 
@@ -43,10 +46,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass3; // where you put the cross arm wid
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> mywidgetClass4; // where you put the cross arm wid
+
 	UUserWidget* getCrossDamage() const; // this is useless
 	
 		
-	
+	void UpdateAmmo(int32 ammoAmount);
 
 	void HideCorssDamage(bool hitt); // this hides and unhides the crossdamage widget
 

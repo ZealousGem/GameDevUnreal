@@ -110,6 +110,7 @@ void AMyCharacter::ApplyDamage(float DamageAmount)
 	if (HUD)
 	{
 		HUD->UpdateHealthBar(HealthPercentage);
+		HUD->UpdateAmmo(ammo);
 	}
 
 	// Optionally, handle player death

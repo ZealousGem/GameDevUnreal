@@ -20,6 +20,7 @@ void AHUDDisplayClass::BeginPlay()
 		CrossHair = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass);
 		CrossDamage = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass2);
 		Health = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass3);
+		Ammo = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass4);
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -37,6 +38,11 @@ void AHUDDisplayClass::BeginPlay()
 			Health->AddToViewport(3);	// sets crosshair under the cross damage layer
 		}
 
+		if(Ammo)
+		{
+			Ammo->AddToViewport(4);
+		}
+
 		
 	}
 	
@@ -45,6 +51,18 @@ void AHUDDisplayClass::BeginPlay()
 UUserWidget* AHUDDisplayClass::getCrossDamage() const // useless function(i should get rid of this)
 {
 	return CrossDamage;
+}
+
+void AHUDDisplayClass::UpdateAmmo(int32 ammoAmount)
+{
+	if(Ammo)
+	{
+		UTextBlock* AmmoAmount = Cast<UTextBlock>(Ammo->GetWidgetFromName(TEXT("Ammo")));
+		if(AmmoAmount)
+		{
+			AmmoAmount->SetText(FText::FromString(FString::FromInt(ammoAmount)));
+		}
+	}
 }
 
 void AHUDDisplayClass::HideCorssDamage(bool hitt) // hides and unhides the widget in the playercontroller class using a bool, true being unhidden and false being hidden

@@ -210,7 +210,8 @@ void APlayerControllerClass::Tracing()
 			if(PlayerCharacter->ammo > 0 && !fireinframe) // checks if ammo is less than 0 and if it has not fireed yet
 			{
 				FHitResult EndHit; 
-				PlayerCharacter->ammo--; // decreases ammo 
+				PlayerCharacter->ammo--;
+				display->UpdateAmmo(PlayerCharacter->ammo);// decreases ammo 
 				startPoint = PlayerCharacter->secGun->GetComponentLocation(); // gets location of weapon where line will start
 				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector(); // will be used to move the line torwards the middle of the camera
 				FVector EndPoint = ((ForwardPoint * 500.f) + startPoint); // increases the distance of the line from the camera
