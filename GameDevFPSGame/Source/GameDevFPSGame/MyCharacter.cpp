@@ -55,6 +55,7 @@ AMyCharacter::AMyCharacter()
 
 	MaxHealth = 100.0f; // set max health
 	CurrentHealth = MaxHealth; //initialize current health
+	
 
 }
 
@@ -64,7 +65,7 @@ void AMyCharacter::BeginPlay()
 	Super::BeginPlay();
     fpsAffect->SetActive(false); // turns off gun affect once the game starts
 	secAffect->SetActive(false);
-	ammo = 12; // sets the ammo to 12 because that is what the rubric wants
+	ammo = 2; // sets the ammo to 12 because that is what the rubric wants
 	if(fpsGun) // sets primary gun on when game runs
 	{
 		fpsGun->SetVisibility(true);
@@ -75,6 +76,7 @@ void AMyCharacter::BeginPlay()
 		secGun->SetVisibility(false);
 	}
 	ApplyDamage(0);
+	Change = false;
 	
 }
 

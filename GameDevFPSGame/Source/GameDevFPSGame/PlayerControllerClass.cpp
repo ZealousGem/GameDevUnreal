@@ -136,7 +136,7 @@ void APlayerControllerClass::HandleSwitch()
 	if(PlayerCharacter) //-> bHasPickedUpSecondWeapon)
 	{
 		
-		if(PlayerCharacter->fpsGun->IsVisible()) // sets secondary gun visible once input is done
+		if(PlayerCharacter->fpsGun->IsVisible() && PlayerCharacter->Change) // sets secondary gun visible once input is done
 		{
 			PlayerCharacter->fpsGun->SetVisibility(false);
 			PlayerCharacter->secGun->SetVisibility(true);
