@@ -52,6 +52,7 @@ public:
 
 	bool hit = false; // useless code, fuck i am messy when it comes to coding
 	
+	void UpdateHealthBar(float HealthPercentage);
 private:
 
 	

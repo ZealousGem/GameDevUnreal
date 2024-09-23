@@ -90,4 +90,32 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
+void AMyCharacter::ApplyDamage(float DamageAmount)
+{
+	CurrentHealth -= DamageAmount;
+
+	// Ensure health doesn't go below 0
+	if (CurrentHealth < 0)
+	{
+		CurrentHealth = 0;
+	}
+
+	// Calculate health percentage
+	float HealthPercentage = CurrentHealth / MaxHealth;
+
+	// Update the health bar in HUD
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(PlayerController->GetHUD());
+	if (HUD)
+	{
+		HUD->UpdateHealthBar(HealthPercentage);
+	}
+
+	// Optionally, handle player death
+	if (CurrentHealth == 0)
+	{
+		// Trigger death
+	}
+}
+
 

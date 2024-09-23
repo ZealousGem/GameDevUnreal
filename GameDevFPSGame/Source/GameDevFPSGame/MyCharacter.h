@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HUDDisplayClass.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -50,8 +51,8 @@ public:
 	float CurrentHealth;
 
 	// function to apply damage
-	//UFUNCTION(BlueprintCallable, Category = "Health")
-	//void ApplyDamage(float DamageAmount);
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	void ApplyDamage(float DamageAmount);
 
 	// line of code
 

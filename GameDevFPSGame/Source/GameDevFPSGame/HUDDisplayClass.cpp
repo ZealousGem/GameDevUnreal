@@ -3,6 +3,8 @@
 
 #include "HUDDisplayClass.h"
 #include "PlayerControllerClass.h"
+#include "Components/ProgressBar.h"  // For UProgressBar
+#include "Components/TextBlock.h"    // For UTextBlock
 #include "GameFrameWork/PlayerController.h"
 
 
@@ -52,5 +54,23 @@ void AHUDDisplayClass::HideCorssDamage(bool hitt) // hides and unhides the widge
 	}
 	
 	
+}
+
+void AHUDDisplayClass::UpdateHealthBar(float HealthPercentage)
+{
+	if (Health)
+	{
+		UProgressBar* HealthBar = Cast<UProgressBar>(Health->GetWidgetFromName(TEXT("HealthBar")));
+		if (HealthBar)
+		{
+			HealthBar->SetPercent(HealthPercentage);  // Update the progress bar with health percentage
+		}
+
+		UTextBlock* HealthText = Cast<UTextBlock>(Health->GetWidgetFromName(TEXT("HealthText")));
+		if (HealthText)
+		{
+			HealthText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::RoundToInt(HealthPercentage * 100))));
+		}
+	}
 }
 
