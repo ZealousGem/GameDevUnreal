@@ -39,6 +39,7 @@ void AHUDDisplayClass::BeginPlay()
 
 		
 	}
+	
 }
 
 UUserWidget* AHUDDisplayClass::getCrossDamage() const // useless function(i should get rid of this)

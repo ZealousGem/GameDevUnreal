@@ -74,6 +74,7 @@ void AMyCharacter::BeginPlay()
 	{
 		secGun->SetVisibility(false);
 	}
+	ApplyDamage(0);
 	
 }
 
