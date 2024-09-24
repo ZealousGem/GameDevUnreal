@@ -6,7 +6,7 @@
 #include "InputAction.h"
 #include "DrawDebugHelpers.h"
 #include "EnhancedInputSubsystems.h"
-#include "WeaponManager.h"
+
 //#include "Engine/Source/Runtime/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "MyCharacter.h"
 #include "GameFramework/PlayerController.h"
@@ -95,9 +95,7 @@ private:
 
 	UPROPERTY()
 	AMyCharacter* PlayerCharacter = nullptr; // creates a mycharacter object
-
-	UWeaponManager* Weapons = nullptr;
-
+	
 	AHUDDisplayClass* display = nullptr; // creates a hud object
 
 	bool fireinframe = false; // use detect a shot has been made by a weapon

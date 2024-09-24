@@ -20,12 +20,15 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	checkf(PlayerCharacter, TEXT("APlayerControllerB derived Class should only posses AMyCharacter derived Pawns"))
 	
 
-	Weapons = NewObject<UWeaponManager>(this);
-	checkf(Weapons, TEXT("Doesnt load the instance"))
+	
 
 
 	display = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
 	checkf(display, TEXT("not able to find the inteded HUD Class"))
+
+
+
+	
 	
 
 	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
@@ -151,7 +154,9 @@ void APlayerControllerClass::HandleMove(const FInputActionValue& InputActionValu
 		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorForwardVector(), MovementVector.Y); // will add a movement transformation to make the player go forward by setting the vector variable
 		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorRightVector(), MovementVector.X); // will add a movement transformation to make the player go side to side by setting the vector variable
 		//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::FromInt(increaseSpeed));
-	}
+	} 
+
+	//Weapons->HandleSwitch();
 }
 
 void APlayerControllerClass::HandleJump()
@@ -185,17 +190,8 @@ void APlayerControllerClass::HandleSwitch()
 			display->AmmoHide();
 			display->MainWeapon();
 		}
-	}
-	else
-	{
-		// If the player hasn't picked up the second weapon, keep only the primary weapon visible
-		//PlayerCharacter->fpsGun->SetVisibility(true);
-		//PlayerCharacter->secGun->SetVisibility(false);  // Ensure the secondary weapon stays hidden
-
-	} /*if(Weapons){
-	Weapons->HandleSwitch();
-
-	} */
+	} 
+	
 	
 }
 
@@ -207,8 +203,9 @@ void APlayerControllerClass::Tracing()
 		FVector startPoint;
         if(PlayerCharacter->fpsGun->IsVisible())
        {
+        	
         	FHitResult EndHit; // this will be the endpoint of the line trace that will be set once a collision is made
-	       startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
+	        startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
         	FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
         	FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
         	FCollisionQueryParams ColParams;
@@ -310,24 +307,16 @@ void APlayerControllerClass::Tracing()
 
 void APlayerControllerClass::HandleFire()
 {
-	// tracing();
-	/*if(Weapons)
-	{
-		Weapons->HandleFire();
-		
-	} */
 
 	Tracing();
-	// calls the tracing function once the action binding is made
+//	Weapons->HandleFire();
 }
 
 void APlayerControllerClass::Released()
 {
-	fireinframe = false; // resets everytime key is hit
-	/*if(Weapons)
-	{
-		Weapons->Released();	
-	} */
+fireinframe = false;
+
+	//Weapons->Released();
 	
 }
 
@@ -338,5 +327,6 @@ void APlayerControllerClass::HidedamageWidget()
 		display->HideCorssDamage(false); // will hide the crossdamage ui
 		display->hit = false; // again this thing is useless
 		
-	}
+	} 
+	
 }
