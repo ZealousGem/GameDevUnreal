@@ -41,6 +41,10 @@ public:
 	UInputAction* ActionCrouch = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
+	UInputAction* ActionSprint = nullptr;
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	UInputAction* ActionSwitch = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
@@ -69,6 +73,10 @@ protected:
 
 	void HandleCrouch();
 
+	void HandleSprintOn();
+
+	void HandleSprintOff();
+
 	void HandleSwitch(); // switches the primary and secondary weapon
 
 	void Tracing(); // creates the line trace and makes the gun go "pew" "pew"
@@ -91,6 +99,10 @@ private:
 	AHUDDisplayClass* display = nullptr; // creates a hud object
 
 	bool fireinframe = false; // use detect a shot has been made by a weapon
+
+	bool spint = false;
+
+	float IncSpeed = 1000.0f;
 
 	
  FTimerHandle TimerHandle_HideWidget; // a timer used for the crossdamage widget which will stay active until 0.5 seconds

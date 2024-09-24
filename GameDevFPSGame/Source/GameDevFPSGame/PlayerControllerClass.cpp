@@ -6,6 +6,7 @@
 #include <string>
 
 #include "K2Node_GetSubsystem.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 
 
@@ -55,6 +56,12 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 		EnhancedInputComponent->BindAction(ActionJump, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleJump);
 	}
 
+	if(ActionSprint)
+	{
+		EnhancedInputComponent->BindAction(ActionSprint, ETriggerEvent::Started, this, &APlayerControllerClass::HandleSprintOn);
+		EnhancedInputComponent->BindAction(ActionSprint, ETriggerEvent::Completed, this, &APlayerControllerClass::HandleSprintOff);
+	}
+
 	if(ActionCrouch)
 	{
 		EnhancedInputComponent->BindAction(ActionCrouch, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleCrouch);
@@ -100,6 +107,29 @@ void APlayerControllerClass::HandleCrouch()
 	
 }
 
+void APlayerControllerClass::HandleSprintOn()
+{
+if(PlayerCharacter && PlayerCharacter->GetCharacterMovement())
+{
+	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = IncSpeed;
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("on")));
+}
+
+	spint = true; 
+	
+}
+
+void APlayerControllerClass::HandleSprintOff()
+{
+if(PlayerCharacter && PlayerCharacter->GetCharacterMovement())
+{
+	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("off")));
+}
+	spint = false;
+	
+}
 
 
 void APlayerControllerClass::HandleLookAround(const FInputActionValue& InputActionValue)
@@ -112,12 +142,14 @@ void APlayerControllerClass::HandleLookAround(const FInputActionValue& InputActi
 
 void APlayerControllerClass::HandleMove(const FInputActionValue& InputActionValue)
 {
-	const FVector2D MovementVector = InputActionValue.Get<FVector2d>();
+	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
 
 	if(PlayerCharacter)
 	{
+		float increaseSpeed = spint ? IncSpeed : 1.0f;
 		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorForwardVector(), MovementVector.Y); // will add a movement transformation to make the player go forward by setting the vector variable
 		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorRightVector(), MovementVector.X); // will add a movement transformation to make the player go side to side by setting the vector variable
+		//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::FromInt(increaseSpeed));
 	}
 }
 
