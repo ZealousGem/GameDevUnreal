@@ -20,7 +20,8 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	checkf(PlayerCharacter, TEXT("APlayerControllerB derived Class should only posses AMyCharacter derived Pawns"))
 	
 
-
+	Weapons = NewObject<UWeaponManager>(this);
+	checkf(Weapons, TEXT("Doesnt load the instance"))
 
 
 	display = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
@@ -165,7 +166,7 @@ void APlayerControllerClass::HandleJump()
 void APlayerControllerClass::HandleSwitch()
 {
 	
-	if(PlayerCharacter) //-> bHasPickedUpSecondWeapon)
+	if(PlayerCharacter) 
 	{
 		
 		if(PlayerCharacter->fpsGun->IsVisible() && PlayerCharacter->Change) // sets secondary gun visible once input is done
@@ -191,7 +192,11 @@ void APlayerControllerClass::HandleSwitch()
 		//PlayerCharacter->fpsGun->SetVisibility(true);
 		//PlayerCharacter->secGun->SetVisibility(false);  // Ensure the secondary weapon stays hidden
 
-	}
+	} /*if(Weapons){
+	Weapons->HandleSwitch();
+
+	} */
+	
 }
 
 void APlayerControllerClass::Tracing()
@@ -305,12 +310,25 @@ void APlayerControllerClass::Tracing()
 
 void APlayerControllerClass::HandleFire()
 {
-	Tracing(); // calls the tracing function once the action binding is made
+	// tracing();
+	/*if(Weapons)
+	{
+		Weapons->HandleFire();
+		
+	} */
+
+	Tracing();
+	// calls the tracing function once the action binding is made
 }
 
 void APlayerControllerClass::Released()
 {
 	fireinframe = false; // resets everytime key is hit
+	/*if(Weapons)
+	{
+		Weapons->Released();	
+	} */
+	
 }
 
 void APlayerControllerClass::HidedamageWidget()

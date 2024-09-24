@@ -6,6 +6,7 @@
 #include "InputAction.h"
 #include "DrawDebugHelpers.h"
 #include "EnhancedInputSubsystems.h"
+#include "WeaponManager.h"
 //#include "Engine/Source/Runtime/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "MyCharacter.h"
 #include "GameFramework/PlayerController.h"
@@ -42,8 +43,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	UInputAction* ActionSprint = nullptr;
-
-
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	UInputAction* ActionSwitch = nullptr;
 
@@ -95,6 +95,8 @@ private:
 
 	UPROPERTY()
 	AMyCharacter* PlayerCharacter = nullptr; // creates a mycharacter object
+
+	UWeaponManager* Weapons = nullptr;
 
 	AHUDDisplayClass* display = nullptr; // creates a hud object
 
