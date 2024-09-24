@@ -239,7 +239,7 @@ void APlayerControllerClass::Tracing()
         			}
         			if (GEngine)
         			{
-        				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 10 damage"), *EndHit.GetActor()->GetName()));
+        				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
         			}
         		}
         	}
@@ -287,7 +287,7 @@ void APlayerControllerClass::Tracing()
 						}
 						if (GEngine)
 						{
-							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 50 damage"), *EndHit.GetActor()->GetName()));
+							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
 						}
 					}
 				}
