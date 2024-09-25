@@ -195,13 +195,4 @@ WeaponHandle->Released();
 	
 }
 
-void APlayerControllerClass::HidedamageWidget()
-{
-	if(display) // checks if the display object has been set
-	{
-		display->HideCorssDamage(false); // will hide the crossdamage ui
-		display->hit = false; // again this thing is useless
-		
-	} 
-	
-}
+

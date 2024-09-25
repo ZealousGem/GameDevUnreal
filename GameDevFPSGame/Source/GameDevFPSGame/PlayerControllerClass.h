@@ -109,8 +109,7 @@ private:
 	float IncSpeed = 1000.0f;
 
 	
- FTimerHandle TimerHandle_HideWidget; // a timer used for the crossdamage widget which will stay active until 0.5 seconds
-	void HidedamageWidget(); // calls the hud corssdamage function to make the bool false
+ 
 	
 	
 	GENERATED_BODY()
