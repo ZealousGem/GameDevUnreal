@@ -6,6 +6,7 @@
 #include "InputAction.h"
 #include "DrawDebugHelpers.h"
 #include "EnhancedInputSubsystems.h"
+#include "WeaponHandling.h"
 
 //#include "Engine/Source/Runtime/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "MyCharacter.h"
@@ -16,6 +17,7 @@
 #include "HUDDisplayClass.h"
 #include "InputActionValue.h"
 #include "InputAction.h"
+
 #include "PlayerControllerClass.generated.h"
 
 /**
@@ -78,9 +80,7 @@ protected:
 	void HandleSprintOff();
 
 	void HandleSwitch(); // switches the primary and secondary weapon
-
-	void Tracing(); // creates the line trace and makes the gun go "pew" "pew"
-
+	
 	void HandleFire(); // activates the tracing method through the keybinding
 
 	void Released(); // will stop ammo counter to decreases
@@ -95,8 +95,12 @@ private:
 
 	UPROPERTY()
 	AMyCharacter* PlayerCharacter = nullptr; // creates a mycharacter object
-	
+
+	UPROPERTY()
 	AHUDDisplayClass* display = nullptr; // creates a hud object
+
+	UPROPERTY()
+	UWeaponHandling* WeaponHandle;
 
 	bool fireinframe = false; // use detect a shot has been made by a weapon
 
