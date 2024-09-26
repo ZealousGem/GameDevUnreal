@@ -16,28 +16,28 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 
 	Super::OnPossess(InPawn);
 
-	PlayerCharacter = Cast<AMyCharacter>(InPawn);
+	PlayerCharacter = Cast<AMyCharacter>(InPawn); // overrides the default to our desired character pawn 
 	checkf(PlayerCharacter, TEXT("APlayerControllerB derived Class should only posses AMyCharacter derived Pawns"))
 	
 
-	WeaponHandle = NewObject<UWeaponHandling>(this);
+	WeaponHandle = NewObject<UWeaponHandling>(this); // creates the weapons object
 	checkf(WeaponHandle, TEXT("weapon isnt loaded"))
 
 	
 
 
-	display = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	display = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD()); // creates the hud object
 	checkf(display, TEXT("not able to find the inteded HUD Class"))
 
 
-	WeaponHandle->Activate(PlayerCharacter,display);
+	WeaponHandle->Activate(PlayerCharacter,display); // instantiates the character and hud class into the weapon class to activate weapon logic
 	
 	
 
-	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
+	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent); // instantiates the enchanced object
 	checkf(EnhancedInputComponent, TEXT("Uable to find a refernece to the EnchancecLocalPlayerSubsystem"))
 
-	UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+	UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()); // detectes the inputmapping used in the editor
 	checkf(InputSubsystem, TEXT("Unable to get a reference to the EnhancedPlayerSystem"))
 
 
@@ -47,7 +47,7 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 	InputSubsystem->AddMappingContext(InputMappingContext, 0);
 
 
-	// conncets all the player inputs to the intended functions
+	// connects all the player inputs to the intended functions
 	if(ActionMovement)
 	{
 		EnhancedInputComponent->BindAction(ActionMovement, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleMove);
@@ -116,7 +116,7 @@ void APlayerControllerClass::HandleCrouch()
 
 void APlayerControllerClass::HandleSprintOn()
 {
-if(PlayerCharacter && PlayerCharacter->GetCharacterMovement())
+if(PlayerCharacter && PlayerCharacter->GetCharacterMovement()) // changes the character's movemnt speed to Increspeed which is 1000 F
 {
 	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = IncSpeed;
 	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("on")));
@@ -128,7 +128,7 @@ if(PlayerCharacter && PlayerCharacter->GetCharacterMovement())
 
 void APlayerControllerClass::HandleSprintOff()
 {
-if(PlayerCharacter && PlayerCharacter->GetCharacterMovement())
+if(PlayerCharacter && PlayerCharacter->GetCharacterMovement()) // changes the character speed back to normal character speed once unpressed
 {
 	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 	
@@ -174,7 +174,7 @@ void APlayerControllerClass::HandleJump()
 void APlayerControllerClass::HandleSwitch()
 {
 	
-	WeaponHandle->SwitchWeapon();
+	WeaponHandle->SwitchWeapon(); // activate the switch function in the weaponhandling class
 	
 	
 }
@@ -183,14 +183,14 @@ void APlayerControllerClass::HandleFire()
 {
 
 	
-	WeaponHandle->HandleFire();
+	WeaponHandle->HandleFire();// activate the LineTracing function in the weaponhandling class
 
 }
 
 void APlayerControllerClass::Released()
 {
 
-WeaponHandle->Released();
+WeaponHandle->Released(); // will switch off the fireing in the weaponhandling class
 	
 	
 }

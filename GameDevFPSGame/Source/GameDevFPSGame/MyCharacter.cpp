@@ -30,6 +30,7 @@ AMyCharacter::AMyCharacter()
 	check(fpsGun != nullptr);
 	fpsGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
 	fpsGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
+	fpsGun->CastShadow = false; // gets rid of showdows from mesh to not ruin the illusion 
 
 	// creates gun affect particle component for the primary gun
 	fpsAffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Primary affect"));
@@ -42,6 +43,7 @@ AMyCharacter::AMyCharacter()
 	check(secGun != nullptr);
 	secGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
 	secGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
+	secGun->CastShadow = false; // same thing be gone shadow!!!!
 
 	// creates gun affect particle component for the secondary gun
 	secAffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Secondary affect"));
@@ -52,6 +54,8 @@ AMyCharacter::AMyCharacter()
 	
 
 	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
+	
+	
 
 	MaxHealth = 100.0f; // set max health
 	CurrentHealth = MaxHealth; //initialize current health
@@ -65,7 +69,7 @@ void AMyCharacter::BeginPlay()
 	Super::BeginPlay();
     fpsAffect->SetActive(false); // turns off gun affect once the game starts
 	secAffect->SetActive(false);
-	ammo = 2; // sets the ammo to 12 because that is what the rubric wants
+	ammo = 12; // sets the ammo to 12 because that is what the rubric wants
 	if(fpsGun) // sets primary gun on when game runs
 	{
 		fpsGun->SetVisibility(true);

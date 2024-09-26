@@ -8,7 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 
-UWeaponHandling::UWeaponHandling() : PlayerCharacter(nullptr), display(nullptr)
+UWeaponHandling::UWeaponHandling() : PlayerCharacter(nullptr), display(nullptr) // sets the display and character objects to null if there is no casting
 {
 }
 
@@ -67,7 +67,7 @@ void UWeaponHandling::Tracing()
         }
 		else if(PlayerCharacter->secGun->IsVisible()) // will only activate if the secondary weapon is displayed
 		{
-			if(PlayerCharacter->ammo > 0 && !FireInFrame) // checks if ammo is less than 0 and if it has not fireed yet
+			if(PlayerCharacter->ammo > 0 && !FireInFrame) // checks if ammo is less than 0 and if it has not fired yet
 			{
 				FHitResult EndHit; 
 				PlayerCharacter->ammo--;
@@ -78,7 +78,7 @@ void UWeaponHandling::Tracing()
 				FCollisionQueryParams ColParams;
 
 				
-				if(PlayerCharacter->secAffect) // turns on gun blasting particles
+				if(PlayerCharacter->secAffect) // turns on gun blasting particles meshes
 				{
 					PlayerCharacter->secAffect->Deactivate();
 					PlayerCharacter->secAffect->Activate();
@@ -118,7 +118,7 @@ void UWeaponHandling::Tracing()
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
 			}
-			FireInFrame = true; // sets it to true to stop ammo from decreasing more than once
+			FireInFrame = true; 
 		}
 	}
 	
@@ -126,12 +126,12 @@ void UWeaponHandling::Tracing()
 
 void UWeaponHandling::HandleFire()
 {
-	Tracing();
+	Tracing(); // activates tracing code
 }
 
 void UWeaponHandling::Released()
 {
-	FireInFrame = false;
+	FireInFrame = false; // sets it to true to stop ammo from decreasing more than once
 }
 
 void UWeaponHandling::HideWidget()
