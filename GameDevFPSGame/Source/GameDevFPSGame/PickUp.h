@@ -41,7 +41,7 @@ public:
     UShapeComponent* PickupBox;
 
 
-    // This is the function that will be triggered when the player overlaps the pickup
+    // This is the function that will be triggered when the player overlaps the pickup, also this is a method that will be overidden by the child classes
     UFUNCTION()
      virtual  void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
         class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

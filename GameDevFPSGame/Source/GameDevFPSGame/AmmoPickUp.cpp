@@ -9,7 +9,7 @@ AAmmoPickUp::AAmmoPickUp()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	AmmoAmount = 10;
+	AmmoAmount = 10; // sets to added ammo amount to 10
 }
 
 // Called when the game starts or when spawned

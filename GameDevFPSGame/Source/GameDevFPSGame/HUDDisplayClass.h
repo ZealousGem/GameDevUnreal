@@ -53,21 +53,21 @@ public:
 
 	UUserWidget* getCrossDamage() const; // this is useless
 
-	void AmmoDisplay();
+	void AmmoDisplay(); // displays ammo if shotgun is equipped
 
-	void AmmoHide();
+	void AmmoHide(); // hides ammo widget when not equipped
 		
 	void UpdateAmmo(int32 ammoAmount);
 
 	void HideCorssDamage(bool hitt); // this hides and unhides the crossdamage widget
 
-	bool hit = false; 
+	bool hit = false;  // stops ammo counter from going down more than once
 	
-	void UpdateHealthBar(float HealthPercentage);
+	void UpdateHealthBar(float HealthPercentage); // handles updates the health bar widget bar
 
-	void MainWeapon();
+	void MainWeapon(); // widget ui text changes to primary weapon
 
-	void SecWeapon();
+	void SecWeapon(); // widget ui text changes to secondary weapon
 private:
 
 	GENERATED_BODY()
