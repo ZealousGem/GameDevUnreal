@@ -62,17 +62,17 @@ UUserWidget* AHUDDisplayClass::getCrossDamage() const // useless function(i shou
 	return CrossDamage;
 }
 
-void AHUDDisplayClass::AmmoDisplay()
+void AHUDDisplayClass::AmmoDisplay() // makes the ammo widget visible
 {
 	Ammo->SetVisibility(ESlateVisibility::Visible);
 }
 
-void AHUDDisplayClass::AmmoHide()
+void AHUDDisplayClass::AmmoHide() // hides the ammo widget
 {
 	Ammo->SetVisibility(ESlateVisibility::Hidden);
 }
 
-void AHUDDisplayClass::UpdateAmmo(int32 ammoAmount)
+void AHUDDisplayClass::UpdateAmmo(int32 ammoAmount) // updates the ammo widget when ammo variable is changed
 {
 	if(Ammo)
 	{
@@ -112,7 +112,7 @@ void AHUDDisplayClass::UpdateHealthBar(float HealthPercentage)
 	}
 }
 
-void AHUDDisplayClass::MainWeapon()
+void AHUDDisplayClass::MainWeapon() // Change the name of the text widget to the primary weapon if the primirary weapon is visible
 {
 	if(WeaponType)
 	{
@@ -124,7 +124,7 @@ void AHUDDisplayClass::MainWeapon()
 	}
 }
 
-void AHUDDisplayClass::SecWeapon()
+void AHUDDisplayClass::SecWeapon() // Change the name of the text widget to the secondary weapon if the secondary weapon is visible
 {
 	if(WeaponType)
 	{

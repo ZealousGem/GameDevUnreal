@@ -97,7 +97,7 @@ void APlayerControllerClass::OnUnPossess() // will unposses character once progr
 	Super::OnUnPossess();
 }
 
-void APlayerControllerClass::HandleCrouch()
+void APlayerControllerClass::HandleCrouch() // uses the movementbase function to set the crouch to true if the movmentbase is set
 {
 	if(PlayerCharacter->GetMovementBase())
 	{
@@ -109,7 +109,7 @@ void APlayerControllerClass::HandleCrouch()
 	}
 
 	PlayerCharacter->GetMovementComponent()->IsCrouching() ? PlayerCharacter->UnCrouch(true) : PlayerCharacter->Crouch(false);
-		
+		// will set the crouch to false if the player is using the crouching funbction
 		
 	
 }
@@ -143,7 +143,7 @@ void APlayerControllerClass::HandleLookAround(const FInputActionValue& InputActi
 {
 	const FVector2D LookAxisVector = InputActionValue.Get<FVector2d>();
 
-	AddYawInput(LookAxisVector.X); // i dont understand this shit, I am retarded, thanks sir for the code :)
+	AddYawInput(LookAxisVector.X); // uses a 2d vector axis to allow the player to look around
 	AddPitchInput(LookAxisVector.Y);
 }
 

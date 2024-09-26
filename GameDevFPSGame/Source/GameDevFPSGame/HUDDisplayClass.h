@@ -21,10 +21,10 @@ protected:
 	UUserWidget* CrossHair; // makes the widget display through the hud
 
 	UPROPERTY()
-	UUserWidget* CrossDamage; // makes the widget display through the hu
+	UUserWidget* CrossDamage; 
 
 	UPROPERTY()
-	UUserWidget* Health;
+	UUserWidget* Health; 
 
 	UPROPERTY()
 	UUserWidget* Ammo;
@@ -61,7 +61,7 @@ public:
 
 	void HideCorssDamage(bool hitt); // this hides and unhides the crossdamage widget
 
-	bool hit = false; // useless code, fuck i am messy when it comes to coding
+	bool hit = false; 
 	
 	void UpdateHealthBar(float HealthPercentage);
 
