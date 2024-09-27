@@ -7,7 +7,7 @@
 #include "GameFramework/HUD.h"
 #include "HUDDisplayClass.generated.h"
 // this class handles all the ui
-// max when you are working on the ui do it in here,
+
 
 /**
  * 
@@ -33,7 +33,7 @@ protected:
 	UUserWidget* WeaponType;
 
 public:
-	virtual void BeginPlay() override; // overrides default hud class with my amazing hud class
+	virtual void BeginPlay() override; // overrides default hud class with my this class
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass; // where you put the cross arm widget
@@ -43,15 +43,15 @@ public:
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
-	TSubclassOf<UUserWidget> mywidgetClass3; // where you put the cross arm wid
+	TSubclassOf<UUserWidget> mywidgetClass3; // For health widget
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
-	TSubclassOf<UUserWidget> mywidgetClass4; // where you put the cross arm wid
+	TSubclassOf<UUserWidget> mywidgetClass4; //For ammo widget
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
-	TSubclassOf<UUserWidget> mywidgetClass5; // where you put the cross arm wid
+	TSubclassOf<UUserWidget> mywidgetClass5; // For weapon widget
 
-	UUserWidget* getCrossDamage() const; // this is useless
+	UUserWidget* getCrossDamage() const; 
 
 	void AmmoDisplay(); // displays ammo if shotgun is equipped
 

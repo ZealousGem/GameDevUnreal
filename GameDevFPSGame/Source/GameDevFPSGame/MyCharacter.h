@@ -10,7 +10,7 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
-// sets all the characters meshes and weapons in this class, also i would recommend to add the health here too.
+// sets all the characters meshes and weapons in this class
 UCLASS()
 class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter
 {

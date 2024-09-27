@@ -69,7 +69,7 @@ void AMyCharacter::BeginPlay()
 	Super::BeginPlay();
     fpsAffect->SetActive(false); // turns off gun affect once the game starts
 	secAffect->SetActive(false);
-	ammo = 12; // sets the ammo to 12 because that is what the rubric wants
+	ammo = 12; // sets the ammo to 12 
 	if(fpsGun) // sets primary gun on when game runs
 	{
 		fpsGun->SetVisibility(true);

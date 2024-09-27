@@ -8,7 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "WeaponHandling.h"
 
-//#include "Engine/Source/Runtime/EnhancedInput/Public/EnhancedInputComponent.h"
+
 #include "MyCharacter.h"
 #include "GameFramework/PlayerController.h"
 #include "EnhancedInputDeveloperSettings.h"
@@ -55,7 +55,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 
-	// Health properties
+	
 	
 
 	

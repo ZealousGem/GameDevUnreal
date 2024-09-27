@@ -28,7 +28,7 @@ void AHUDDisplayClass::BeginPlay()
 		CrossHair->AddToViewport(2);	// sets crosshair under the cross damage layer
 		}
        
-		if(mywidgetClass2) // same shit as the one before
+		if(mywidgetClass2) // checks if widget has been added
 		{
 			CrossDamage->AddToViewport(1); // sets the wdiget layer above the crosshair
 			CrossDamage->SetVisibility(ESlateVisibility::Hidden); // hides the widget once the game starts
@@ -39,13 +39,13 @@ void AHUDDisplayClass::BeginPlay()
 			Health->AddToViewport(3);	// sets crosshair under the cross damage layer
 		}
 
-		if(Ammo)
+		if(Ammo) // checks if widget has been added
 		{
 			Ammo->AddToViewport(4);
 			Ammo->SetVisibility(ESlateVisibility::Hidden);
 		}
 
-		if(WeaponType)
+		if(WeaponType) // checks if widget has been added
 		{
 			WeaponType->AddToViewport(5);
 			
@@ -57,7 +57,7 @@ void AHUDDisplayClass::BeginPlay()
 	
 }
 
-UUserWidget* AHUDDisplayClass::getCrossDamage() const // useless function(i should get rid of this)
+UUserWidget* AHUDDisplayClass::getCrossDamage() const 
 {
 	return CrossDamage;
 }

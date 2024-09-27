@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PickUp.generated.h"
-// made this pickup class for the pickup blueprint, Max use this class to create the pickup functions
+
 UCLASS(Abstract)
 class GAMEDEVFPSGAME_API APickUp : public AActor
 {

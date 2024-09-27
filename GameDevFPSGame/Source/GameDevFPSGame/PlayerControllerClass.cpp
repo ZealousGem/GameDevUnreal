@@ -156,10 +156,10 @@ void APlayerControllerClass::HandleMove(const FInputActionValue& InputActionValu
 		float increaseSpeed = spint ? IncSpeed : 1.0f;
 		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorForwardVector(), MovementVector.Y); // will add a movement transformation to make the player go forward by setting the vector variable
 		PlayerCharacter->AddMovementInput(PlayerCharacter->GetActorRightVector(), MovementVector.X); // will add a movement transformation to make the player go side to side by setting the vector variable
-		//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::FromInt(increaseSpeed));
+		
 	} 
 
-	//Weapons->HandleSwitch();
+	
 }
 
 void APlayerControllerClass::HandleJump()

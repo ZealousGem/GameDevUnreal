@@ -21,7 +21,7 @@ void UWeaponHandling::Activate(AMyCharacter* isPlayerCharacter, AHUDDisplayClass
 void UWeaponHandling::Tracing()
 {
 
-	if(PlayerCharacter) // look at secondaryweapon code to understand how this works
+	if(PlayerCharacter) 
 	{
 		FVector startPoint;
         if(PlayerCharacter->fpsGun->IsVisible())
@@ -40,20 +40,20 @@ void UWeaponHandling::Tracing()
         		
         	}
         	
-        	//DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
+        	
         	if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
         	{
         		if (EndHit.bBlockingHit)
         		{
-        		//	display->hit = true;
+        		
         			
         			if(display) // make sure the display object has been set
         			{
-        				//display->getCrossDamage()->SetVisibility(ESlateVisibility::Visible);
+        				
                          
         				display->HideCorssDamage(true); // calls the public method to unhid the cross damage ui
         				display->hit = true; // this is useless i should delete this lol
-        				//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Visible"))); // debug to check if it working
+        				
         				GetWorld()->GetTimerManager().ClearTimer(TimerHandle_HideWidget); // clears any timer  if the player is hitting an actor costantnly
         				GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideWidget, this, &UWeaponHandling::HideWidget, 0.5f ,false); // if the player isn't colliding with actors constaly, the timer will be made to hide the widget for 0.5 seconds, after it reaches 0.5 seconds it will call a method to hide the crossdamage ui
         			}
@@ -86,21 +86,20 @@ void UWeaponHandling::Tracing()
         		
 				}
 				
-				//DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Red, false, 1, 0, 1);
 				
-				//FString message = FString::Printf(TEXT("Ammo: %d"), PlayerCharacter->ammo);
-				//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, message);
+				
+				
 				if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams)) // will activate if enpoint of line collides with an actor
 				{
 					if (EndHit.bBlockingHit)
 					{
-						if(display) // look at fps code to figure out how this works
+						if(display) 
 						{
-							//display->getCrossDamage()->SetVisibility(ESlateVisibility::Visible);
+							
                          
 							display->HideCorssDamage(true);
 							display->hit = true;
-							//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Visible")));
+							
 							GetWorld()->GetTimerManager().ClearTimer(TimerHandle_HideWidget);
 							GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideWidget, this, &UWeaponHandling::HideWidget, 0.5f ,false);
 						}
