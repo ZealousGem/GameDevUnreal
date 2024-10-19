@@ -8,7 +8,7 @@
 #include "WeaponpPickUp.generated.h"
 
 UCLASS()
-class GAMEDEVFPSGAME_API AWeaponpPickUp : public APickUp
+class GAMEDEVFPSGAME_API AWeaponpPickUp : public APickUp, public IObserver
 {
 	GENERATED_BODY()
 
@@ -26,5 +26,6 @@ public:
 
 	virtual  void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	   class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void PickitUp() override;
 	
 };

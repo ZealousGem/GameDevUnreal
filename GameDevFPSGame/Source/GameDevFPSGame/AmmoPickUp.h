@@ -8,7 +8,7 @@
 #include "AmmoPickUp.generated.h"
 
 UCLASS()
-class GAMEDEVFPSGAME_API AAmmoPickUp : public APickUp
+class GAMEDEVFPSGAME_API AAmmoPickUp : public APickUp, public IObserver
 {
 	GENERATED_BODY()
 
@@ -26,9 +26,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
 	virtual  void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	   class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Properties") // ammo given to the player once picked up
 	int32 AmmoAmount;
+
+
+	virtual void PickitUp() override;
 };

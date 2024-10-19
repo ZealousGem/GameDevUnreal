@@ -3,6 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameManager.h"
+#include "AmmoPickUp.h"
+#include "WeaponpPickUp.h"
 #include "GameFramework/GameModeBase.h"
 #include "MyGameModeBase.generated.h"
 
@@ -13,5 +16,10 @@ UCLASS()
 class GAMEDEVFPSGAME_API AMyGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+	UGameManager* gameManager;
 };

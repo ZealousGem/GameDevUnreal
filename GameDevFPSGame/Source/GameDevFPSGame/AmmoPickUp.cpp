@@ -50,3 +50,8 @@ void AAmmoPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	Destroy(); // destorys pickup
 }
 
+void AAmmoPickUp::PickitUp()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Ammo Picked Up")));
+}
+

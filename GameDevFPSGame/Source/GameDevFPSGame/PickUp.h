@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Observer.h"
 #include "GameFramework/Actor.h"
 #include "PickUp.generated.h"
 
@@ -29,7 +30,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
+	
 
     UPROPERTY(EditAnywhere)
     USceneComponent* PickupRoot;
