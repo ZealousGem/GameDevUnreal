@@ -34,9 +34,12 @@ void AWeaponpPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 	AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor);
 	if (PlayerCharacter)
 	{
+		
 		if(!PlayerCharacter->Change) // if cast is done correclty once collision is made the boolean will be set to true which will allow the player to access the second gun
 		{
-			PlayerCharacter->Change = true;
+			
+			newWeapon();
+			PlayerCharacter->Change = change;
 			
 		}
 	}
@@ -49,6 +52,11 @@ void AWeaponpPickUp::PickitUp()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Shot Gun Picked Up")));
 	
+}
+
+void AWeaponpPickUp::newWeapon()
+{
+	change = true;
 }
 	
 

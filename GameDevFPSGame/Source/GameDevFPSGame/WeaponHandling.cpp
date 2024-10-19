@@ -5,6 +5,7 @@
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "WeaponpPickUp.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -165,4 +166,8 @@ void UWeaponHandling::SwitchWeapon()
 		}
 	} 
 }
+
+
+
+
 

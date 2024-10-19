@@ -11,12 +11,16 @@ void AMyGameModeBase::BeginPlay()
 	gameManager = NewObject<UGameManager>();
 
 	AAmmoPickUp* AmmoPickUp = GetWorld()->SpawnActor<AAmmoPickUp>(); // retrives the pickup classes
-	AWeaponpPickUp* WeaponPickUp = GetWorld()->SpawnActor<AWeaponpPickUp>(); // generates observers
+	AWeaponpPickUp* WeaponPickUp = GetWorld()->SpawnActor<AWeaponpPickUp>();
+	AMyCharacter* Character = GetWorld()->SpawnActor<AMyCharacter>();
+	// generates observers
 
 	if(gameManager)
 	{
 		gameManager->AssignObserver(AmmoPickUp); // assigns the pickup class as an oberverer
-		gameManager->AssignObserver(WeaponPickUp); 
+		gameManager->AssignObserver(WeaponPickUp);
+		gameManager->AssignObserver(WeaponPickUp);
+		gameManager->AssignObserverWeapon(Character);
 	}
 
 	if(gameManager)

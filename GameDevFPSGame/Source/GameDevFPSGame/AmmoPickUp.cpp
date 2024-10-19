@@ -28,6 +28,7 @@ void AAmmoPickUp::Tick(float DeltaTime)
 void AAmmoPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	PickitUp();
 	// overides parents overlap function
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
@@ -54,4 +55,6 @@ void AAmmoPickUp::PickitUp()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Ammo Picked Up")));
 }
+
+
 

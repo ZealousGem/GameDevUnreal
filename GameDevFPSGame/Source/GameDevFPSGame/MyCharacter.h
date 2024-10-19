@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "HUDDisplayClass.h"
+#include "Observer.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -12,7 +13,7 @@
 
 // sets all the characters meshes and weapons in this class
 UCLASS()
-class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter
+class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter, public IObserverWeapon
 {
 	GENERATED_BODY()
 
@@ -66,6 +67,8 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void newWeapon() override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

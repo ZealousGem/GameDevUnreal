@@ -6,6 +6,8 @@
 #include "GameManager.h"
 #include "AmmoPickUp.h"
 #include "WeaponpPickUp.h"
+#include "WeaponHandling.h"
+#include "MyCharacter.h"
 #include "GameFramework/GameModeBase.h"
 #include "MyGameModeBase.generated.h"
 

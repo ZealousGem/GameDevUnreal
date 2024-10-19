@@ -41,6 +41,7 @@ class GAMEDEVFPSGAME_API IObserverWeapon
 	public:
 	
 	virtual void newWeapon() = 0;
+	
 
 
 

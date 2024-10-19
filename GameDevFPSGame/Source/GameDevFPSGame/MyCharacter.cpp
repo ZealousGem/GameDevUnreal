@@ -80,7 +80,7 @@ void AMyCharacter::BeginPlay()
 		secGun->SetVisibility(false);
 	}
 	ApplyDamage(0);
-	Change = false;
+	newWeapon();
 	
 }
 
@@ -90,6 +90,11 @@ void AMyCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
   
 	
+}
+
+void AMyCharacter::newWeapon()
+{
+	Change = false;
 }
 
 // Called to bind functionality to input

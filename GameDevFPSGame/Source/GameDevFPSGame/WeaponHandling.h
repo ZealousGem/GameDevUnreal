@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MyCharacter.h"
+#include "WeaponpPickUp.h"
 #include "UObject/Object.h"
 #include "UObject/NoExportTypes.h"
 #include "WeaponHandling.generated.h"
@@ -26,17 +27,20 @@ public:
     void HideWidget(); // hides the damage ui widget
 	void SwitchWeapon(); // switches between the primary and secondary weapon
 	
+	
 private:
 
      AMyCharacter* PlayerCharacter; // empty character class to be used to instatiate object through activate method
 
 	AHUDDisplayClass* display; // empty hud class to be used to instatiate object through activate method
+	
 
 	FTimerHandle TimerHandle_HideWidget; // this will be the amount of time the damage widget will display
 
 	bool FireInFrame = false; 
-	
 
+	
+    
 
 	
 
