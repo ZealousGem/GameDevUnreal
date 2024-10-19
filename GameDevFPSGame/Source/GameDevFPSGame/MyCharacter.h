@@ -58,6 +58,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	void ApplyDamage(float DamageAmount);
 
+	
+
 	// line of code
 
 protected:
@@ -69,6 +71,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void newWeapon() override;
+
+	
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

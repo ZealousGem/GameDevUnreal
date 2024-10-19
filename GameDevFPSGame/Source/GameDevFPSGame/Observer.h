@@ -49,3 +49,23 @@ class GAMEDEVFPSGAME_API IObserverWeapon
 	public:
 };
 
+UINTERFACE()
+class UObserverHP : public UInterface
+{
+	GENERATED_BODY()
+};
+
+class GAMEDEVFPSGAME_API IObserverHP
+{
+	GENERATED_BODY()
+public:
+	
+	virtual void HealthChanged(float health) = 0;
+	
+
+
+
+	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
+public:
+};
+

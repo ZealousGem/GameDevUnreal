@@ -97,6 +97,8 @@ void AMyCharacter::newWeapon()
 	Change = false;
 }
 
+
+
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -130,5 +132,7 @@ void AMyCharacter::ApplyDamage(float DamageAmount)
 		// Trigger death
 	}
 }
+
+
 
 
