@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "GameFramework/Character.h"
+#include "Perception/PawnSensingComponent.h"
 #include "EnemyBaseCharacter.generated.h"
 
 UCLASS()
@@ -26,12 +28,25 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	void ApplyDamage(float DamageAmount);
+
+	UPROPERTY(EditAnywhere, Category= "AI")
+	UBehaviorTree* BehaviourTree;
+	
+    UPROPERTY(VisibleAnywhere, Category="AI")
+	UPawnSensingComponent* PawnSensingComp;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void PlayerCaught(APawn* Pawn);
+	
+
 public:
 	// Called every frame
+
+	
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input

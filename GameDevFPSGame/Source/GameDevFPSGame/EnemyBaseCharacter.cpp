@@ -20,6 +20,8 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 
 	MaxHealth = 100.0f; // set max health
 	CurrentHealth = MaxHealth; //initialize current health
+	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensing Component"));
+	PawnSensingComp->SetPeripheralVisionAngle(90.f);
 }
 
 void AEnemyBaseCharacter::ApplyDamage(float DamageAmount)
@@ -49,7 +51,16 @@ void AEnemyBaseCharacter::ApplyDamage(float DamageAmount)
 void AEnemyBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(PawnSensingComp)
+	{
+		PawnSensingComp->OnSeePawn.AddDynamic(this, &AEnemyBaseCharacter::PlayerCaught);
+	}
 	
+}
+
+void AEnemyBaseCharacter::PlayerCaught(APawn* Pawn)
+{
 }
 
 // Called every frame
