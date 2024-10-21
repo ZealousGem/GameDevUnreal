@@ -6,6 +6,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "GameFramework/Character.h"
 #include "Perception/PawnSensingComponent.h"
+#include "Animation/AnimSequence.h"
 #include "EnemyBaseCharacter.generated.h"
 
 UCLASS()
@@ -41,6 +42,16 @@ protected:
 
 	UFUNCTION()
 	void PlayerCaught(APawn* Pawn);
+
+	UPROPERTY(EditAnywhere, Category= "Animations") // animation sequence for the character
+	UAnimSequence* WalkAnimation;
+
+	UPROPERTY(EditAnywhere, Category= "Animations") // animation sequence for the character
+	UAnimSequence* IdleAnimation;
+
+	void setWalkAnimation(bool moving);
+
+	bool movement;
 	
 
 public:

@@ -63,10 +63,39 @@ void AEnemyBaseCharacter::PlayerCaught(APawn* Pawn)
 {
 }
 
+void AEnemyBaseCharacter::setWalkAnimation(bool moving)
+{
+	UAnimInstance* Inctance = character->GetAnimInstance();
+	checkf(Inctance,TEXT("Is not set"));
+	if(moving && WalkAnimation && !movement)
+	{
+		 character->PlayAnimation(WalkAnimation, true);
+		movement = true;
+		
+	}
+
+	else if (!moving && IdleAnimation && movement)
+	{
+		character->PlayAnimation(IdleAnimation,true);
+		movement = false;
+		
+	}
+}
+
 // Called every frame
 void AEnemyBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+  if(GetVelocity().Size() > 0)
+  {
+	  setWalkAnimation(true);
+  }
+
+	else
+	{
+		setWalkAnimation(false);
+	}
+	
 }
 
 // Called to bind functionality to input

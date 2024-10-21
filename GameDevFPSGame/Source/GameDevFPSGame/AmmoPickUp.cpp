@@ -3,6 +3,8 @@
 
 #include "AmmoPickUp.h"
 
+#include "EnemyBaseCharacter.h"
+
 
 // Sets default values
 AAmmoPickUp::AAmmoPickUp()
@@ -33,7 +35,8 @@ void AAmmoPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
 	// Cast the overlapping actor to the player character class (AMyCharacter)
-	AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor);
+if(AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
+{
 	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
 
 
@@ -47,6 +50,14 @@ void AAmmoPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 		}
 
 	}
+}
+
+	if(AEnemyBaseCharacter* enemy = Cast<AEnemyBaseCharacter>(OtherActor))
+	{
+		// will add later
+	}
+	
+	
 
 	Destroy(); // destorys pickup
 }
