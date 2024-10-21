@@ -4,6 +4,7 @@
 #include "EnemyBaseCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 
 
 // Sets default values
@@ -22,6 +23,7 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	CurrentHealth = MaxHealth; //initialize current health
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensing Component"));
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
+	setStim();
 }
 
 void AEnemyBaseCharacter::ApplyDamage(float DamageAmount)
@@ -79,6 +81,16 @@ void AEnemyBaseCharacter::setWalkAnimation(bool moving)
 		character->PlayAnimation(IdleAnimation,true);
 		movement = false;
 		
+	}
+}
+
+void AEnemyBaseCharacter::setStim()
+{
+	Stim = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));
+	if(Stim)
+	{
+		Stim->RegisterForSense(TSubclassOf<UAISense>());
+		Stim->RegisterWithPerceptionSystem();
 	}
 }
 

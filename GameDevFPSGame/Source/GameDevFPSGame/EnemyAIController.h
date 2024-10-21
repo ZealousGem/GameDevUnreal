@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "Perception/AIPerceptionTypes.h"
 #include "EnemyAIController.generated.h"
 
 UCLASS()
@@ -41,6 +42,13 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	class UAISenseConfig_Sight* SightConfig;
+
+	void SetUpPerceptionSystem();
+
+	UFUNCTION()
+	void PlayerDetected(AActor* actor, FAIStimulus const Stimulus);
 
 public:
 	// Called every frame

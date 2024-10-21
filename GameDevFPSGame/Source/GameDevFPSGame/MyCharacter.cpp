@@ -3,6 +3,8 @@
 
 #include "MyCharacter.h"
 
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -83,6 +85,8 @@ void AMyCharacter::BeginPlay()
 	newWeapon();
 	
 }
+
+
 
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)

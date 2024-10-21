@@ -52,6 +52,10 @@ protected:
 	void setWalkAnimation(bool moving);
 
 	bool movement;
+
+	class UAIPerceptionStimuliSourceComponent* Stim;
+
+	void setStim();
 	
 
 public:
