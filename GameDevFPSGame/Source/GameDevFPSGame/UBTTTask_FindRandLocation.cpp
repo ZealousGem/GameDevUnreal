@@ -105,7 +105,7 @@ EBTNodeResult::Type UUBTTTask_ShootPlayer::ExecuteTask(UBehaviorTreeComponent& O
 	if(AMyCharacter* const Player = Cast<AMyCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) // gets location of player character
 	{
 		auto const playerLoc = Player->GetActorLocation(); // gets player location
-		npc = Cast<AEnemyBaseCharacter>(this); // instantiates npc class
+		npc = Cast<AEnemyAIController>(this); // instantiates npc class
 		if(SearchRadius) // will activate if player is in search radius
 		{
 			FNavLocation Loc;
@@ -113,16 +113,12 @@ EBTNodeResult::Type UUBTTTask_ShootPlayer::ExecuteTask(UBehaviorTreeComponent& O
 			{
 				if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc))
 				{
-					npc->Fire(); // activates firing logic 
+					npc->fire(); // activates firing logic 
 					FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 					return EBTNodeResult::Succeeded;
 				}
 			}
 		}
-		
-		
-		
-		
 		
 		
 		

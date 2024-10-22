@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MyCharacter.h"
+#include "EnemyBaseCharacter.h"
 #include "WeaponpPickUp.h"
 #include "UObject/Object.h"
 #include "UObject/NoExportTypes.h"
@@ -20,13 +21,15 @@ public:
 	UWeaponHandling();
 
 	void Activate(AMyCharacter* isPlayerCharacter, AHUDDisplayClass* DisplayHUD);
+	void ActivateNPC(AEnemyBaseCharacter* npc);
 
 	void Tracing();  // creates the line trace and makes the gun go "pew" "pew"
 	void HandleFire(); // handles firing spray
 	void Released(); // will set inframe to false for weapon to fire agian
     void HideWidget(); // hides the damage ui widget
 	void SwitchWeapon(); // switches between the primary and secondary weapon
-	
+
+	void NPCFire();
 	
 private:
 
@@ -34,7 +37,7 @@ private:
 
 	AHUDDisplayClass* display; // empty hud class to be used to instatiate object through activate method
 	
-
+    AEnemyBaseCharacter* aiG;
 	FTimerHandle TimerHandle_HideWidget; // this will be the amount of time the damage widget will display
 
 	bool FireInFrame = false; 

@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EnemyBaseCharacter.h"
 #include "AIController.h"
+#include "WeaponHandling.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "EnemyAIController.generated.h"
@@ -39,6 +41,8 @@ public:
 
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return  PatrolPoints; }
 
+	void fire();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -49,6 +53,11 @@ protected:
 
 	UFUNCTION()
 	void PlayerDetected(AActor* actor, FAIStimulus const Stimulus);
+
+private :
+	AEnemyBaseCharacter* npc = nullptr;
+
+	UWeaponHandling* Wep = nullptr;
 
 public:
 	// Called every frame

@@ -9,7 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 
-UWeaponHandling::UWeaponHandling() : PlayerCharacter(nullptr), display(nullptr) // sets the display and character objects to null if there is no casting
+UWeaponHandling::UWeaponHandling() : PlayerCharacter(nullptr), display(nullptr), aiG(nullptr) // sets the display and character objects to null if there is no casting
 {
 }
 
@@ -17,6 +17,11 @@ void UWeaponHandling::Activate(AMyCharacter* isPlayerCharacter, AHUDDisplayClass
 {
 	PlayerCharacter = isPlayerCharacter;
 	display = DisplayHUD;
+}
+
+void UWeaponHandling::ActivateNPC(AEnemyBaseCharacter* npc)
+{
+	aiG = npc;
 }
 
 void UWeaponHandling::Tracing()
@@ -165,6 +170,15 @@ void UWeaponHandling::SwitchWeapon()
 			display->MainWeapon();
 		}
 	} 
+}
+
+void UWeaponHandling::NPCFire()
+{
+	if(aiG)
+	{
+		aiG->fpsexplosion->Deactivate();
+		aiG->fpsexplosion->Activate();
+	}
 }
 
 

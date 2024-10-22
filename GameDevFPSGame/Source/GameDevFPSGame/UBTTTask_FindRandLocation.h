@@ -2,8 +2,9 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
-#include "EnemyBaseCharacter.h"
+#include "EnemyAIController.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "UBTTTask_FindRandLocation.generated.h"
 
@@ -58,5 +59,5 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AI", meta=(AllowPrivateAccess= "true"))
 	float SearchRadius = 150.f;
 	
-	AEnemyBaseCharacter* npc;
+	AEnemyAIController* npc;
 };
