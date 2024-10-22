@@ -20,8 +20,7 @@ AEnemyAIController::AEnemyAIController()
 	PlayerKey = "Target";
 	LocationKey = "LocationTo";
 
-	Wep = NewObject<UWeaponHandling>();
-	npc = Cast<AEnemyBaseCharacter>(GetCharacter());
+	
 	
 	AssignedPoint = 0;
 }
@@ -29,7 +28,10 @@ AEnemyAIController::AEnemyAIController()
 void AEnemyAIController::OnPossess(APawn* NewPawn)
 {
 	Super::OnPossess(NewPawn);
+	Wep = NewObject<UWeaponHandling>(this);
+	npc = Cast<AEnemyBaseCharacter>(NewPawn);
 	
+	Wep->ActivateNPC(npc);
 	AEnemyBaseCharacter* AIChar = Cast<AEnemyBaseCharacter>(NewPawn);
 	if (AIChar)
 	{
@@ -51,8 +53,13 @@ void AEnemyAIController::SetPlayerFound(APawn* InPawn)
 
 void AEnemyAIController::fire()
 {
+	//
+	
+	
 	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Enemy is Shooting")));
-	//Wep->ActivateNPC(npc); causes crash
+	Wep->NPCFire();
+	 // causes crash
+	
 }
 
 // Called when the game starts or when spawned

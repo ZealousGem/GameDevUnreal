@@ -42,6 +42,8 @@ public:
     UPROPERTY(VisibleAnywhere, Category="AI")
 	UPawnSensingComponent* PawnSensingComp;
 
+
+
 	void Fire();
 	
 	

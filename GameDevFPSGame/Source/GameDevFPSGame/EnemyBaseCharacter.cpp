@@ -22,6 +22,16 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	fpsWep->SetupAttachment(character);
 	
 	character->SetupAttachment(GetCapsuleComponent());
+
+	 //CapsuleComponent = GetCapsuleComponent();
+	//CapsuleComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Block);
+	
+	//GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Overlap); // Allow line trace hits
+	 
+	
 	fpsexplosion = CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" affect"));
 	fpsexplosion->SetupAttachment(fpsWep);
 	check(fpsexplosion != nullptr);

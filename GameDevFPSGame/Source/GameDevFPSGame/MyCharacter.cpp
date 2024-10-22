@@ -56,6 +56,10 @@ AMyCharacter::AMyCharacter()
 	secAffect->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
 	
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Block);
+	
 
 	GetMesh()->SetOnlyOwnerSee(true); // player doesn't see third person mesh
 	

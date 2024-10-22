@@ -38,6 +38,8 @@ void UWeaponHandling::Tracing()
         	FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector();
         	FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
         	FCollisionQueryParams ColParams;
+        	ColParams.AddIgnoredActor(PlayerCharacter); // ignores own actor collisons
+        	//DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Green, false, 1, 0, 1);
        
         	if(PlayerCharacter->fpsAffect)
         	{
@@ -49,10 +51,11 @@ void UWeaponHandling::Tracing()
         	
         	if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
         	{
-        		if (EndHit.bBlockingHit)
+        		if (AEnemyBaseCharacter* CharacterHit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
         		{
         		
-        			
+        			//CharacterHit->ApplyDamage(10.f);
+        			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
         			if(display) // make sure the display object has been set
         			{
         				
@@ -82,6 +85,7 @@ void UWeaponHandling::Tracing()
 				FVector ForwardPoint = PlayerCharacter->FPSCameraComponent->GetForwardVector(); // will be used to move the line torwards the middle of the camera
 				FVector EndPoint = ((ForwardPoint * 500.f) + startPoint); // increases the distance of the line from the camera
 				FCollisionQueryParams ColParams;
+				ColParams.AddIgnoredActor(PlayerCharacter);
 
 				
 				if(PlayerCharacter->secAffect) // turns on gun blasting particles meshes
@@ -97,7 +101,7 @@ void UWeaponHandling::Tracing()
 				
 				if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams)) // will activate if enpoint of line collides with an actor
 				{
-					if (EndHit.bBlockingHit)
+					if (AEnemyBaseCharacter* CharacterHit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
 					{
 						if(display) 
 						{
@@ -178,6 +182,28 @@ void UWeaponHandling::NPCFire()
 	{
 		aiG->fpsexplosion->Deactivate();
 		aiG->fpsexplosion->Activate();
+
+		FHitResult EndHit; 
+		FVector startPoint = aiG->fpsexplosion->GetComponentLocation();
+		FVector ForwardPoint = aiG->fpsexplosion->GetForwardVector();
+		FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
+		FCollisionQueryParams ColParams;
+		ColParams.AddIgnoredActor(aiG); // ignores own actor collisons
+	//	DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Green, false, 1, 0, 1);
+		if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
+		{
+			if (AMyCharacter* Player = Cast<AMyCharacter>(EndHit.GetActor()))
+			{
+				
+				
+					if (GEngine)
+					{
+						GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
+					}
+				
+				
+			}
+		}
 	}
 }
 

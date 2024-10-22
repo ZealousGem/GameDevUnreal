@@ -57,6 +57,7 @@ protected:
 private :
 	AEnemyBaseCharacter* npc = nullptr;
 
+	UPROPERTY()
 	UWeaponHandling* Wep = nullptr;
 
 public:
