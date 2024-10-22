@@ -51,7 +51,7 @@ void AEnemyAIController::SetPlayerFound(APawn* InPawn)
 
 void AEnemyAIController::fire()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Enemy is Shooting")));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Enemy is Shooting")));
 	//Wep->ActivateNPC(npc); causes crash
 }
 

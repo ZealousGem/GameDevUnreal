@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MyCharacter.h"
 #include "PickUp.h"
 #include "HealthPickUp.generated.h"
 
@@ -14,6 +15,18 @@ class GAMEDEVFPSGAME_API AHealthPickUp : public APickUp
 public:
 	// Sets default values for this actor's properties
 	AHealthPickUp();
+
+
+	virtual  void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Properties") // ammo given to the player
+		int32 HealthAmount;
+
+	//virtual void PickitUp() override;
+
+
+
 
 protected:
 	// Called when the game starts or when spawned

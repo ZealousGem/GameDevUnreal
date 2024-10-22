@@ -2,7 +2,7 @@
 
 
 #include "MyCharacter.h"
-
+#include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 
 
@@ -60,7 +60,7 @@ AMyCharacter::AMyCharacter()
 	
 
 	MaxHealth = 100.0f; // set max health
-	CurrentHealth = MaxHealth; //initialize current health
+	CurrentHealth = 90.0f; //initialize current health
 	
 
 }
@@ -134,6 +134,17 @@ void AMyCharacter::ApplyDamage(float DamageAmount)
 	if (CurrentHealth == 0)
 	{
 		// Trigger death
+	}
+}
+void AMyCharacter::Heal(float HealAmount)
+{
+	CurrentHealth += HealAmount;
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("Character healed")));
+
+	if (CurrentHealth > MaxHealth)
+	{
+		CurrentHealth = MaxHealth;
 	}
 }
 
