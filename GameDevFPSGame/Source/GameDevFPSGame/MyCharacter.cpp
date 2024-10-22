@@ -4,6 +4,8 @@
 #include "MyCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Spawner.h"
+
 
 
 // Sets default values
@@ -60,7 +62,7 @@ AMyCharacter::AMyCharacter()
 	
 
 	MaxHealth = 100.0f; // set max health
-	CurrentHealth = 90.0f; //initialize current health
+	CurrentHealth = 100.0f; //initialize current health
 	
 
 }
@@ -81,8 +83,9 @@ void AMyCharacter::BeginPlay()
 	{
 		secGun->SetVisibility(false);
 	}
-	ApplyDamage(0);
+	ApplyDamage(10);
 	newWeapon();
+	//CurrentHealth = MaxHealth;
 	
 }
 
@@ -116,7 +119,23 @@ void AMyCharacter::ApplyDamage(float DamageAmount)
 	if (CurrentHealth < 0)
 	{
 		CurrentHealth = 0;
+
+		
 	}
+	if (CurrentHealth == 0)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("player health is 0")));// it reaches here so far
+		// Call respawn function from spawner
+		if (ASpawner* Spawner = Cast<ASpawner>(UGameplayStatics::GetActorOfClass(GetWorld(), ASpawner::StaticClass())))
+		{
+			Spawner->RespawnCharacter(this);
+
+			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("player respawned")));
+			
+		}
+	}
+
+	
 
 	// Calculate health percentage
 	float HealthPercentage = CurrentHealth / MaxHealth;
@@ -131,10 +150,7 @@ void AMyCharacter::ApplyDamage(float DamageAmount)
 	}
 
 	// Optionally, handle player death
-	if (CurrentHealth == 0)
-	{
-		// Trigger death
-	}
+	
 }
 void AMyCharacter::Heal(float HealAmount)
 {
@@ -146,6 +162,7 @@ void AMyCharacter::Heal(float HealAmount)
 	{
 		CurrentHealth = MaxHealth;
 	}
+	//ApplyDamage(100);// i did this to test out the respawning
 }
 
 

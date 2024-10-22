@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include"MyCharacter.h"
 #include "Spawner.generated.h"
 
 UCLASS()
@@ -15,6 +16,9 @@ public:
 	// Sets default values for this actor's properties
 	ASpawner();
 
+	void RespawnCharacter(ACharacter* CharacterToRespawn);
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,4 +26,13 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+
+	UPROPERTY()
+	TArray<AActor*> RespawnPoints;
+
+	// Function to gather all spawn points in the level
+	void FindRespawnPoints();
+
 };

@@ -51,6 +51,7 @@ void AHUDDisplayClass::BeginPlay()
 			
 		
 		}
+		
 
 		
 	}
