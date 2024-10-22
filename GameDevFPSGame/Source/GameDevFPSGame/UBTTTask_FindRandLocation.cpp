@@ -4,6 +4,7 @@
 #include "UBTTTask_FindRandLocation.h"
 #include "MyCharacter.h"
 #include "EnemyAIController.h"
+#include "EnemyBaseCharacter.h"
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -39,7 +40,6 @@ EBTNodeResult::Type UUBTTTask_FindRandLocation::ExecuteTask(UBehaviorTreeCompone
 	 }
  	return EBTNodeResult::Failed;
  }
-	
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }
 
@@ -92,5 +92,43 @@ EBTNodeResult::Type UUBTTTask_PlayerFound::ExecuteTask(UBehaviorTreeComponent& O
 		
 	}
 	return EBTNodeResult::Failed;
+	return Super::ExecuteTask(OwnerComp, NodeMemory);
+}
+
+UUBTTTask_ShootPlayer::UUBTTTask_ShootPlayer(FObjectInitializer const& ObjectInitializer)
+{
+	NodeName=TEXT("Attack Player");
+}
+
+EBTNodeResult::Type UUBTTTask_ShootPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+	if(AMyCharacter* const Player = Cast<AMyCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) // gets location of player character
+	{
+		auto const playerLoc = Player->GetActorLocation(); // gets player location
+		npc = Cast<AEnemyBaseCharacter>(this); // instantiates npc class
+		if(SearchRadius) // will activate if player is in search radius
+		{
+			FNavLocation Loc;
+			if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld())) // will activate location once its found nav actor
+			{
+				if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc))
+				{
+					npc->Fire(); // activates firing logic 
+					FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+					return EBTNodeResult::Succeeded;
+				}
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+	}
+
+	FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+	return  EBTNodeResult::Failed;
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }

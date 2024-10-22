@@ -16,9 +16,17 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	character = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Enemy"));
 	check(character != nullptr)
 
+
+	fpsWep = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Primary Weapon"));
+	check(fpsWep != nullptr);
+	fpsWep->SetupAttachment(character);
 	
 	character->SetupAttachment(GetCapsuleComponent());
+	fpsexplosion = CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" affect"));
+	fpsexplosion->SetupAttachment(fpsWep);
+	check(fpsexplosion != nullptr);
 
+	
 	MaxHealth = 100.0f; // set max health
 	CurrentHealth = MaxHealth; //initialize current health
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensing Component"));
@@ -47,6 +55,11 @@ void AEnemyBaseCharacter::ApplyDamage(float DamageAmount)
 	{
 		// Trigger death
 	}
+}
+
+void AEnemyBaseCharacter::Fire()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Enemy is Shooting")));
 }
 
 // Called when the game starts or when spawned

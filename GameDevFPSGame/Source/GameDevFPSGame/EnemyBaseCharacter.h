@@ -21,6 +21,12 @@ public:
 	UPROPERTY(VisibleAnywhere, Category= CharatcerMesh)
 	USkeletalMeshComponent* character;
 
+	UPROPERTY(VisibleDefaultsOnly, Category= CharacterMesh) // adds the epic gun effect to the primary gun
+	UParticleSystemComponent* fpsexplosion;
+
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adding the gun mesh to player
+	USkeletalMeshComponent* fpsWep;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
 
@@ -35,6 +41,9 @@ public:
 	
     UPROPERTY(VisibleAnywhere, Category="AI")
 	UPawnSensingComponent* PawnSensingComp;
+
+	void Fire();
+	
 	
 protected:
 	// Called when the game starts or when spawned

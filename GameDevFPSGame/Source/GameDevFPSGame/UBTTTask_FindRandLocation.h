@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EnemyBaseCharacter.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "UBTTTask_FindRandLocation.generated.h"
 
@@ -40,4 +41,22 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AI", meta=(AllowPrivateAccess= "true"))
 	float SearchRadius = 150.f;
 	
+};
+
+UCLASS()
+class GAMEDEVFPSGAME_API UUBTTTask_ShootPlayer : public UBTTask_BlackboardBase
+{
+	GENERATED_BODY()
+
+public:
+
+	explicit UUBTTTask_ShootPlayer(FObjectInitializer const & ObjectInitializer);
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AI", meta=(AllowPrivateAccess= "true"))
+	float SearchRadius = 150.f;
+	
+	AEnemyBaseCharacter* npc;
 };
