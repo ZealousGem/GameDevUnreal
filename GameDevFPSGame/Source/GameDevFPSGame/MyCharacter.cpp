@@ -130,13 +130,16 @@ void AMyCharacter::ApplyDamage(float DamageAmount)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("player health is 0")));// it reaches here so far
 		// Call respawn function from spawner
-		if (ASpawner* Spawner = Cast<ASpawner>(UGameplayStatics::GetActorOfClass(GetWorld(), ASpawner::StaticClass())))
-		{
-			Spawner->RespawnCharacter(this);
+		//if (ASpawner* Spawner = Cast<ASpawner>(UGameplayStatics::GetActorOfClass(GetWorld(), ASpawner::StaticClass())))
+		//{
+
+			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("in player if")));
+
+			//Spawner->RespawnCharacter(this);
 
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("player respawned")));
 			
-		}
+		//}
 	}
 
 	
@@ -166,7 +169,7 @@ void AMyCharacter::Heal(float HealAmount)
 	{
 		CurrentHealth = MaxHealth;
 	}
-	//ApplyDamage(100);// i did this to test out the respawning
+	ApplyDamage(100);// i did this to test out the respawning
 }
 
 

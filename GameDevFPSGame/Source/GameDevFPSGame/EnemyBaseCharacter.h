@@ -51,6 +51,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Mesh") // the ammo variable that will be affected once the secondary weapon is shot
 	int32 ammo;
 
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	//void Heal(float HealAmount);
+
 	void Fire();
 	
 	

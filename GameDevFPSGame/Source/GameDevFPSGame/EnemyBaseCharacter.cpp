@@ -5,6 +5,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Spawner.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
