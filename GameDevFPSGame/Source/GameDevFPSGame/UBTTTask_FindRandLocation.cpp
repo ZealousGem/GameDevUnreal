@@ -141,7 +141,7 @@ EBTNodeResult::Type UUBTTTask_FoundAmmo::ExecuteTask(UBehaviorTreeComponent& Own
 	if(AAmmoPickUp* const Ammo = Cast<AAmmoPickUp>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) // gets location of player character
 	{
 		
-		auto const playerLoc = Ammo->GetActorLocation();
+		auto const AmmoLoc = Ammo->GetActorLocation();
 
 		
 		// gets the location to use as a centre point
@@ -150,7 +150,7 @@ EBTNodeResult::Type UUBTTTask_FoundAmmo::ExecuteTask(UBehaviorTreeComponent& Own
 			FNavLocation Loc; // generates random location near player
 			if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld()))
 			{
-				if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc)) // gets random location near the player
+				if(Nav->GetRandomPointInNavigableRadius(AmmoLoc, SearchRadius, Loc)) // gets random location near the player
 				{
 					OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Loc.Location);
 			 	
@@ -162,11 +162,33 @@ EBTNodeResult::Type UUBTTTask_FoundAmmo::ExecuteTask(UBehaviorTreeComponent& Own
 
 		else
 		{
-			OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), playerLoc);
+			OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), AmmoLoc);
 			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 			return  EBTNodeResult::Succeeded;
 		}
 		
 	}
 	return EBTNodeResult::Failed;
+}
+
+UUBTTTask_SwitchWeapon::UUBTTTask_SwitchWeapon(FObjectInitializer const& ObjectInitializer)
+{
+	NodeName=TEXT("SwitchWeapon");
+}
+
+EBTNodeResult::Type UUBTTTask_SwitchWeapon::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+	AEnemyAIController* Npc = Cast<AEnemyAIController>(OwnerComp.GetAIOwner()); 
+	AEnemyBaseCharacter* npc = Cast<AEnemyBaseCharacter>(Npc->GetPawn());
+
+	if(npc->ammo >= 0)
+	{
+		Npc->SwitchWep();
+	}
+
+	if(npc->ammo <=0)
+	{
+		Npc->SwitchWep();
+	}
+	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }

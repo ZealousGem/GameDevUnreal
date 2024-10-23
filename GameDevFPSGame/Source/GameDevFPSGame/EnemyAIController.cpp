@@ -64,6 +64,11 @@ void AEnemyAIController::fire()
 	
 }
 
+void AEnemyAIController::SwitchWep()
+{
+	Wep->NPCSwitch();
+}
+
 // Called when the game starts or when spawned
 void AEnemyAIController::BeginPlay()
 {

@@ -207,6 +207,24 @@ void UWeaponHandling::NPCFire()
 	}
 }
 
+void UWeaponHandling::NPCSwitch()
+{
+	if(aiG->fpsWep->IsVisible()) // sets secondary gun visible once input is done
+	{
+		aiG->fpsWep->SetVisibility(false);
+		aiG->fpsWep->SetVisibility(true);
+		
+	}
+
+	else if(PlayerCharacter->secGun->IsVisible()) // sets primary gun visible one input is done
+	{
+
+		aiG->secWep->SetVisibility(false);
+		aiG->secWep->SetVisibility(true);
+		
+	} 
+}
+
 
 
 

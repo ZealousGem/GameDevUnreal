@@ -82,3 +82,24 @@ private:
 	
 	
 };
+
+UCLASS()
+class GAMEDEVFPSGAME_API UUBTTTask_SwitchWeapon : public UBTTask_BlackboardBase
+{
+	GENERATED_BODY()
+
+public:
+
+	explicit UUBTTTask_SwitchWeapon(FObjectInitializer const & ObjectInitializer);
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AI", meta=(AllowPrivateAccess= "true"))
+	float SearchRadius = 150.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Searching", meta=(AllowPrivateAccess= "true"))
+	bool RandomSearch = false;
+	
+	
+};

@@ -30,6 +30,7 @@ public:
 	void SwitchWeapon(); // switches between the primary and secondary weapon
 
 	void NPCFire();
+	void NPCSwitch();
 	
 private:
 
