@@ -26,10 +26,7 @@ public:
 
 	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adds the epic gun affect to the secondary gun
 	UParticleSystemComponent* secAffect;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Mesh") // the ammo variable that will be affected once the secondary weapon is shot
-	int32 ammo;
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh")
 	bool Change;
 

@@ -27,6 +27,12 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adding the gun mesh to player
 	USkeletalMeshComponent* fpsWep;
 
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adds the epic gun affect to the secondary gun
+	UParticleSystemComponent* secExplosion;
+
+	UPROPERTY(VisibleDefaultsOnly, Category= Mesh) // adds the seconadary gun mesh to player
+	USkeletalMeshComponent* secWep;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
 
@@ -42,7 +48,8 @@ public:
     UPROPERTY(VisibleAnywhere, Category="AI")
 	UPawnSensingComponent* PawnSensingComp;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Mesh") // the ammo variable that will be affected once the secondary weapon is shot
+	int32 ammo;
 
 	void Fire();
 	

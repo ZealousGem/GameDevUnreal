@@ -2,6 +2,8 @@
 
 
 #include "UBTTTask_FindRandLocation.h"
+
+#include "AmmoPickUp.h"
 #include "MyCharacter.h"
 #include "EnemyAIController.h"
 #include "EnemyBaseCharacter.h"
@@ -29,7 +31,7 @@ EBTNodeResult::Type UUBTTTask_FindRandLocation::ExecuteTask(UBehaviorTreeCompone
 
             FNavLocation Loc;
 
-	 		if(Nav->GetRandomPointInNavigableRadius(Orgin, SearchRadius, Loc))
+	 		if(Nav->GetRandomPointInNavigableRadius(Orgin, SearchRadius, Loc)) // will retieve navigation actor in game world
 	 		{
 	 			OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Loc.Location); // sets the node location in the blackboard component
 	 		}
@@ -73,11 +75,11 @@ EBTNodeResult::Type UUBTTTask_PlayerFound::ExecuteTask(UBehaviorTreeComponent& O
 			 		APawn* Enem = Enemy->GetPawn();
 			 		if(Enem)
 			 		{
-			 			Enem->SetActorRotation(LookATPlayer);
+			 			Enem->SetActorRotation(LookATPlayer); // makes the enemy look at the player 
 			 		}
 			 	}
 			 	
-			 	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+			 	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); // will tell tree that this node is successful
 			 	return  EBTNodeResult::Succeeded;
 			 }
 			}
@@ -127,4 +129,44 @@ EBTNodeResult::Type UUBTTTask_ShootPlayer::ExecuteTask(UBehaviorTreeComponent& O
 	FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 	return  EBTNodeResult::Failed;
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
+}
+
+UUBTTTask_FoundAmmo::UUBTTTask_FoundAmmo(FObjectInitializer const& ObjectInitializer)
+{
+	NodeName=TEXT("Getting Ammo");
+}
+
+EBTNodeResult::Type UUBTTTask_FoundAmmo::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+	if(AAmmoPickUp* const Ammo = Cast<AAmmoPickUp>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) // gets location of player character
+	{
+		
+		auto const playerLoc = Ammo->GetActorLocation();
+
+		
+		// gets the location to use as a centre point
+		if(RandomSearch)
+		{
+			FNavLocation Loc; // generates random location near player
+			if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld()))
+			{
+				if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc)) // gets random location near the player
+				{
+					OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Loc.Location);
+			 	
+					FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); // will tell tree that this node is successful
+					return  EBTNodeResult::Succeeded;
+				}
+			}
+		}
+
+		else
+		{
+			OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), playerLoc);
+			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+			return  EBTNodeResult::Succeeded;
+		}
+		
+	}
+	return EBTNodeResult::Failed;
 }

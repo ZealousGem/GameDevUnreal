@@ -1,4 +1,6 @@
 ﻿#include "EnemyAIController.h"
+
+#include "AmmoPickUp.h"
 #include "EnemyBaseCharacter.h"
 #include "MyCharacter.h"
 #include "BehaviorTree/BehaviorTree.h"
@@ -94,6 +96,11 @@ void AEnemyAIController::PlayerDetected(AActor* actor, FAIStimulus const Stimulu
 	if(auto* const car = Cast<AMyCharacter>(actor))
 	{
 		GetBlackboardComponent()->SetValueAsBool("SeesPlayer", Stimulus.WasSuccessfullySensed());
+	}
+
+	if(auto* const car = Cast<AAmmoPickUp>(actor))
+	{
+		GetBlackboardComponent()->SetValueAsBool("SeesAmmo", Stimulus.WasSuccessfullySensed());
 	}
 }
 

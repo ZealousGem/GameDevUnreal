@@ -20,6 +20,10 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	fpsWep = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Primary Weapon"));
 	check(fpsWep != nullptr);
 	fpsWep->SetupAttachment(character);
+
+	secWep = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Secondary Weapon"));
+	check(secWep != nullptr);
+	secWep->SetupAttachment(character);
 	
 	character->SetupAttachment(GetCapsuleComponent());
 
@@ -30,11 +34,15 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Block);
 	
 	//GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Overlap); // Allow line trace hits
-	 
-	
-	fpsexplosion = CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" affect"));
-	fpsexplosion->SetupAttachment(fpsWep);
+
+
+	fpsexplosion= CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" affect"));
+fpsexplosion->SetupAttachment(secWep);
 	check(fpsexplosion != nullptr);
+
+	secExplosion= CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" sec affect"));
+	secExplosion->SetupAttachment(secWep);
+	check(secExplosion != nullptr);
 
 	
 	MaxHealth = 100.0f; // set max health
@@ -81,7 +89,16 @@ void AEnemyBaseCharacter::BeginPlay()
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AEnemyBaseCharacter::PlayerCaught);
 	}
-	
+	if(fpsWep) // sets primary gun on when game runs
+	{
+		fpsWep->SetVisibility(true);
+	}
+
+	if(secWep) // sets secondary gun hidden when game runs
+	{
+		secWep->SetVisibility(false);
+	}
+	ammo = 12; 
 }
 
 void AEnemyBaseCharacter::PlayerCaught(APawn* Pawn)
