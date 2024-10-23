@@ -24,6 +24,7 @@ public:
 		int32 HealthAmount;
 
 	//virtual void PickitUp() override;
+	void Respawn();
 
 
 
@@ -35,4 +36,9 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	FTimerHandle RespawnTimerHandle;
+
+	bool bIsActive;
 };

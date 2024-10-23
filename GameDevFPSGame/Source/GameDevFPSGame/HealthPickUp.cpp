@@ -7,6 +7,9 @@
 #include "GameFramework/PlayerController.h"
 
 #include "EnemyBaseCharacter.h"
+#include "Engine/World.h" // Include the header for GetWorld()
+#include "TimerManager.h"
+
 
 
 // Sets default values
@@ -15,7 +18,8 @@ AHealthPickUp::AHealthPickUp()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	HealthAmount = 10;
+	HealthAmount = 25;
+	bIsActive = true;
 }
 
 // Called when the game starts or when spawned
@@ -35,50 +39,70 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 {
 	//PickitUp();
 
-	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-
-	if (AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
+	if (bIsActive)
 	{
-		if (PlayerCharacter->CurrentHealth < PlayerCharacter->MaxHealth)
+		Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+
+		if (AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
 		{
-			PlayerCharacter->Heal(HealthAmount);
-		}
+			if (PlayerCharacter->CurrentHealth < PlayerCharacter->MaxHealth)
+			{
+				PlayerCharacter->Heal(HealthAmount);
+			}
 
-		AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
+			AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
 
-		if (HUD)
-		{
-			float HealthPercentage = PlayerCharacter->CurrentHealth / PlayerCharacter->MaxHealth;
-			HUD->UpdateHealthBar(HealthPercentage);
-		}
-		Destroy();
+			if (HUD)
+			{
+				float HealthPercentage = PlayerCharacter->CurrentHealth / PlayerCharacter->MaxHealth;
+				HUD->UpdateHealthBar(HealthPercentage);
+			}
 
-		//if (PlayerCharacter->Change)
-		//{
-			// Need to add code into other class (PlayerCharacter->ammo += AmmoAmount;)
+			bIsActive = false;
 
-			//if (HUD)
-			//{
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 5.0f, false);
 
-				// Need to change code for health (HUD->UpdateAmmo(PlayerCharacter->ammo);)
-
-			//}
-
+			SetActorHiddenInGame(true);
 			
 
-		//}
 
-		//if (AEnemyBaseCharacter* enemy = Cast<AEnemyBaseCharacter>(OtherActor))
-		//{
-			//Need to add code
-		//}
-		//Destroy()
 
+		}
+		else if (AEnemyBaseCharacter* EnemyCharacter = Cast<AEnemyBaseCharacter>(OtherActor))
+		{
+			// Check if the enemy's current health is less than maximum health
+			if (EnemyCharacter->CurrentHealth < EnemyCharacter->MaxHealth)
+			{
+				EnemyCharacter->CurrentHealth += HealthAmount; // Add health to the enemy
+
+				// Ensure enemy health doesn't exceed max health
+				if (EnemyCharacter->CurrentHealth > EnemyCharacter->MaxHealth)
+				{
+					EnemyCharacter->CurrentHealth = EnemyCharacter->MaxHealth;
+				}
+
+				// Deactivate the pickup
+				bIsActive = false;
+				// Start respawn timer
+				GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 5.0f, false);
+
+				// Optionally, make it invisible
+				SetActorHiddenInGame(true);
+			}
+		}
 
 
 	}
 
 }
+
+void AHealthPickUp::Respawn()
+{
+	bIsActive = true;
+
+	SetActorHiddenInGame(false);
+}
+	
 //void AHealthPickUp::PickitUp()
 //{
 	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("health Picked Up")));
