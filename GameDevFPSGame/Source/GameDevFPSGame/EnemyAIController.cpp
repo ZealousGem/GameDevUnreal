@@ -60,7 +60,7 @@ void AEnemyAIController::fire()
 	
 	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Enemy is Shooting")));
 	Wep->NPCFire();
-	 // causes crash
+	
 	
 }
 
@@ -102,21 +102,26 @@ void AEnemyAIController::SetUpPerceptionSystem()
 		SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 
 		GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
-		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::PlayerDetected);
+		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::PlayerDetected); // will sense any of the actors in this function
 		GetPerceptionComponent()->ConfigureSense(*SightConfig);
 	}
 }
 
-void AEnemyAIController::PlayerDetected(AActor* actor, FAIStimulus const Stimulus)
+void AEnemyAIController::PlayerDetected(AActor* actor, FAIStimulus const Stimulus) // will be able to retrieve key in blackboard to create sequence condition
 {
-	if(auto* const car = Cast<AMyCharacter>(actor))
+	if(AMyCharacter* ca = Cast<AMyCharacter>(actor))
 	{
 		GetBlackboardComponent()->SetValueAsBool("SeesPlayer", Stimulus.WasSuccessfullySensed());
 	}
 
-	if(auto* const car = Cast<AAmmoPickUp>(actor))
+	else if(AAmmoPickUp* ar = Cast<AAmmoPickUp>(actor))
 	{
 		GetBlackboardComponent()->SetValueAsBool("SeesAmmo", Stimulus.WasSuccessfullySensed());
+	}
+
+	else if(AEnemyBaseCharacter* help = Cast<AEnemyBaseCharacter>(actor)) 
+	{
+		GetBlackboardComponent()->SetValueAsBool("SeesNPC", Stimulus.WasSuccessfullySensed());
 	}
 }
 
@@ -124,4 +129,12 @@ void AEnemyAIController::PlayerDetected(AActor* actor, FAIStimulus const Stimulu
 void AEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	bool PlayerIsVisible = GetBlackboardComponent()->GetValueAsBool("SeesPlayer"); // will override the node to make enemies attack players if they stuck hitting each other
+
+	if(PlayerIsVisible)
+	{
+		 GetBlackboardComponent()->SetValueAsBool("SeesNPC", false);
+		
+	}
 }

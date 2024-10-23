@@ -45,6 +45,25 @@ private:
 };
 
 UCLASS()
+class GAMEDEVFPSGAME_API UUBTTTask_NPCFound : public UBTTask_BlackboardBase
+{
+	GENERATED_BODY()
+
+public:
+
+	explicit UUBTTTask_NPCFound(FObjectInitializer const & ObjectInitializer);
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Searching", meta=(AllowPrivateAccess= "true"))
+	bool RandomSearch = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AI", meta=(AllowPrivateAccess= "true"))
+	float SearchRadius = 150.f;
+	
+};
+
+UCLASS()
 class GAMEDEVFPSGAME_API UUBTTTask_ShootPlayer : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
@@ -60,6 +79,24 @@ private:
 	float SearchRadius = 150.f;
 	
 	AEnemyAIController* npc;
+};
+
+UCLASS()
+class GAMEDEVFPSGAME_API UUBTTTask_ShootNPC : public UBTTask_BlackboardBase
+{
+	GENERATED_BODY()
+
+public:
+
+	explicit UUBTTTask_ShootNPC(FObjectInitializer const & ObjectInitializer);
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AI", meta=(AllowPrivateAccess= "true"))
+	float SearchRadius = 150.f;
+	
+	AEnemyAIController* npcPlayer;
 };
 
 UCLASS()

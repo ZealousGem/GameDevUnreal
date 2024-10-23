@@ -52,7 +52,8 @@ UUBTTTask_PlayerFound::UUBTTTask_PlayerFound(FObjectInitializer const& ObjectIni
 
 EBTNodeResult::Type UUBTTTask_PlayerFound::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	// retieve player character 
+	// retieve player character
+	
 	if(AMyCharacter* const Player = Cast<AMyCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) // gets location of player character
 	{
 		
@@ -93,8 +94,68 @@ EBTNodeResult::Type UUBTTTask_PlayerFound::ExecuteTask(UBehaviorTreeComponent& O
 		}
 		
 	}
+	
+	
+
+	
 	return EBTNodeResult::Failed;
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
+}
+
+UUBTTTask_NPCFound::UUBTTTask_NPCFound(FObjectInitializer const& ObjectInitializer)
+{
+	NodeName =TEXT("NPC Found");
+}
+
+EBTNodeResult::Type UUBTTTask_NPCFound::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+	TArray<AActor*> EnimiesFound;  // creates array to allow many actos to be sensed
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyBaseCharacter::StaticClass(), EnimiesFound);
+
+	for(AActor* FoundActor : EnimiesFound) // detetcing first enemies in range
+	{
+		AEnemyBaseCharacter* npc = Cast<AEnemyBaseCharacter>(FoundActor); // instantiate the sensed actor to an enemyactor only 
+		if(npc)
+		{
+			auto const playerLoc = npc->GetActorLocation(); // gets it's location
+			if(RandomSearch)
+			{
+				FNavLocation Loc; // generates random location near player
+				if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld()))
+				{
+					if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc)) // gets random location near the player
+					{
+						OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Loc.Location);
+						
+						AEnemyAIController* Enemy = Cast<AEnemyAIController>(OwnerComp.GetAIOwner()); // gets enemy ai controller
+						if(Enemy)
+						{
+							APawn* Enem = Enemy->GetPawn();
+							if(Enem)
+							{
+								FRotator LookATPlayer = ((playerLoc - Loc.Location).Rotation());
+							    Enem->SetActorRotation(LookATPlayer); // makes the enemy look at the player 
+							}
+						}
+			 	
+						FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); // will tell tree that this node is successful
+						return  EBTNodeResult::Succeeded;
+					}
+				}
+			}
+
+			else
+			{
+				OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), playerLoc);
+				FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+				return  EBTNodeResult::Succeeded;
+			}
+			
+		}
+	}
+
+	return  EBTNodeResult::Failed;
 }
 
 UUBTTTask_ShootPlayer::UUBTTTask_ShootPlayer(FObjectInitializer const& ObjectInitializer)
@@ -126,6 +187,48 @@ EBTNodeResult::Type UUBTTTask_ShootPlayer::ExecuteTask(UBehaviorTreeComponent& O
 		
 	}
 
+	FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+	return  EBTNodeResult::Failed;
+	return Super::ExecuteTask(OwnerComp, NodeMemory);
+}
+
+UUBTTTask_ShootNPC::UUBTTTask_ShootNPC(FObjectInitializer const& ObjectInitializer)
+{
+	NodeName = TEXT("Shoot NPC");
+}
+
+EBTNodeResult::Type UUBTTTask_ShootNPC::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+	TArray<AActor*> EnimiesFound;
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyBaseCharacter::StaticClass(), EnimiesFound);
+
+	for(AActor* FoundActor : EnimiesFound) // detetcing first enemies in range
+	{
+		AEnemyBaseCharacter* npc = Cast<AEnemyBaseCharacter>(FoundActor);
+		if(npc)
+		{
+			auto const playerLoc = npc->GetActorLocation(); // gets player location
+			npcPlayer = Cast<AEnemyAIController>(OwnerComp.GetAIOwner()); // instantiates npc class
+			if(SearchRadius) // will activate if player is in search radius
+			{
+				FNavLocation Loc;
+				if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld())) // will activate location once its found nav actor
+				{
+					if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc))
+					{
+						npcPlayer->fire(); // activates firing logic 
+						FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+						return EBTNodeResult::Succeeded;
+					}
+				}
+			}
+		
+			
+		}
+		
+	}
+	
 	FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 	return  EBTNodeResult::Failed;
 	return Super::ExecuteTask(OwnerComp, NodeMemory);

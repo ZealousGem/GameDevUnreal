@@ -207,6 +207,13 @@ void UWeaponHandling::NPCFire()
 				
 				
 				}
+				else if (AEnemyBaseCharacter* CharacterHit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
+				{
+					if (GEngine)
+					{
+						GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 3 damage"), *EndHit.GetActor()->GetName()));
+					}
+				}
 			}
 		}
 
@@ -239,6 +246,14 @@ void UWeaponHandling::NPCFire()
 				if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams)) // will activate if enpoint of line collides with an actor
 				{
 					if (AMyCharacter* CharacterHit = Cast<AMyCharacter>(EndHit.GetActor()))
+					{
+						if (GEngine)
+						{
+							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
+						}
+					}
+					
+					else if (AEnemyBaseCharacter* Hit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
 					{
 						if (GEngine)
 						{
