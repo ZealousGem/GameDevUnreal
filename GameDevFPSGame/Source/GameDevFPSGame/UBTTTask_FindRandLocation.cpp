@@ -179,16 +179,18 @@ UUBTTTask_SwitchWeapon::UUBTTTask_SwitchWeapon(FObjectInitializer const& ObjectI
 EBTNodeResult::Type UUBTTTask_SwitchWeapon::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AEnemyAIController* Npc = Cast<AEnemyAIController>(OwnerComp.GetAIOwner()); 
-	AEnemyBaseCharacter* npc = Cast<AEnemyBaseCharacter>(Npc->GetPawn());
+if(Npc)
+{
+	Npc->SwitchWep();
+	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+	return  EBTNodeResult::Succeeded;
+}	
 
-	if(npc->ammo >= 0)
+	else
 	{
-		Npc->SwitchWep();
+		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		return  EBTNodeResult::Failed;
 	}
-
-	if(npc->ammo <=0)
-	{
-		Npc->SwitchWep();
-	}
+	
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }

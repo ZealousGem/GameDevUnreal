@@ -6,6 +6,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "WeaponpPickUp.h"
+#include "DynamicMesh/DynamicMesh3.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -180,20 +181,23 @@ void UWeaponHandling::NPCFire()
 {
 	if(aiG)
 	{
-		aiG->fpsexplosion->Deactivate();
-		aiG->fpsexplosion->Activate();
-
-		FHitResult EndHit; 
-		FVector startPoint = aiG->fpsexplosion->GetComponentLocation();
-		FVector ForwardPoint = aiG->fpsexplosion->GetForwardVector();
-		FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
-		FCollisionQueryParams ColParams;
-		ColParams.AddIgnoredActor(aiG); // ignores own actor collisons
-	//	DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Green, false, 1, 0, 1);
-		if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
+		if(aiG->fpsWep->IsVisible())
 		{
-			if (AMyCharacter* Player = Cast<AMyCharacter>(EndHit.GetActor()))
+
+			aiG->fpsexplosion->Deactivate();
+			aiG->fpsexplosion->Activate();
+
+			FHitResult EndHit; 
+			FVector startPoint = aiG->fpsexplosion->GetComponentLocation();
+			FVector ForwardPoint = aiG->fpsexplosion->GetForwardVector();
+			FVector EndPoint = ((ForwardPoint * 1000.f) + startPoint);
+			FCollisionQueryParams ColParams;
+			ColParams.AddIgnoredActor(aiG); // ignores own actor collisons
+			//	DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Green, false, 1, 0, 1);
+			if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams))
 			{
+				if (AMyCharacter* Player = Cast<AMyCharacter>(EndHit.GetActor()))
+				{
 				
 				
 					if (GEngine)
@@ -202,27 +206,83 @@ void UWeaponHandling::NPCFire()
 					}
 				
 				
+				}
 			}
 		}
+
+		else if(aiG->secWep->IsVisible())
+		{
+			if(aiG->ammo > 0) // checks if ammo is less than 0 and if it has not fired yet
+			{
+				FHitResult EndHit; 
+				aiG->ammo--;
+				FString message = FString::Printf(TEXT("Ammo: %d"), aiG->ammo);
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, message);
+				FVector startPoint = aiG->secExplosion->GetComponentLocation();
+				FVector ForwardPoint = aiG->secExplosion->GetForwardVector();
+				FVector EndPoint = ((ForwardPoint * 500.f) + startPoint);
+				FCollisionQueryParams ColParams;
+				ColParams.AddIgnoredActor(aiG);
+				//DrawDebugLine(GetWorld(), startPoint, EndPoint, FColor::Green, false, 1, 0, 1);
+
+				
+				if(aiG->secExplosion) // turns on gun blasting particles meshes
+				{
+					aiG->secExplosion->Deactivate();
+					aiG->secExplosion->Activate();
+					
+				}
+				
+				
+				
+				
+				if(GetWorld()->LineTraceSingleByChannel(EndHit, startPoint, EndPoint, ECC_Visibility, ColParams)) // will activate if enpoint of line collides with an actor
+				{
+					if (AMyCharacter* CharacterHit = Cast<AMyCharacter>(EndHit.GetActor()))
+					{
+						if (GEngine)
+						{
+							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
+						}
+					}
+				}
+				
+				
+			
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
+			}
+			
+		}
+		
 	}
 }
 
-void UWeaponHandling::NPCSwitch()
+
+
+void UWeaponHandling::NPCSwitchPrimary()
+{
+	
+
+	if(aiG->secWep->IsVisible()) // sets primary gun visible one input is done
+	{
+
+		aiG->secWep->SetVisibility(false);
+		aiG->fpsWep->SetVisibility(true);
+		
+	} 
+}
+
+void UWeaponHandling::NPCSwitchSecondary()
 {
 	if(aiG->fpsWep->IsVisible()) // sets secondary gun visible once input is done
 	{
 		aiG->fpsWep->SetVisibility(false);
-		aiG->fpsWep->SetVisibility(true);
-		
-	}
-
-	else if(PlayerCharacter->secGun->IsVisible()) // sets primary gun visible one input is done
-	{
-
-		aiG->secWep->SetVisibility(false);
 		aiG->secWep->SetVisibility(true);
 		
-	} 
+	}
 }
 
 

@@ -55,6 +55,7 @@ if(AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
 	if(AEnemyBaseCharacter* enemy = Cast<AEnemyBaseCharacter>(OtherActor))
 	{
 		// will add later
+		enemy->ammo += AmmoAmount;
 	}
 	
 	

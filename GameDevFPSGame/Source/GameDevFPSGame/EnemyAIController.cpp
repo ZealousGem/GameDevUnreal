@@ -66,7 +66,18 @@ void AEnemyAIController::fire()
 
 void AEnemyAIController::SwitchWep()
 {
-	Wep->NPCSwitch();
+	
+		if(npc->ammo <=0)
+		{
+			Wep->NPCSwitchPrimary();
+		}
+
+	    
+	    else
+	    {
+		    Wep->NPCSwitchSecondary();
+	    }
+	
 }
 
 // Called when the game starts or when spawned
