@@ -134,8 +134,32 @@ EBTNodeResult::Type UUBTTTask_NPCFound::ExecuteTask(UBehaviorTreeComponent& Owne
 							APawn* Enem = Enemy->GetPawn();
 							if(Enem)
 							{
-								FRotator LookATPlayer = ((playerLoc - Loc.Location).Rotation());
-							    Enem->SetActorRotation(LookATPlayer); // makes the enemy look at the player 
+								/*APawn* setPawn = OwnerComp.GetAIOwner()->GetPawn();
+					   AEnemyBaseCharacter* Enemy = Cast<AEnemyBaseCharacter>(setPawn);
+					   FVector ForwardVector = Enemy->GetActorForwardVector();
+					   FVector enemLoc = (npc->GetActorLocation() - Enemy->GetActorLocation().GetSafeNormal());
+					   float Angling = FMath::Acos(FVector::DotProduct(ForwardVector, enemLoc) * 180.f/PI);
+					   bool NpcIsSeen = Angling <= 270.f;
+					   if(NpcIsSeen)
+					   {
+						   FRotator LookATPlayer = ((playerLoc - Loc.Location).Rotation());
+						   Enemy->SetActorRotation(LookATPlayer);
+						   GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("rotating")));
+						   //NpcIsSeen = true;
+								}*/
+
+								
+									//FRotator CurrentRotation = Enem->GetActorRotation();
+									FRotator LookATPlayer = ((playerLoc - Loc.Location).Rotation());
+									//float Delta = UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+								//	FRotator Rotate = FMath::RInterpTo(CurrentRotation, LookATPlayer, Delta, 3.0f);
+									Enem->SetActorRotation(LookATPlayer); // makes the enemy look at the player
+									GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("rotating")));
+									
+								
+								
+								
+							    
 							}
 						}
 			 	
@@ -217,6 +241,32 @@ EBTNodeResult::Type UUBTTTask_ShootNPC::ExecuteTask(UBehaviorTreeComponent& Owne
 				{
 					if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc))
 					{
+						APawn* setPawn = OwnerComp.GetAIOwner()->GetPawn();
+						AEnemyBaseCharacter* Enemy = Cast<AEnemyBaseCharacter>(setPawn);
+						FVector ForwardVector = Enemy->GetActorForwardVector();
+						FVector enemLoc = (npc->GetActorLocation() - Enemy->GetActorLocation());
+						enemLoc.Normalize();
+						float dot = FVector::DotProduct(ForwardVector, enemLoc);
+						dot = FMath::Clamp(dot, -1.0f, 1.0f);
+						float Angling = FMath::Acos((dot) * (180.f/PI));
+						bool canSeeNPC = Angling <= 90.f; 
+
+						
+						if(canSeeNPC)
+						{
+							FRotator LookATPlayer = (playerLoc - Enemy->GetActorLocation()).Rotation();
+							Enemy->SetActorRotation(LookATPlayer);
+							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("rotating")));
+							canSeeNPC = false;
+						}
+						//FRotator CurrentRotation = Enemy->GetActorRotation();
+						
+						//float delta = 1.0f;
+					//	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, LookATPlayer, delta, 3.0f);
+						 // makes the enemy look at the player
+						
+							//canSeeNPC = false;	
+						
 						npcPlayer->fire(); // activates firing logic 
 						FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 						return EBTNodeResult::Succeeded;
@@ -241,36 +291,43 @@ UUBTTTask_FoundAmmo::UUBTTTask_FoundAmmo(FObjectInitializer const& ObjectInitial
 
 EBTNodeResult::Type UUBTTTask_FoundAmmo::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	if(AAmmoPickUp* const Ammo = Cast<AAmmoPickUp>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) // gets location of player character
+	TArray<AActor*> AmmoFound;
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyBaseCharacter::StaticClass(), AmmoFound);
+
+	for(AActor* FoundActor : AmmoFound) // detetcing first enemies in range
 	{
-		
-		auto const AmmoLoc = Ammo->GetActorLocation();
+		AEnemyBaseCharacter* Ammo = Cast<AEnemyBaseCharacter>(FoundActor);
+		if(Ammo == 0){
+			auto const AmmoLoc = Ammo->GetActorLocation();
 
 		
-		// gets the location to use as a centre point
-		if(RandomSearch)
-		{
-			FNavLocation Loc; // generates random location near player
-			if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld()))
+			// gets the location to use as a centre point
+			if(RandomSearch)
 			{
-				if(Nav->GetRandomPointInNavigableRadius(AmmoLoc, SearchRadius, Loc)) // gets random location near the player
+				FNavLocation Loc; // generates random location near player
+				if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld()))
 				{
-					OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Loc.Location);
+					if(Nav->GetRandomPointInNavigableRadius(AmmoLoc, SearchRadius, Loc)) // gets random location near the player
+					{
+						OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Loc.Location);
 			 	
-					FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); // will tell tree that this node is successful
-					return  EBTNodeResult::Succeeded;
+						FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded); // will tell tree that this node is successful
+						return  EBTNodeResult::Succeeded;
+					}
 				}
 			}
-		}
 
-		else
-		{
-			OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), AmmoLoc);
-			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-			return  EBTNodeResult::Succeeded;
-		}
+			else
+			{
+				OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), AmmoLoc);
+				FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+				return  EBTNodeResult::Succeeded;
+			}
 		
+		}
 	}
+	
 	return EBTNodeResult::Failed;
 }
 

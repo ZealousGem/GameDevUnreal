@@ -137,4 +137,6 @@ void AEnemyAIController::Tick(float DeltaTime)
 		 GetBlackboardComponent()->SetValueAsBool("SeesNPC", false);
 		
 	}
+
+	
 }

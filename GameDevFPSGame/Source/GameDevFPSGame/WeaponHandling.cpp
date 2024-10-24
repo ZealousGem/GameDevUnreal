@@ -211,7 +211,7 @@ void UWeaponHandling::NPCFire()
 				{
 					if (GEngine)
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 3 damage"), *EndHit.GetActor()->GetName()));
+					//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 3 damage"), *EndHit.GetActor()->GetName()));
 					}
 				}
 			}
@@ -257,7 +257,7 @@ void UWeaponHandling::NPCFire()
 					{
 						if (GEngine)
 						{
-							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
+						//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
 						}
 					}
 				}
