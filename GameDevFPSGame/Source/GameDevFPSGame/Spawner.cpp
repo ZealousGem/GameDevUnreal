@@ -81,13 +81,15 @@ void ASpawner::RespawnCharacter(ACharacter* CharacterToRespawn)
         if (AMyCharacter* MyCharacter = Cast<AMyCharacter>(CharacterToRespawn))
         {
             MyCharacter->CurrentHealth = MyCharacter->MaxHealth; // Reset health
+            MyCharacter->ammo = 12;
             GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("reset character health")));
             MyCharacter->ApplyDamage(0);
         }
 
         else if (AEnemyBaseCharacter* EnemyCharacter = Cast<AEnemyBaseCharacter>(CharacterToRespawn))
         {
-            EnemyCharacter->CurrentHealth = EnemyCharacter->MaxHealth; // Reset enemy health
+            EnemyCharacter->CurrentHealth = EnemyCharacter->MaxHealth;
+             EnemyCharacter->ammo = 12;// Reset enemy health
             GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Enemy health reset to maximum."));
             // Reset any additional enemy state if necessary
         }

@@ -226,8 +226,8 @@ void UWeaponHandling::NPCFire()
 			{
 				FHitResult EndHit; 
 				aiG->ammo--;
-				FString message = FString::Printf(TEXT("Ammo: %d"), aiG->ammo);
-				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, message);
+			//	FString message = FString::Printf(TEXT("Ammo: %d"), aiG->ammo);
+			//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, message);
 				FVector startPoint = aiG->secExplosion->GetComponentLocation();
 				FVector ForwardPoint = aiG->secExplosion->GetForwardVector();
 				FVector EndPoint = ((ForwardPoint * 500.f) + startPoint);
@@ -253,7 +253,7 @@ void UWeaponHandling::NPCFire()
 						CharacterHit->ApplyDamage(25.f);
 						if (GEngine)
 						{
-							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
+							//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
 						}
 					}
 					

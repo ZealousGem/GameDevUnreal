@@ -252,13 +252,13 @@ EBTNodeResult::Type UUBTTTask_ShootNPC::ExecuteTask(UBehaviorTreeComponent& Owne
 						bool canSeeNPC = Angling <= 90.f; 
 
 						
-						if(canSeeNPC)
-						{
-							FRotator LookATPlayer = (playerLoc - Enemy->GetActorLocation()).Rotation();
-							Enemy->SetActorRotation(LookATPlayer);
-							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("rotating")));
+						
+							//FRotator LookATPlayer = (playerLoc - Enemy->GetActorLocation()).Rotation();
+						//	Enemy->SetActorRotation(LookATPlayer);
+							//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("rotating")));
+							Enemy->RoateToEnemy(npc);
 							canSeeNPC = false;
-						}
+						
 						//FRotator CurrentRotation = Enemy->GetActorRotation();
 						
 						//float delta = 1.0f;
@@ -295,6 +295,7 @@ EBTNodeResult::Type UUBTTTask_FoundAmmo::ExecuteTask(UBehaviorTreeComponent& Own
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyBaseCharacter::StaticClass(), AmmoFound);
 
+	
 	for(AActor* FoundActor : AmmoFound) // detetcing first enemies in range
 	{
 		AEnemyBaseCharacter* Ammo = Cast<AEnemyBaseCharacter>(FoundActor);

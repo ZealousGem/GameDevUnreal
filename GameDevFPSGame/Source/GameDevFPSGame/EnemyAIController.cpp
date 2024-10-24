@@ -92,11 +92,11 @@ void AEnemyAIController::SetUpPerceptionSystem()
 	if(SightConfig)
 	{
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception"))); // creates AI Vision radius
-		SightConfig->SightRadius = 500.f;
+		SightConfig->SightRadius = 700.f;
 		SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.f;
 		SightConfig->PeripheralVisionAngleDegrees = 90.f;
 		SightConfig->SetMaxAge(5.f);
-		SightConfig->AutoSuccessRangeFromLastSeenLocation = 520.f;
+		SightConfig->AutoSuccessRangeFromLastSeenLocation = 720.f;
 		SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 		SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 		SightConfig->DetectionByAffiliation.bDetectNeutrals = true;

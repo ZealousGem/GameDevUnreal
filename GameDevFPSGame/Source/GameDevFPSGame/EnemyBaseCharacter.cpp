@@ -136,6 +136,22 @@ void AEnemyBaseCharacter::setStim()
 	}
 }
 
+void AEnemyBaseCharacter::RoateToEnemy(AActor* Target)
+{
+	if(Target)
+	{
+		FVector DirectionOfTarget = Target->GetActorLocation() - GetActorLocation();
+		DirectionOfTarget.Z = 0;
+		DirectionOfTarget.Normalize();
+
+		FRotator NewRoation = DirectionOfTarget.Rotation();
+		FRotator currentRot = GetActorRotation();
+
+		FRotator FinalRotation = FRotator(currentRot.Pitch, NewRoation.Yaw, currentRot.Roll);
+		SetActorRotation(FinalRotation);
+	}
+}
+
 // Called every frame
 void AEnemyBaseCharacter::Tick(float DeltaTime)
 {

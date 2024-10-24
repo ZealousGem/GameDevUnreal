@@ -55,6 +55,8 @@ public:
 	//void Heal(float HealAmount);
 
 	void Fire();
+
+	void RoateToEnemy(AActor* Target);
 	
 	
 protected:
@@ -77,6 +79,8 @@ protected:
 	class UAIPerceptionStimuliSourceComponent* Stim;
 
 	void setStim();
+
+	
 	
 
 public:
