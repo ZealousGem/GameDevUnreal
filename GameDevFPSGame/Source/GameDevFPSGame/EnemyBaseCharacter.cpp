@@ -39,7 +39,7 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 
 
 	fpsexplosion= CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" affect"));
-fpsexplosion->SetupAttachment(secWep);
+    fpsexplosion->SetupAttachment(secWep);
 	check(fpsexplosion != nullptr);
 
 	secExplosion= CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" sec affect"));
@@ -48,7 +48,7 @@ fpsexplosion->SetupAttachment(secWep);
 
 	
 	MaxHealth = 100.0f; // set max health
-	CurrentHealth = MaxHealth; //initialize current health
+	CurrentHealth = 90.0f; //initialize current health
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensing Component"));
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
 	setStim();

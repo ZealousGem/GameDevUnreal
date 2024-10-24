@@ -12,6 +12,7 @@ AAmmoPickUp::AAmmoPickUp()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	AmmoAmount = 10; // sets to added ammo amount to 10
+	PickedUp = true;
 }
 
 // Called when the game starts or when spawned
@@ -33,24 +34,24 @@ void AAmmoPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	PickitUp();
 	// overides parents overlap function
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-
-	// Cast the overlapping actor to the player character class (AMyCharacter)
-if(AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
+if(PickedUp)
 {
-	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
-
-
-	// If the cast succeeds and it's the player character, give ammo
-	if(PlayerCharacter->Change)
+	if(AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
 	{
-		PlayerCharacter->ammo += AmmoAmount;
-		if(HUD)
-		{
-			HUD->UpdateAmmo(PlayerCharacter->ammo); // updates the ammo widget hud
-		}
+		AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
 
+
+		// If the cast succeeds and it's the player character, give ammo
+		if(PlayerCharacter->Change)
+		{
+			PlayerCharacter->ammo += AmmoAmount;
+			if(HUD)
+			{
+				HUD->UpdateAmmo(PlayerCharacter->ammo); // updates the ammo widget hud
+			}
+
+		}
 	}
-}
 
 	if(AEnemyBaseCharacter* enemy = Cast<AEnemyBaseCharacter>(OtherActor))
 	{
@@ -58,9 +59,22 @@ if(AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
 		enemy->ammo += AmmoAmount;
 	}
 	
-	
+	GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AAmmoPickUp::Respawn, 5.0f, false);
+	PickupMesh->SetVisibility(false);
+	SetActorHiddenInGame(true);
 
-	Destroy(); // destorys pickup
+}
+	// Cast the overlapping actor to the player character class (AMyCharacter)
+
+//Destroy(); // destorys pickup
+}
+
+void AAmmoPickUp::Respawn()
+{
+	PickedUp = true;
+	//SetActorHiddenInGame(false);
+	PickupMesh->SetVisibility(true);
+	SetActorHiddenInGame(false);
 }
 
 void AAmmoPickUp::PickitUp()

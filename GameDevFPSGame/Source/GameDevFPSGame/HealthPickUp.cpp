@@ -61,7 +61,7 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 			bIsActive = false;
 
 			GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 5.0f, false);
-
+            PickupMesh->SetVisibility(false);
 			SetActorHiddenInGame(true);
 			
 
@@ -70,9 +70,11 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 		}
 		else if (AEnemyBaseCharacter* EnemyCharacter = Cast<AEnemyBaseCharacter>(OtherActor))
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Player Healed"));
 			// Check if the enemy's current health is less than maximum health
 			if (EnemyCharacter->CurrentHealth < EnemyCharacter->MaxHealth)
 			{
+				
 				EnemyCharacter->CurrentHealth += HealthAmount; // Add health to the enemy
 
 				// Ensure enemy health doesn't exceed max health
@@ -85,7 +87,8 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 				bIsActive = false;
 				// Start respawn timer
 				GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 5.0f, false);
-
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Player Healed"));
+				PickupMesh->SetVisibility(false);
 				// Optionally, make it invisible
 				SetActorHiddenInGame(true);
 			}
@@ -99,7 +102,7 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 void AHealthPickUp::Respawn()
 {
 	bIsActive = true;
-
+	PickupMesh->SetVisibility(true);
 	SetActorHiddenInGame(false);
 }
 	

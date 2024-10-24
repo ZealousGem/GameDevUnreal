@@ -169,7 +169,7 @@ void AMyCharacter::Heal(float HealAmount)
 	{
 		CurrentHealth = MaxHealth;
 	}
-	ApplyDamage(100);// i did this to test out the respawning
+//	ApplyDamage(100);// i did this to test out the respawning
 }
 
 

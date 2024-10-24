@@ -54,7 +54,7 @@ void UWeaponHandling::Tracing()
         	{
         		if (AEnemyBaseCharacter* CharacterHit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
         		{
-        		
+        			CharacterHit->ApplyDamage(10.f);
         			//CharacterHit->ApplyDamage(10.f);
         			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
         			if(display) // make sure the display object has been set
@@ -104,6 +104,8 @@ void UWeaponHandling::Tracing()
 				{
 					if (AEnemyBaseCharacter* CharacterHit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
 					{
+						CharacterHit->ApplyDamage(25.f);
+					//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Player hit"));
 						if(display) 
 						{
 							
@@ -116,7 +118,7 @@ void UWeaponHandling::Tracing()
 						}
 						if (GEngine)
 						{
-							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
+							// GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
 						}
 					}
 				}
@@ -198,7 +200,7 @@ void UWeaponHandling::NPCFire()
 			{
 				if (AMyCharacter* Player = Cast<AMyCharacter>(EndHit.GetActor()))
 				{
-				
+					Player->ApplyDamage(10.f);
 				
 					if (GEngine)
 					{
@@ -209,6 +211,7 @@ void UWeaponHandling::NPCFire()
 				}
 				else if (AEnemyBaseCharacter* CharacterHit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
 				{
+					CharacterHit->ApplyDamage(10.f);
 					if (GEngine)
 					{
 					//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 3 damage"), *EndHit.GetActor()->GetName()));
@@ -247,6 +250,7 @@ void UWeaponHandling::NPCFire()
 				{
 					if (AMyCharacter* CharacterHit = Cast<AMyCharacter>(EndHit.GetActor()))
 					{
+						CharacterHit->ApplyDamage(25.f);
 						if (GEngine)
 						{
 							GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
@@ -255,6 +259,7 @@ void UWeaponHandling::NPCFire()
 					
 					else if (AEnemyBaseCharacter* Hit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
 					{
+						Hit->ApplyDamage(25.f);
 						if (GEngine)
 						{
 						//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has cased 12 damage"), *EndHit.GetActor()->GetName()));
