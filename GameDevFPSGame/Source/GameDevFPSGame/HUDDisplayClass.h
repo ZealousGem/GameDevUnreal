@@ -32,6 +32,9 @@ protected:
 	UPROPERTY()
 	UUserWidget* WeaponType;
 
+	UPROPERTY()
+	UUserWidget* Death;
+
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my this class
 
@@ -51,6 +54,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass5; // For weapon widget
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> mywidgetClass6; // For weapon widget
+
 	UUserWidget* getCrossDamage() const; 
 
 	void AmmoDisplay(); // displays ammo if shotgun is equipped
@@ -68,6 +74,10 @@ public:
 	void MainWeapon(); // widget ui text changes to primary weapon
 
 	void SecWeapon(); // widget ui text changes to secondary weapon
+
+	void displayDeath(bool hitt);
+
+	void TimerDeath();
 private:
 
 	GENERATED_BODY()

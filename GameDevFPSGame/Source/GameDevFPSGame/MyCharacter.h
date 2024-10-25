@@ -13,7 +13,7 @@
 
 // sets all the characters meshes and weapons in this class
 UCLASS()
-class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter, public IObserverWeapon
+class GAMEDEVFPSGAME_API AMyCharacter : public ACharacter, public IObserverWeapon, public IObserverHP
 {
 	GENERATED_BODY()
 
@@ -61,8 +61,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category ="Health")
 	void Heal(float HealAmount);
 
-	
-
+	virtual void YouDied() override;
+  
 	// line of code
 
 protected:
@@ -77,7 +77,9 @@ public:
 	virtual void newWeapon() override;
 
 	
-
+	
+private:
+	FTimerHandle time_handle;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };

@@ -22,6 +22,7 @@ void AHUDDisplayClass::BeginPlay()
 		Health = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass3);
 		Ammo = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass4);
 		WeaponType = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass5);
+		Death = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass6);
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -50,6 +51,12 @@ void AHUDDisplayClass::BeginPlay()
 			WeaponType->AddToViewport(5);
 			
 		
+		}
+
+		if(Death)
+		{
+			Death->AddToViewport(6);
+			Death->SetVisibility(ESlateVisibility::Hidden);
 		}
 		
 
@@ -135,5 +142,20 @@ void AHUDDisplayClass::SecWeapon() // Change the name of the text widget to the 
 			secWep->SetText(FText::FromString(FString::Printf(TEXT("Secondary Weapon"))));
 		}
 	}
+}
+
+void AHUDDisplayClass::displayDeath(bool hitt)
+{
+	//GetWorld()->GetTimerManager().ClearTimer(TimerHandle_HideWidget);
+//	GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideWidget, this, &UWeaponHandling::HideWidget, 0.5f ,false);
+	if(Death)
+	{
+		Death->SetVisibility(hitt ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	}
+}
+
+void AHUDDisplayClass::TimerDeath()
+{
+	displayDeath(false);
 }
 

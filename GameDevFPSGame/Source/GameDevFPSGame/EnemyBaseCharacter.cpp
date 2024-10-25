@@ -51,7 +51,7 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 
 	
 	MaxHealth = 100.0f; // set max health
-	CurrentHealth = 90.0f; //initialize current health
+	CurrentHealth = MaxHealth; //initialize current health
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensing Component"));
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
 	setStim();

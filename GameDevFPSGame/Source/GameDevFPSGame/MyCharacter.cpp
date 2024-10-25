@@ -32,7 +32,7 @@ AMyCharacter::AMyCharacter()
 	// creates primary weapon mesh component for the player
 	fpsGun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Primary Gun"));
 	check(fpsGun != nullptr);
-	fpsGun-> SetOnlyOwnerSee(true); // only the player can see this mesh 
+	fpsGun->SetOnlyOwnerSee(true); // only the player can see this mesh 
 	fpsGun->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 	fpsGun->CastShadow = false; // gets rid of showdows from mesh to not ruin the illusion 
 
@@ -87,7 +87,7 @@ void AMyCharacter::BeginPlay()
 	{
 		secGun->SetVisibility(false);
 	}
-	ApplyDamage(10);
+	ApplyDamage(1);
 	newWeapon();
 	//CurrentHealth = MaxHealth;
 	
@@ -108,6 +108,16 @@ void AMyCharacter::newWeapon()
 	Change = false;
 }
 
+void AMyCharacter::YouDied()
+{
+	;
+	 // this is useless i should delete this lol
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(PlayerController->GetHUD());		
+    HUD->displayDeath(true);
+	GetWorld()->GetTimerManager().SetTimer(time_handle, HUD, &AHUDDisplayClass::TimerDeath, 1.0f, false);
+	
+}
 
 
 // Called to bind functionality to input
@@ -138,7 +148,7 @@ void AMyCharacter::ApplyDamage(float DamageAmount)
 			//Spawner->RespawnCharacter(this);
 
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("player respawned")));
-			
+			YouDied();
 		//}
 	}
 
@@ -171,6 +181,8 @@ void AMyCharacter::Heal(float HealAmount)
 	}
 //	ApplyDamage(100);// i did this to test out the respawning
 }
+
+
 
 
 

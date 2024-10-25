@@ -33,6 +33,7 @@ public:
 	void NPCSwitchPrimary();
 	void  NPCSwitchSecondary();
 	
+	
 private:
 
      AMyCharacter* PlayerCharacter; // empty character class to be used to instatiate object through activate method

@@ -60,7 +60,8 @@ class GAMEDEVFPSGAME_API IObserverHP
 	GENERATED_BODY()
 public:
 	
-	virtual void HealthChanged(float health) = 0;
+	virtual void YouDied() =0;
+	//FTimerHandle time;
 	
 
 
