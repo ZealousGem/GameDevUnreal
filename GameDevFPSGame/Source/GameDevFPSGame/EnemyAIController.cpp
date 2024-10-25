@@ -19,8 +19,7 @@ AEnemyAIController::AEnemyAIController()
 	Blackboard = CreateDefaultSubobject<UBlackboardComponent>(TEXT("Blackboard"));
 
 	SetUpPerceptionSystem(); // sets the ai vision perimter 
-	PlayerKey = "Target";
-	LocationKey = "LocationTo";
+
 
 	
 	
@@ -30,14 +29,14 @@ AEnemyAIController::AEnemyAIController()
 void AEnemyAIController::OnPossess(APawn* NewPawn)
 {
 	Super::OnPossess(NewPawn);
-	Wep = NewObject<UWeaponHandling>(this);
-	npc = Cast<AEnemyBaseCharacter>(NewPawn);
+	Wep = NewObject<UWeaponHandling>(this); // instaties weapons class for ai firing
+	npc = Cast<AEnemyBaseCharacter>(NewPawn); // instatiates enemy character class for movmemnt and firing lgoci 
 	
 	Wep->ActivateNPC(npc);
 	AEnemyBaseCharacter* AIChar = Cast<AEnemyBaseCharacter>(NewPawn);
 	if (AIChar)
 	{
-		Blackboard->InitializeBlackboard(*(AIChar->BehaviourTree->BlackboardAsset));
+		Blackboard->InitializeBlackboard(*(AIChar->BehaviourTree->BlackboardAsset)); // instatiates blackboard to enemy character
 	}
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyBaseCharacter::StaticClass(), PatrolPoints); // populates nodes
@@ -45,11 +44,11 @@ void AEnemyAIController::OnPossess(APawn* NewPawn)
 	Behavoior->StartTree(*AIChar->BehaviourTree); // runs tree
 }
 
-void AEnemyAIController::SetPlayerFound(APawn* InPawn)
+void AEnemyAIController::SetPlayerFound(APawn* InPawn)  // useless function
 {
 	if (Blackboard)
 	{
-		Blackboard->SetValueAsObject(PlayerKey, InPawn);
+	//	Blackboard->SetValueAsObject(PlayerKey, InPawn);
 	}
 }
 

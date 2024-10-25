@@ -22,11 +22,15 @@ public:
 
 	void AssignObserverWeapon(TScriptInterface<IObserverWeapon> ObserverWep);
 
+	void AssignObserverHP(TScriptInterface<IObserverHP> Observerhp);
+
 	void notifyChange(); // tells all the assigned obersers there was a change
 
 private:
 	
 	TArray<TScriptInterface<IObserver>>Observers; // to contain more than one assigned observer
 
-	TArray<TScriptInterface<IObserverWeapon>> ObserverWeps; 
+	TArray<TScriptInterface<IObserverWeapon>> ObserverWeps;
+
+	TArray<TScriptInterface<IObserverHP>> ObserverHPs; 
 };

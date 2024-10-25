@@ -76,11 +76,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category= "Animations") // animation sequence for the character
 	UAnimSequence* IdleAnimation;
 
-	void setWalkAnimation(bool moving);
+	void setWalkAnimation(bool moving); // handles animations
 
-	bool movement;
+	bool movement; // checks if ai is moving
 
-	class UAIPerceptionStimuliSourceComponent* Stim;
+	class UAIPerceptionStimuliSourceComponent* Stim; // sets the perception system on the enemy character
 
 	void setStim();
 

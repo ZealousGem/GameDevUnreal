@@ -241,10 +241,10 @@ EBTNodeResult::Type UUBTTTask_ShootNPC::ExecuteTask(UBehaviorTreeComponent& Owne
 				{
 					if(Nav->GetRandomPointInNavigableRadius(playerLoc, SearchRadius, Loc))
 					{
-						APawn* setPawn = OwnerComp.GetAIOwner()->GetPawn();
+						APawn* setPawn = OwnerComp.GetAIOwner()->GetPawn(); // fill dind posssed actor(ai)
 						AEnemyBaseCharacter* Enemy = Cast<AEnemyBaseCharacter>(setPawn);
 						FVector ForwardVector = Enemy->GetActorForwardVector();
-						FVector enemLoc = (npc->GetActorLocation() - Enemy->GetActorLocation());
+						FVector enemLoc = (npc->GetActorLocation() - Enemy->GetActorLocation()); // will retrieve the location of the spotted enemy
 						enemLoc.Normalize();
 						float dot = FVector::DotProduct(ForwardVector, enemLoc);
 						dot = FMath::Clamp(dot, -1.0f, 1.0f);
@@ -253,19 +253,9 @@ EBTNodeResult::Type UUBTTTask_ShootNPC::ExecuteTask(UBehaviorTreeComponent& Owne
 
 						
 						
-							//FRotator LookATPlayer = (playerLoc - Enemy->GetActorLocation()).Rotation();
-						//	Enemy->SetActorRotation(LookATPlayer);
-							//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("rotating")));
-							Enemy->RoateToEnemy(npc);
+						
+							Enemy->RoateToEnemy(npc); // will rotate towards enemy
 							canSeeNPC = false;
-						
-						//FRotator CurrentRotation = Enemy->GetActorRotation();
-						
-						//float delta = 1.0f;
-					//	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, LookATPlayer, delta, 3.0f);
-						 // makes the enemy look at the player
-						
-							//canSeeNPC = false;	
 						
 						npcPlayer->fire(); // activates firing logic 
 						FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);

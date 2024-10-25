@@ -56,7 +56,7 @@ AMyCharacter::AMyCharacter()
 	secAffect->SetupAttachment(FPSCameraComponent); // attaches the mesh to the camera component
 
 	
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); // allows the player to hit enemy with line trace logic 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Block);
 	

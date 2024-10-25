@@ -19,6 +19,14 @@ void UGameManager::AssignObserverWeapon(TScriptInterface<IObserverWeapon> Observ
 	}
 }
 
+void UGameManager::AssignObserverHP(TScriptInterface<IObserverHP> Observerhp)
+{
+	if(Observerhp)
+	{
+		ObserverHPs.Add(Observerhp);
+	}
+}
+
 void UGameManager::notifyChange() // will tell all observers in the list that there has been a change
 {
 	for(TScriptInterface<IObserver> Observer : Observers)
@@ -43,6 +51,19 @@ void UGameManager::notifyChange() // will tell all observers in the list that th
 			if(Wep)
 			{
 				Wep->newWeapon();
+			}
+			
+		}
+	}
+
+	for(TScriptInterface<IObserverHP> ObserverHP : ObserverHPs)
+	{
+		if(ObserverHP)
+		{
+			IObserverHP* Wepo = Cast<IObserverHP>(ObserverHP.GetObject());
+			if(Wepo)
+			{
+				;Wepo->YouDied();
 			}
 			
 		}

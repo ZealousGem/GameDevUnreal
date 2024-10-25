@@ -21,11 +21,7 @@ class GAMEDEVFPSGAME_API AEnemyAIController : public AAIController
 
 	//keys
 
-	UPROPERTY(EditDefaultsOnly, Category= AI)
-	FName LocationKey;
-
-	UPROPERTY(EditDefaultsOnly, Category= AI)
-	FName PlayerKey;
+	
 
 	TArray<AActor*> PatrolPoints;
 	virtual void OnPossess(APawn* NewPawn) override;
@@ -35,7 +31,7 @@ public:
 	// Sets default values for this actor's properties
 	AEnemyAIController();
 
-	void SetPlayerFound(APawn* InPawn);
+	void SetPlayerFound(APawn* InPawn); // useless function
 
 	FORCEINLINE UBlackboardComponent* getBlackBaordComp() const { return Blackboard; }
 

@@ -32,13 +32,12 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	
 	character->SetupAttachment(GetCapsuleComponent());
 
-	 //CapsuleComponent = GetCapsuleComponent();
-	//CapsuleComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); // allows the enemy to hit player with line trace logic 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Block);
 	
-	//GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Overlap); // Allow line trace hits
+	
 
 
 	fpsexplosion= CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" affect"));
@@ -112,16 +111,16 @@ void AEnemyBaseCharacter::PlayerCaught(APawn* Pawn)
 
 void AEnemyBaseCharacter::setWalkAnimation(bool moving)
 {
-	UAnimInstance* Inctance = character->GetAnimInstance();
+	UAnimInstance* Inctance = character->GetAnimInstance(); // will instatiate animation instance
 	checkf(Inctance,TEXT("Is not set"));
-	if(moving && WalkAnimation && !movement)
+	if(moving && WalkAnimation && !movement) // will only activate walk animation one character is moving
 	{
 		 character->PlayAnimation(WalkAnimation, true);
 		movement = true;
 		
 	}
 
-	else if (!moving && IdleAnimation && movement)
+	else if (!moving && IdleAnimation && movement) // will only activate idle animation whewn character is not moving
 	{
 		character->PlayAnimation(IdleAnimation,true);
 		movement = false;
@@ -143,15 +142,15 @@ void AEnemyBaseCharacter::RoateToEnemy(AActor* Target)
 {
 	if(Target)
 	{
-		FVector DirectionOfTarget = Target->GetActorLocation() - GetActorLocation();
-		DirectionOfTarget.Z = 0;
+		FVector DirectionOfTarget = Target->GetActorLocation() - GetActorLocation(); // finds direction of targeted enemy
+		DirectionOfTarget.Z = 0; // will rorate on z axis to not make the npc go up and down
 		DirectionOfTarget.Normalize();
 
-		FRotator NewRoation = DirectionOfTarget.Rotation();
-		FRotator currentRot = GetActorRotation();
+		FRotator NewRoation = DirectionOfTarget.Rotation(); // will retirve current roration of target mesh
+		FRotator currentRot = GetActorRotation(); // will keep roation of x and y
 
 		FRotator FinalRotation = FRotator(currentRot.Pitch, NewRoation.Yaw, currentRot.Roll);
-		SetActorRotation(FinalRotation);
+		SetActorRotation(FinalRotation); // sets rotation
 	}
 }
 

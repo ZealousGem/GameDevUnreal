@@ -18,8 +18,9 @@ void AMyGameModeBase::BeginPlay()
 	if(gameManager)
 	{
 		gameManager->AssignObserver(AmmoPickUp); // assigns the pickup class as an oberverer
-		gameManager->AssignObserver(WeaponPickUp);
-		gameManager->AssignObserver(WeaponPickUp);
+		gameManager->AssignObserver(WeaponPickUp); // assigns weapon pickup as an oberbser
+		gameManager->AssignObserverWeapon(WeaponPickUp); 
+		gameManager->AssignObserverHP(Character); // assings character to both the wepon and hp observer
 		gameManager->AssignObserverWeapon(Character);
 	}
 
