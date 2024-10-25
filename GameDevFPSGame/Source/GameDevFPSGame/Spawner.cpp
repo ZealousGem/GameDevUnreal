@@ -21,7 +21,7 @@ void ASpawner::BeginPlay()
 	Super::BeginPlay();
 
 	FindRespawnPoints();
-    GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, FString::Printf(TEXT("Found %d respawn points"), RespawnPoints.Num()));
+    
 	
 }
 
@@ -51,12 +51,13 @@ void ASpawner::Tick(float DeltaTime)
             RespawnCharacter(EnemyCharacter);
         }
     }
-    //AEnemyBaseCharacter* EnemyCharacter = Cast<AEnemyBaseCharacter>(UGameplayStatics::GetEnemyCharacter(GetWorld(), 0));
+    
 
 }
 
 void ASpawner::FindRespawnPoints()
 {
+    //Used to find the spawnpoints by the tag SpawnPoint
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("SpawnPoint"), RespawnPoints);
 }
 
@@ -64,34 +65,34 @@ void ASpawner::FindRespawnPoints()
 
 void ASpawner::RespawnCharacter(ACharacter* CharacterToRespawn)
 {
-    //GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("In respawn character method")));
+    
     if (CharacterToRespawn && RespawnPoints.Num() > 0)
     {
         // Get a random respawn point
         int32 RandomIndex = FMath::RandRange(0, RespawnPoints.Num() - 1);
         AActor* RespawnPoint = RespawnPoints[RandomIndex];
 
-        //GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("Gets respawn point")));
+       
 
         // Set the character's location to the respawn point
         CharacterToRespawn->SetActorLocation(RespawnPoint->GetActorLocation());
-        //GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("set character location to respawn point")));
+        
 
-        // Optionally reset character's health and state here
+        //Resets character's health and state here
         if (AMyCharacter* MyCharacter = Cast<AMyCharacter>(CharacterToRespawn))
         {
             MyCharacter->CurrentHealth = MyCharacter->MaxHealth; // Reset health
             MyCharacter->ammo = 12;
-            GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("reset character health")));
+            
             MyCharacter->ApplyDamage(0);
         }
 
         else if (AEnemyBaseCharacter* EnemyCharacter = Cast<AEnemyBaseCharacter>(CharacterToRespawn))
         {
             EnemyCharacter->CurrentHealth = EnemyCharacter->MaxHealth;
-             EnemyCharacter->ammo = 12;// Reset enemy health
-            GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Enemy health reset to maximum."));
-            // Reset any additional enemy state if necessary
+            EnemyCharacter->ammo = 12;// Reset enemy health
+            
+            
         }
     }
 }

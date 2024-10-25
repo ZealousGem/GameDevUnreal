@@ -5,9 +5,8 @@
 #include "MyCharacter.h"
 #include "HUDDisplayClass.h"
 #include "GameFramework/PlayerController.h"
-
 #include "EnemyBaseCharacter.h"
-#include "Engine/World.h" // Include the header for GetWorld()
+#include "Engine/World.h" 
 #include "TimerManager.h"
 
 
@@ -37,7 +36,7 @@ void AHealthPickUp::Tick(float DeltaTime)
 void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	//PickitUp();
+	
 
 	if (bIsActive)
 	{
@@ -45,8 +44,10 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 
 		if (AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
 		{
+			// Check if the players current health is less than maximum health
 			if (PlayerCharacter->CurrentHealth < PlayerCharacter->MaxHealth)
 			{
+
 				PlayerCharacter->Heal(HealthAmount);
 			}
 
@@ -70,7 +71,7 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 		}
 		else if (AEnemyBaseCharacter* EnemyCharacter = Cast<AEnemyBaseCharacter>(OtherActor))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Player Healed"));
+			
 			// Check if the enemy's current health is less than maximum health
 			if (EnemyCharacter->CurrentHealth < EnemyCharacter->MaxHealth)
 			{
@@ -87,9 +88,9 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 				bIsActive = false;
 				// Start respawn timer
 				GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 10.0f, false);
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Player Healed"));
+				
 				PickupMesh->SetVisibility(false);
-				// Optionally, make it invisible
+				
 				SetActorHiddenInGame(true);
 			}
 		}
@@ -99,6 +100,7 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 
 }
 
+//used to respawn the health pickup
 void AHealthPickUp::Respawn()
 {
 	bIsActive = true;
@@ -106,9 +108,5 @@ void AHealthPickUp::Respawn()
 	SetActorHiddenInGame(false);
 }
 	
-//void AHealthPickUp::PickitUp()
-//{
-	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("health Picked Up")));
 
-//}
 
