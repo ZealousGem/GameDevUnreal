@@ -60,7 +60,7 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 
 			bIsActive = false;
 
-			GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 5.0f, false);
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 10.0f, false);
             PickupMesh->SetVisibility(false);
 			SetActorHiddenInGame(true);
 			
@@ -86,7 +86,7 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 				// Deactivate the pickup
 				bIsActive = false;
 				// Start respawn timer
-				GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 5.0f, false);
+				GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AHealthPickUp::Respawn, 10.0f, false);
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Player Healed"));
 				PickupMesh->SetVisibility(false);
 				// Optionally, make it invisible

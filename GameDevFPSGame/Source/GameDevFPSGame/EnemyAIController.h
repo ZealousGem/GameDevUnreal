@@ -20,7 +20,6 @@ class GAMEDEVFPSGAME_API AEnemyAIController : public AAIController
 	UBlackboardComponent* Blackboard;
 
 	//keys
-
 	
 
 	TArray<AActor*> PatrolPoints;

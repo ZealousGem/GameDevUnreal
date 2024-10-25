@@ -68,13 +68,13 @@ void AEnemyAIController::SwitchWep()
 	
 		if(npc->ammo <=0)
 		{
-			Wep->NPCSwitchPrimary();
+			Wep->NPCSwitchPrimary(); // will switch to enemy primary weapon
 		}
 
 	    
 	    else
 	    {
-		    Wep->NPCSwitchSecondary();
+		    Wep->NPCSwitchSecondary(); // will switch to enemy secondary weapon
 	    }
 	
 }
@@ -91,18 +91,18 @@ void AEnemyAIController::SetUpPerceptionSystem()
 	if(SightConfig)
 	{
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception"))); // creates AI Vision radius
-		SightConfig->SightRadius = 700.f;
-		SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.f;
+		SightConfig->SightRadius = 800.f;
+		SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.f; // will lose sight of enemy once it has gone over this radius
 		SightConfig->PeripheralVisionAngleDegrees = 90.f;
 		SightConfig->SetMaxAge(5.f);
-		SightConfig->AutoSuccessRangeFromLastSeenLocation = 720.f;
+		SightConfig->AutoSuccessRangeFromLastSeenLocation = 820.f; // will go last location enemy saw player
 		SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 		SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 		SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 
 		GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
 		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::PlayerDetected); // will sense any of the actors in this function
-		GetPerceptionComponent()->ConfigureSense(*SightConfig);
+		GetPerceptionComponent()->ConfigureSense(*SightConfig); // congirues enemy sight vision
 	}
 }
 
@@ -113,7 +113,7 @@ void AEnemyAIController::PlayerDetected(AActor* actor, FAIStimulus const Stimulu
 		GetBlackboardComponent()->SetValueAsBool("SeesPlayer", Stimulus.WasSuccessfullySensed());
 	}
 
-	else if(AAmmoPickUp* ar = Cast<AAmmoPickUp>(actor))
+	else if(APickUp* ar = Cast<APickUp>(actor))
 	{
 		GetBlackboardComponent()->SetValueAsBool("SeesAmmo", Stimulus.WasSuccessfullySensed());
 	}
@@ -122,6 +122,8 @@ void AEnemyAIController::PlayerDetected(AActor* actor, FAIStimulus const Stimulu
 	{
 		GetBlackboardComponent()->SetValueAsBool("SeesNPC", Stimulus.WasSuccessfullySensed());
 	}
+
+	
 }
 
 // Called every frame
@@ -136,6 +138,10 @@ void AEnemyAIController::Tick(float DeltaTime)
 		 GetBlackboardComponent()->SetValueAsBool("SeesNPC", false);
 		
 	}
+if(npc->CurrentHealth <= 15){ // will run away if health is less than 25
 
+	GetBlackboardComponent()->SetValueAsBool("SeesNPC", false);
+	GetBlackboardComponent()->SetValueAsBool("SeesPlayer", false);
+}
 	
 }

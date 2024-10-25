@@ -59,7 +59,7 @@ if(PickedUp)
 		enemy->ammo += AmmoAmount;
 	}
 	
-	GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AAmmoPickUp::Respawn, 5.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &AAmmoPickUp::Respawn, 10.0f, false);
 	PickupMesh->SetVisibility(false);
 	SetActorHiddenInGame(true);
 

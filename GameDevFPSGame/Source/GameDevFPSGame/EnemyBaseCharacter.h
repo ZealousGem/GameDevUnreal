@@ -23,7 +23,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category= HatMesh)
 	UStaticMeshComponent* hat;
-
+	
 	
 	UPROPERTY(VisibleDefaultsOnly, Category= CharacterMesh) // adds the epic gun effect to the primary gun
 	UParticleSystemComponent* fpsexplosion;

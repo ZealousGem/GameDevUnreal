@@ -288,8 +288,8 @@ EBTNodeResult::Type UUBTTTask_FoundAmmo::ExecuteTask(UBehaviorTreeComponent& Own
 	
 	for(AActor* FoundActor : AmmoFound) // detetcing first enemies in range
 	{
-		AEnemyBaseCharacter* Ammo = Cast<AEnemyBaseCharacter>(FoundActor);
-		if(Ammo == 0){
+		APickUp* Ammo = Cast<APickUp>(FoundActor);
+		if(Ammo){
 			auto const AmmoLoc = Ammo->GetActorLocation();
 
 		
