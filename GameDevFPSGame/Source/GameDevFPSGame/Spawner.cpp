@@ -83,7 +83,7 @@ void ASpawner::RespawnCharacter(ACharacter* CharacterToRespawn)
         {
             MyCharacter->CurrentHealth = MyCharacter->MaxHealth; // Reset health
             MyCharacter->ammo = 12;
-            
+            MyCharacter->YouDied();
             MyCharacter->ApplyDamage(0);
         }
 

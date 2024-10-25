@@ -24,7 +24,7 @@ EBTNodeResult::Type UUBTTTask_FindRandLocation::ExecuteTask(UBehaviorTreeCompone
  {
 	 if(auto* const npc = fock->GetPawn()) // retirves the enemmy character
 	 {
-		 auto const Orgin = npc->GetActorLocation(); // generates a random location for ai to go to
+		 auto const Orgin = npc->GetActorLocation(); // grabs the ai's location
 
 	 	if(auto* const Nav = UNavigationSystemV1::GetCurrent(GetWorld()))
 	 	{

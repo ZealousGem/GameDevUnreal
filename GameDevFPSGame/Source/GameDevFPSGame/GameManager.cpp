@@ -63,7 +63,7 @@ void UGameManager::notifyChange() // will tell all observers in the list that th
 			IObserverHP* Wepo = Cast<IObserverHP>(ObserverHP.GetObject());
 			if(Wepo)
 			{
-				;Wepo->YouDied();
+				Wepo->YouDied();
 			}
 			
 		}

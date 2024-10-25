@@ -119,7 +119,7 @@ void APlayerControllerClass::HandleSprintOn()
 if(PlayerCharacter && PlayerCharacter->GetCharacterMovement()) // changes the character's movemnt speed to Increspeed which is 1000 F
 {
 	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = IncSpeed;
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("on")));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("on")));
 }
 
 	spint = true; 
@@ -132,7 +132,7 @@ if(PlayerCharacter && PlayerCharacter->GetCharacterMovement()) // changes the ch
 {
 	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 	
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("off")));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("off")));
 }
 	spint = false;
 	
