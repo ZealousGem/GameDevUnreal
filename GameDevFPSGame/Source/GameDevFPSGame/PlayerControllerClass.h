@@ -56,7 +56,8 @@ public:
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 
 	
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | System")
+	UInputAction* ActionPause = nullptr;
 
 	
 
@@ -85,7 +86,7 @@ protected:
 
 	void Released(); // will stop ammo counter to decreases
 
-	
+	void HandleEscape();
 	
 	
 private:
@@ -101,6 +102,8 @@ private:
 
 	UPROPERTY()
 	UWeaponHandling* WeaponHandle;
+
+
 
 	bool fireinframe = false; // use detect a shot has been made by a weapon
 

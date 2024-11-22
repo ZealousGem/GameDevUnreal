@@ -8,6 +8,7 @@
 #include "K2Node_GetSubsystem.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "Engine/World.h" 
 
 
 void APlayerControllerClass::OnPossess(APawn* InPawn)
@@ -39,6 +40,7 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 
 	UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()); // detectes the inputmapping used in the editor
 	checkf(InputSubsystem, TEXT("Unable to get a reference to the EnhancedPlayerSystem"))
+
 
 
 	checkf(InputMappingContext, TEXT("Input Mapping was not Specified"))
@@ -85,6 +87,12 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 		EnhancedInputComponent->BindAction(ActionFire, ETriggerEvent::Completed, this, &APlayerControllerClass::Released); // will actvate the realease method once fire method has been implemented to not let ammo decrease more than once 
 		
 	}
+	if (ActionPause)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Binding ActionPause to HandleEscape."));
+		EnhancedInputComponent->BindAction(ActionPause, ETriggerEvent::Triggered, this, &APlayerControllerClass::HandleEscape);
+	}
+
 
 	
 	
@@ -193,6 +201,11 @@ void APlayerControllerClass::Released()
 WeaponHandle->Released(); // will switch off the fireing in the weaponhandling class
 	
 	
+}
+void APlayerControllerClass::HandleEscape()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Pressed Escape"));
+	UE_LOG(LogTemp, Warning, TEXT("Pressed Escape - HandleEscape Triggered."));
 }
 
 
