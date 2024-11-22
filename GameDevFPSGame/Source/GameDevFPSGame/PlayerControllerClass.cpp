@@ -86,6 +86,12 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 		
 	}
 
+	if(ActionShowLeaderBoard)
+	{
+		EnhancedInputComponent->BindAction(ActionShowLeaderBoard, ETriggerEvent::Started, this, &APlayerControllerClass::ShowLeaderBoard); // will activate the handle fire method once keybidning is set
+		EnhancedInputComponent->BindAction(ActionShowLeaderBoard, ETriggerEvent::Completed, this, &APlayerControllerClass::HideLeaderBoard);
+	}
+
 	
 	
 }
@@ -193,6 +199,16 @@ void APlayerControllerClass::Released()
 WeaponHandle->Released(); // will switch off the fireing in the weaponhandling class
 	
 	
+}
+
+void APlayerControllerClass::ShowLeaderBoard()
+{
+	display->ShowLeaderBoard();
+}
+
+void APlayerControllerClass::HideLeaderBoard()
+{
+	display->HideLeaderBoard();
 }
 
 

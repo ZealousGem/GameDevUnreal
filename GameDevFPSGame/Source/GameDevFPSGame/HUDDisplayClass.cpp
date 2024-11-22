@@ -23,6 +23,7 @@ void AHUDDisplayClass::BeginPlay()
 		Ammo = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass4);
 		WeaponType = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass5);
 		Death = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass6);
+		LeaderBoard = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass7);
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -57,6 +58,12 @@ void AHUDDisplayClass::BeginPlay()
 		{
 			Death->AddToViewport(6);
 			Death->SetVisibility(ESlateVisibility::Hidden);
+		}
+
+		if(LeaderBoard)
+		{
+			LeaderBoard->AddToViewport(7);
+			LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 		}
 		
 
@@ -158,4 +165,16 @@ void AHUDDisplayClass::TimerDeath()
 {
 	displayDeath(false);
 }
+
+void AHUDDisplayClass::ShowLeaderBoard()
+{
+	LeaderBoard->SetVisibility(ESlateVisibility::Visible);
+}
+
+void AHUDDisplayClass::HideLeaderBoard()
+{
+	LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
+}
+
+
 

@@ -51,6 +51,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	UInputAction* ActionFire = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
+	UInputAction* ActionShowLeaderBoard = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
@@ -85,7 +88,9 @@ protected:
 
 	void Released(); // will stop ammo counter to decreases
 
-	
+	void ShowLeaderBoard();
+
+	void HideLeaderBoard();
 	
 	
 private:
