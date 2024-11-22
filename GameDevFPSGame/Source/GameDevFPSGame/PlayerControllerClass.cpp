@@ -206,6 +206,13 @@ void APlayerControllerClass::HandleEscape()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("Pressed Escape"));
 	UE_LOG(LogTemp, Warning, TEXT("Pressed Escape - HandleEscape Triggered."));
+
+	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetHUD());
+
+	if (HUD)
+	{
+		HUD->TogglePauseMenu();
+	}
 }
 
 

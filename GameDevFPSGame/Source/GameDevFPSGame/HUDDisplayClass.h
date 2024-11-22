@@ -35,6 +35,9 @@ protected:
 	UPROPERTY()
 	UUserWidget* Death;
 
+	UPROPERTY()
+	UUserWidget* PauseMenuInstance;
+
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my this class
 
@@ -57,7 +60,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass6; // For weapon widget
 
+
+
 	UUserWidget* getCrossDamage() const; 
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<UUserWidget> PauseMenuClass;
+
+	UFUNCTION(BlueprintCallable, Category = "Pause Menu")
+	void ResumeGame();
+
 
 	void AmmoDisplay(); // displays ammo if shotgun is equipped
 
@@ -78,6 +91,23 @@ public:
 	void displayDeath(bool hitt);
 
 	void TimerDeath();
+
+	void ShowPauseMenu();
+
+	void HidePauseMenu();
+
+	void TogglePauseMenu();
+
+	bool IsPauseMenuVisible() const;
+
+
+
+
+
+
+
+
+
 private:
 
 	GENERATED_BODY()

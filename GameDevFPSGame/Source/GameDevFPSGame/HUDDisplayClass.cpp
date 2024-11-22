@@ -6,6 +6,8 @@
 #include "Components/ProgressBar.h"  // For UProgressBar
 #include "Components/TextBlock.h"    // For UTextBlock
 #include "GameFrameWork/PlayerController.h"
+#include "Kismet/GameplayStatics.h"
+#include "Components/Button.h"
 
 
 
@@ -57,6 +59,11 @@ void AHUDDisplayClass::BeginPlay()
 		{
 			Death->AddToViewport(6);
 			Death->SetVisibility(ESlateVisibility::Hidden);
+		}
+		if (PauseMenuClass)
+		{
+			PauseMenuInstance = CreateWidget<UUserWidget>(GetWorld(), PauseMenuClass);
+
 		}
 		
 
@@ -158,4 +165,125 @@ void AHUDDisplayClass::TimerDeath()
 {
 	displayDeath(false);
 }
+
+void AHUDDisplayClass::ShowPauseMenu()
+{
+	if (!PauseMenuInstance && PauseMenuClass)
+	{
+		PauseMenuInstance = CreateWidget<UUserWidget>(GetWorld(), PauseMenuClass);
+
+	}
+	if (PauseMenuInstance && !PauseMenuInstance->IsInViewport())
+	{
+		PauseMenuInstance->AddToViewport();
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		APlayerController* PC = GetWorld()->GetFirstPlayerController();
+		if (PC)
+		{
+			PC->SetInputMode(FInputModeUIOnly());
+			PC->bShowMouseCursor = true;
+		}
+	}
+}
+
+void AHUDDisplayClass::HidePauseMenu()
+{
+	if (PauseMenuInstance && PauseMenuInstance->IsInViewport())
+	{
+		PauseMenuInstance->RemoveFromViewport();
+		UGameplayStatics::SetGamePaused(GetWorld(), false);
+		APlayerController* PC = GetWorld()->GetFirstPlayerController();
+		if (PC)
+		{
+			PC->SetInputMode(FInputModeGameOnly());
+			PC->bShowMouseCursor = false;
+
+		}
+
+	}
+}
+void AHUDDisplayClass::TogglePauseMenu()
+{
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+	if (!PC) return;
+
+	if (PauseMenuInstance && PauseMenuInstance->IsInViewport())
+	{
+
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, TEXT("Hiding Pause Menu"));
+		PauseMenuInstance->RemoveFromViewport();
+		UGameplayStatics::SetGamePaused(GetWorld(), false);
+		FInputModeGameOnly InputMode;
+		PC->SetInputMode(InputMode);
+		PC->bShowMouseCursor = false;
+
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, TEXT("Showing Pause Menu"));
+		if (!PauseMenuInstance && PauseMenuClass)
+		{
+			PauseMenuInstance = CreateWidget<UUserWidget>(GetWorld(), PauseMenuClass);
+
+		}
+		if (PauseMenuInstance)
+		{
+			PauseMenuInstance->AddToViewport();
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+			FInputModeUIOnly InputMode;
+			InputMode.SetWidgetToFocus(PauseMenuInstance->TakeWidget());
+			PC->SetInputMode(InputMode);
+			PC->bShowMouseCursor = true;
+
+
+			UWidget* FirstButton = Cast<UWidget>(PauseMenuInstance->GetWidgetFromName(TEXT("Button_Resume")));
+			if (FirstButton)
+			{
+				//APlayerController* PC = GetWorld()->GetFirstPlayerController();
+				if (PC)
+				{
+					FirstButton->SetUserFocus(PC);
+					
+				}
+
+			}
+
+
+		}
+	}
+	
+}
+
+bool AHUDDisplayClass::IsPauseMenuVisible() const
+{
+	return PauseMenuInstance && PauseMenuInstance->IsInViewport();
+
+}
+
+
+void AHUDDisplayClass::ResumeGame()
+{
+
+	if (PauseMenuInstance && PauseMenuInstance->IsInViewport())
+	{
+		PauseMenuInstance->RemoveFromViewport();
+	}
+
+	// Resume the game
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
+
+	// Reset input mode
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+	if (PC)
+	{
+		FInputModeGameOnly InputMode;
+		PC->SetInputMode(InputMode);
+		PC->bShowMouseCursor = false;
+	}
+
+}
+
+
+
 
