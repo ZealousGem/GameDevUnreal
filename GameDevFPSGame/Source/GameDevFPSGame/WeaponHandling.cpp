@@ -105,6 +105,8 @@ void UWeaponHandling::Tracing()
 					if (AEnemyBaseCharacter* CharacterHit = Cast<AEnemyBaseCharacter>(EndHit.GetActor()))
 					{
 						CharacterHit->ApplyDamage(25.f);
+
+						
 					//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Player hit"));
 						if(display) 
 						{
@@ -128,7 +130,8 @@ void UWeaponHandling::Tracing()
 			}
 			else
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
+				//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf
+					//(TEXT("you have run out of ammo")));
 			}
 			FireInFrame = true; 
 		}

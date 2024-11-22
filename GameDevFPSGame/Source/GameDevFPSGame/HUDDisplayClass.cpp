@@ -2,9 +2,12 @@
 
 
 #include "HUDDisplayClass.h"
+
+#include "LeaderBoardManager.h"
 #include "PlayerControllerClass.h"
 #include "Components/ProgressBar.h"  // For UProgressBar
 #include "Components/TextBlock.h"    // For UTextBlock
+#include "Components/VerticalBox.h"
 #include "GameFrameWork/PlayerController.h"
 
 
@@ -62,8 +65,15 @@ void AHUDDisplayClass::BeginPlay()
 
 		if(LeaderBoard)
 		{
+			 LeaderBoardManager = NewObject<ULeaderBoardManager>();
 			LeaderBoard->AddToViewport(7);
 			LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
+			if(LeaderBoardManager)
+			{
+				LeaderBoardManager->CreateLeaderBoard(GetWorld());
+				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf
+					(TEXT("Leaderboard made")));
+			}
 		}
 		
 
@@ -166,9 +176,29 @@ void AHUDDisplayClass::TimerDeath()
 	displayDeath(false);
 }
 
+void AHUDDisplayClass::UpdateLeaderBoard()
+{
+	//if(!LeaderBoard || !leaderbo)
+	UVerticalBox* LeaderBoardList = Cast<UVerticalBox>(LeaderBoard->GetWidgetFromName(TEXT("List")));
+	LeaderBoardList->ClearChildren();
+
+	const TArray<FLeaderboardStart> & Start = LeaderBoardManager->GetLeaderBoard();
+
+	for(const FLeaderboardStart& Starter: Start)
+	{
+		UTextBlock* WidgetData = NewObject<UTextBlock>(this);
+		if(WidgetData)
+		{
+			WidgetData->SetText(FText::FromString(FString::Printf(TEXT("Player: %s, Kills: %d"), *Starter.Player, Starter.Kills)));
+			LeaderBoardList->AddChild(WidgetData);
+		}
+	}
+}
+
 void AHUDDisplayClass::ShowLeaderBoard()
 {
 	LeaderBoard->SetVisibility(ESlateVisibility::Visible);
+	UpdateLeaderBoard();
 }
 
 void AHUDDisplayClass::HideLeaderBoard()

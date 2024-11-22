@@ -4,6 +4,7 @@
 
 #include "Blueprint/UserWidget.h"
 #include "CoreMinimal.h"
+#include "LeaderBoardManager.h"
 #include "GameFramework/HUD.h"
 #include "HUDDisplayClass.generated.h"
 // this class handles all the ui
@@ -37,6 +38,9 @@ protected:
 
 	UPROPERTY()
 	UUserWidget* LeaderBoard;
+
+	UPROPERTY()
+	ULeaderBoardManager* LeaderBoardManager = nullptr;
 
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my this class
@@ -85,6 +89,7 @@ public:
 
 	void TimerDeath();
 
+	void UpdateLeaderBoard();
 	void ShowLeaderBoard();
 
 	void HideLeaderBoard();
