@@ -43,6 +43,7 @@ private:
 public:
 	void CreateLeaderBoard(UWorld* World);
 	void UpdatePlayerKills(int32 KillsNew);
+	void UpdateBotKills(int32 KillsNew);
 	void UpdateBotKillCount(const FString& AiName, int32 KillCount);
 	const TArray<FLeaderboardStart>& GetLeaderBoard() const;
 	

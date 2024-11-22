@@ -179,17 +179,17 @@ void AHUDDisplayClass::TimerDeath()
 void AHUDDisplayClass::UpdateLeaderBoard()
 {
 	//if(!LeaderBoard || !leaderbo)
-	UVerticalBox* LeaderBoardList = Cast<UVerticalBox>(LeaderBoard->GetWidgetFromName(TEXT("List")));
-	LeaderBoardList->ClearChildren();
+	UVerticalBox* LeaderBoardList = Cast<UVerticalBox>(LeaderBoard->GetWidgetFromName(TEXT("List"))); // instantiated the list in the leaderboard widget
+	LeaderBoardList->ClearChildren(); // clears old data from leaderboard
 
 	const TArray<FLeaderboardStart> & Start = LeaderBoardManager->GetLeaderBoard();
 
 	for(const FLeaderboardStart& Starter: Start)
 	{
-		UTextBlock* WidgetData = NewObject<UTextBlock>(this);
+		UTextBlock* WidgetData = NewObject<UTextBlock>(this); // creates a text box to add each struct
 		if(WidgetData)
 		{
-			WidgetData->SetText(FText::FromString(FString::Printf(TEXT("Player: %s, Kills: %d"), *Starter.Player, Starter.Kills)));
+			WidgetData->SetText(FText::FromString(FString::Printf(TEXT("Player: %s, Kills: %d"), *Starter.Player, Starter.Kills))); // creates a text block in the widget
 			LeaderBoardList->AddChild(WidgetData);
 		}
 	}
@@ -205,6 +205,67 @@ void AHUDDisplayClass::HideLeaderBoard()
 {
 	LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 }
+
+void AHUDDisplayClass::UpdatePlayerCount()
+{
+	LeaderBoardManager->UpdatePlayerKills(1);
+	//LeaderBoardManager->UpdateBotKills(1);
+	//LeaderboardManager->UpdateBotDeathCount(TEXT("Bot1"), NewBotDeathCount);
+	UpdateLeaderBoard();
+}
+
+void AHUDDisplayClass::UpdateBotCount(FString Bot)
+{
+	if(Bot == "Bot 1")
+	{
+		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 1"), 1);
+		UpdateLeaderBoard();
+	}
+
+	if(Bot == "Bot 2")
+	{
+		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 2"), 1);
+		UpdateLeaderBoard();
+	}
+
+	if(Bot == "Bot 3")
+	{
+		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 3"), 1);
+		UpdateLeaderBoard();
+	}
+
+	if(Bot == "Bot 4")
+	{
+		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 4"), 1);
+		UpdateLeaderBoard();
+	}
+
+	if(Bot == "Bot 5")
+	{
+		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 5"), 1);
+		UpdateLeaderBoard();
+	}
+
+	if(Bot == "Bot 6")
+	{
+		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 6"), 1);
+		UpdateLeaderBoard();
+	}
+
+	if(Bot == "Bot 7")
+	{
+		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 7"), 1);
+		UpdateLeaderBoard();
+	}
+	//Death->SetVisibility(ESlateVisibility::Visible);
+	
+	
+
+	
+
+	
+}
+
 
 
 

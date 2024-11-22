@@ -57,6 +57,8 @@ private :
 	UPROPERTY()
 	UWeaponHandling* Wep = nullptr;
 
+	
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

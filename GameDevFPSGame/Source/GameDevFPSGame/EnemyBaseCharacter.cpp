@@ -17,7 +17,7 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 
 	character = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Enemy"));
 	check(character != nullptr)
-
+    
 	hat = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("EnemyHat"));
 	check(hat != nullptr);
 	hat->SetupAttachment(character);

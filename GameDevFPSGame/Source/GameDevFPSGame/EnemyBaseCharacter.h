@@ -24,7 +24,6 @@ public:
 	UPROPERTY(VisibleAnywhere, Category= HatMesh)
 	UStaticMeshComponent* hat;
 	
-	
 	UPROPERTY(VisibleDefaultsOnly, Category= CharacterMesh) // adds the epic gun effect to the primary gun
 	UParticleSystemComponent* fpsexplosion;
 
@@ -42,6 +41,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health")
 	float CurrentHealth;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Bot")
+	FString Botname;
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	void ApplyDamage(float DamageAmount);

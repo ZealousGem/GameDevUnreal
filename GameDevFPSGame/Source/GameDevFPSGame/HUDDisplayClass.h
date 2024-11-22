@@ -93,6 +93,10 @@ public:
 	void ShowLeaderBoard();
 
 	void HideLeaderBoard();
+
+	void UpdatePlayerCount();
+
+	void UpdateBotCount(FString Bot);
 private:
 
 	GENERATED_BODY()
