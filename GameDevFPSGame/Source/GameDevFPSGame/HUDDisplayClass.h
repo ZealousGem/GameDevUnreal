@@ -40,6 +40,9 @@ protected:
 	UUserWidget* LeaderBoard;
 
 	UPROPERTY()
+	UUserWidget* Timer;
+
+	UPROPERTY()
 	ULeaderBoardManager* LeaderBoardManager = nullptr;
 
 public:
@@ -67,7 +70,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass7; // For weapon widget
 
-	UUserWidget* getCrossDamage() const; 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> mywidgetClass8; // For weapon widget
+
+	UUserWidget* getCrossDamage() const;
+
+	int32 Minutes = 3;
+
+	int32 Seconds = 0;
+
+	void Counter();
 
 	void AmmoDisplay(); // displays ammo if shotgun is equipped
 

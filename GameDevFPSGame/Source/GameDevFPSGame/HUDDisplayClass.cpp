@@ -16,7 +16,10 @@
 void AHUDDisplayClass::BeginPlay()
 {
 	Super::BeginPlay();
+	FTimerHandle TimerHandle;
+GetWorldTimerManager().SetTimer(TimerHandle, this, &AHUDDisplayClass::Counter, 1.f, true, 0.0);
 
+	
 	if(mywidgetClass)
 	{
 		// allows unreal to access the class through blueprints 
@@ -27,6 +30,7 @@ void AHUDDisplayClass::BeginPlay()
 		WeaponType = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass5);
 		Death = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass6);
 		LeaderBoard = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass7);
+		Timer = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass8);
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -66,7 +70,7 @@ void AHUDDisplayClass::BeginPlay()
 		if(LeaderBoard)
 		{
 			 LeaderBoardManager = NewObject<ULeaderBoardManager>();
-			LeaderBoard->AddToViewport(7);
+			LeaderBoard->AddToViewport(8);
 			LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 			if(LeaderBoardManager)
 			{
@@ -76,7 +80,10 @@ void AHUDDisplayClass::BeginPlay()
 			}
 		}
 		
-
+if(Timer)
+{
+	Timer->AddToViewport(7);
+}
 		
 	}
 	
@@ -85,6 +92,31 @@ void AHUDDisplayClass::BeginPlay()
 UUserWidget* AHUDDisplayClass::getCrossDamage() const 
 {
 	return CrossDamage;
+}
+
+void AHUDDisplayClass::Counter()
+{
+	if(Seconds != 0)
+	{
+		UTextBlock* SecondsAmount = Cast<UTextBlock>(Timer->GetWidgetFromName(TEXT("Seconds")));
+		Seconds = Seconds - 1;
+		SecondsAmount->SetText(FText::FromString(FString::FromInt(Seconds)));
+	}
+
+	else if (Minutes != 0)
+	{
+		UTextBlock* MinutesAmount = Cast<UTextBlock>(Timer->GetWidgetFromName(TEXT("Minutes")));
+		Minutes = Minutes - 1;
+		MinutesAmount->SetText(FText::FromString(FString::FromInt(Minutes)));
+		UTextBlock* SecondsAmount = Cast<UTextBlock>(Timer->GetWidgetFromName(TEXT("Seconds")));
+		Seconds = 59;
+		SecondsAmount->SetText(FText::FromString(FString::FromInt(Seconds)));
+	}
+
+	else
+	{
+		/// will end game lol
+	}
 }
 
 void AHUDDisplayClass::AmmoDisplay() // makes the ammo widget visible
