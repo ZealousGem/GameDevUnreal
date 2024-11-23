@@ -54,6 +54,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	UInputAction* ActionShowLeaderBoard = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
+	UInputAction* ActionPauseGame = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
@@ -91,6 +94,8 @@ protected:
 	void ShowLeaderBoard();
 
 	void HideLeaderBoard();
+
+	void PauseGame();
 	
 	
 private:

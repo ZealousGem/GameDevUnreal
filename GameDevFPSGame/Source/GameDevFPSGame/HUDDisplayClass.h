@@ -5,6 +5,7 @@
 #include "Blueprint/UserWidget.h"
 #include "CoreMinimal.h"
 #include "LeaderBoardManager.h"
+#include "PauseMenu.h"
 #include "GameFramework/HUD.h"
 #include "HUDDisplayClass.generated.h"
 // this class handles all the ui
@@ -43,7 +44,13 @@ protected:
 	UUserWidget* Timer;
 
 	UPROPERTY()
+	UUserWidget* PauseMenu;
+
+	UPROPERTY()
 	ULeaderBoardManager* LeaderBoardManager = nullptr;
+
+	UPROPERTY()
+	UPauseMenu* PauseFunc = nullptr;
 
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my this class
@@ -72,6 +79,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass8; // For weapon widget
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> mywidgetClass9; // For weapon widget
 
 	UUserWidget* getCrossDamage() const;
 
@@ -109,7 +119,15 @@ public:
 	void UpdatePlayerCount();
 
 	void UpdateBotCount(FString Bot);
-private:
 
+	void PauseGame();
+
+	void HidePuaseMenu();
+
+	void UnHidePasueMenu();
+
+	
+private:
+ bool isPaused;
 	GENERATED_BODY()
 };

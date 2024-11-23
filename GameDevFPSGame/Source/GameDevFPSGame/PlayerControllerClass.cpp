@@ -92,6 +92,12 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 		EnhancedInputComponent->BindAction(ActionShowLeaderBoard, ETriggerEvent::Completed, this, &APlayerControllerClass::HideLeaderBoard);
 	}
 
+	if(ActionPauseGame)
+	{
+		
+		EnhancedInputComponent->BindAction(ActionPauseGame, ETriggerEvent::Triggered, this, &APlayerControllerClass::PauseGame);
+	}
+
 	
 	
 }
@@ -209,6 +215,11 @@ void APlayerControllerClass::ShowLeaderBoard()
 void APlayerControllerClass::HideLeaderBoard()
 {
 	display->HideLeaderBoard();
+}
+
+void APlayerControllerClass::PauseGame()
+{
+	display->PauseGame();
 }
 
 

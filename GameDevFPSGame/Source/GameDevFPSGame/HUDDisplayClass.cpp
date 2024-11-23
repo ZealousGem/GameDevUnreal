@@ -18,7 +18,7 @@ void AHUDDisplayClass::BeginPlay()
 	Super::BeginPlay();
 	FTimerHandle TimerHandle;
 GetWorldTimerManager().SetTimer(TimerHandle, this, &AHUDDisplayClass::Counter, 1.f, true, 0.0);
-
+isPaused = false;
 	
 	if(mywidgetClass)
 	{
@@ -31,6 +31,7 @@ GetWorldTimerManager().SetTimer(TimerHandle, this, &AHUDDisplayClass::Counter, 1
 		Death = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass6);
 		LeaderBoard = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass7);
 		Timer = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass8);
+		PauseMenu = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass9);
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -84,6 +85,14 @@ if(Timer)
 {
 	Timer->AddToViewport(7);
 }
+
+		if(PauseMenu)
+		{
+			PauseFunc = Cast<UPauseMenu>(PauseMenu);
+			PauseFunc->Frozen = false;
+			PauseMenu->AddToViewport(9);
+			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+		}
 		
 	}
 	
@@ -229,13 +238,21 @@ void AHUDDisplayClass::UpdateLeaderBoard()
 
 void AHUDDisplayClass::ShowLeaderBoard()
 {
-	LeaderBoard->SetVisibility(ESlateVisibility::Visible);
-	UpdateLeaderBoard();
+	if(isPaused == false)
+	{
+		LeaderBoard->SetVisibility(ESlateVisibility::Visible);
+		UpdateLeaderBoard();
+	}
+	
 }
 
 void AHUDDisplayClass::HideLeaderBoard()
 {
-	LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
+	if(isPaused == false)
+	{
+		LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
+	}
+	
 }
 
 void AHUDDisplayClass::UpdatePlayerCount()
@@ -297,6 +314,35 @@ void AHUDDisplayClass::UpdateBotCount(FString Bot)
 
 	
 }
+
+void AHUDDisplayClass::PauseGame()
+{
+	if(PauseFunc->Frozen == false)
+	{
+		isPaused = true;
+		PauseFunc->PauseToggle(isPaused);
+		
+	}
+
+	
+
+
+}
+
+void AHUDDisplayClass::HidePuaseMenu()
+{
+	LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
+	PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void AHUDDisplayClass::UnHidePasueMenu()
+{
+	LeaderBoard->SetVisibility(ESlateVisibility::Visible);
+	UpdateLeaderBoard();
+	PauseMenu->SetVisibility(ESlateVisibility::Visible);
+}
+
+
 
 
 
