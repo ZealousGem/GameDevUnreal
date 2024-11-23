@@ -8,6 +8,8 @@
 #include "K2Node_GetSubsystem.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "PauseMenu.h"
+#include "Kismet/GameplayStatics.h"
 
 
 void APlayerControllerClass::OnPossess(APawn* InPawn)
@@ -209,6 +211,50 @@ void APlayerControllerClass::ShowLeaderBoard()
 void APlayerControllerClass::HideLeaderBoard()
 {
 	display->HideLeaderBoard();
+}
+
+void APlayerControllerClass::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	// Bind the Escape key to toggle the pause menu
+	InputComponent->BindKey(EKeys::P, IE_Pressed, this, &APlayerControllerClass::TogglePauseMenu);
+
+}
+
+void APlayerControllerClass::TogglePauseMenu()
+{
+	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetHUD());
+	if (!HUD)
+    {
+        return; // Ensure we have a valid HUD
+    }
+
+    if (UGameplayStatics::IsGamePaused(GetWorld()))
+    {
+        // If the game is paused, hide the pause menu and resume the game
+        HUD->HidePauseMenu();
+        UGameplayStatics::SetGamePaused(GetWorld(), false);
+
+        // Reset input mode to gameplay
+        SetInputMode(FInputModeGameOnly());
+        bShowMouseCursor = false;
+    }
+    else
+    {
+        // If the game is not paused, show the pause menu and pause the game
+        HUD->ShowPauseMenu();
+        UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+        // Set input mode for UI
+        FInputModeUIOnly InputMode;
+		if (HUD->PauseMenu)
+		{
+			InputMode.SetWidgetToFocus(HUD->PauseMenu->TakeWidget());
+		}
+        SetInputMode(InputMode);
+        bShowMouseCursor = true;
+    }
+
 }
 
 

@@ -13,4 +13,17 @@ UCLASS()
 class GAMEDEVFPSGAME_API UPauseMenu : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+
+	UFUNCTION(BlueprintCallable, Category = "Pause Menu")
+	void ResumeGame();
+
+
+	UFUNCTION(BlueprintCallable, Category = "Pause Menu")
+	void QuitToMainMenu();
+
+	UFUNCTION(BlueprintCallable, Category = "Pause Menu")
+	void RestartLevel();
+
 };

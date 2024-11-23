@@ -9,6 +9,7 @@
 #include "Components/TextBlock.h"    // For UTextBlock
 #include "Components/VerticalBox.h"
 #include "GameFrameWork/PlayerController.h"
+#include "Kismet/GameplayStatics.h"
 
 
 
@@ -78,6 +79,19 @@ GetWorldTimerManager().SetTimer(TimerHandle, this, &AHUDDisplayClass::Counter, 1
 				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf
 					(TEXT("Leaderboard made")));
 			}
+		}
+
+		if (PauseMenuClass)
+		{
+			PauseMenu = CreateWidget<UUserWidget>(GetWorld(), PauseMenuClass);
+			if (PauseMenu)
+			{
+
+				PauseMenu->AddToViewport(10); // Set layer above other widgets
+				PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+
+			}
+
 		}
 		
 if(Timer)
@@ -296,6 +310,42 @@ void AHUDDisplayClass::UpdateBotCount(FString Bot)
 	
 
 	
+}
+void AHUDDisplayClass::ShowPauseMenu()
+{
+	if (PauseMenu)
+	{
+		PauseMenu->SetVisibility(ESlateVisibility::Visible);
+		UGameplayStatics::SetGamePaused(GetWorld(), true); // Pause the game
+
+		// Enable UI input mode
+		APlayerController* PC = GetWorld()->GetFirstPlayerController();
+		if (PC)
+		{
+			FInputModeUIOnly InputMode;
+			InputMode.SetWidgetToFocus(PauseMenu->TakeWidget());
+			PC->SetInputMode(InputMode);
+			PC->bShowMouseCursor = true;
+		}
+	}
+}
+
+void AHUDDisplayClass::HidePauseMenu()
+{
+	if (PauseMenu)
+	{
+		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+		UGameplayStatics::SetGamePaused(GetWorld(), false); // Resume the game
+
+		// Reset to gameplay input mode
+		APlayerController* PC = GetWorld()->GetFirstPlayerController();
+		if (PC)
+		{
+			FInputModeGameOnly InputMode;
+			PC->SetInputMode(InputMode);
+			PC->bShowMouseCursor = false;
+		}
+	}
 }
 
 

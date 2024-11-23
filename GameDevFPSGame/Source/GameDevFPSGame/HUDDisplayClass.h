@@ -45,6 +45,8 @@ protected:
 	UPROPERTY()
 	ULeaderBoardManager* LeaderBoardManager = nullptr;
 
+	
+
 public:
 	virtual void BeginPlay() override; // overrides default hud class with my this class
 
@@ -74,6 +76,12 @@ public:
 	TSubclassOf<UUserWidget> mywidgetClass8; // For weapon widget
 
 	UUserWidget* getCrossDamage() const;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> PauseMenuClass;
+
+	UPROPERTY()
+	UUserWidget* PauseMenu;
 
 	int32 Minutes = 3;
 
@@ -109,6 +117,10 @@ public:
 	void UpdatePlayerCount();
 
 	void UpdateBotCount(FString Bot);
+
+	void ShowPauseMenu();
+	void HidePauseMenu();
+
 private:
 
 	GENERATED_BODY()

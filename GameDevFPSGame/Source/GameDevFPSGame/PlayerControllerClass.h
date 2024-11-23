@@ -18,6 +18,9 @@
 #include "InputActionValue.h"
 #include "InputAction.h"
 
+#include "PauseMenu.h"
+
+
 #include "PlayerControllerClass.generated.h"
 
 /**
@@ -58,6 +61,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input | Character Movement")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 
+	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	//TSubclassOf<UUserWidget> PauseMenuClass;
+
+	virtual void SetupInputComponent() override;
 	
 	
 
@@ -91,7 +98,13 @@ protected:
 	void ShowLeaderBoard();
 
 	void HideLeaderBoard();
+
+	void TogglePauseMenu();
+
+	//UPROPERTY()
+	//UUserWidget* PauseMenuInstance;
 	
+
 	
 private:
 
