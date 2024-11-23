@@ -30,6 +30,7 @@ void UPauseMenu::PauseToggle(bool isPaused)
 			else
 			{
 				HUD->HidePuaseMenu();
+				
 				FInputModeGameOnly Input;
 				PlayerController->SetInputMode(Input);
 				Frozen = false;

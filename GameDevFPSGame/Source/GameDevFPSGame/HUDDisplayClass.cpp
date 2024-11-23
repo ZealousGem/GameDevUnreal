@@ -319,12 +319,15 @@ void AHUDDisplayClass::PauseGame()
 {
 	if(PauseFunc->Frozen == false)
 	{
-		isPaused = true;
-		PauseFunc->PauseToggle(isPaused);
+		
+		PauseFunc->PauseToggle(true);
 		
 	}
 
-	
+	else
+	{
+		//isPaused = false;
+	}
 
 
 }
@@ -333,12 +336,14 @@ void AHUDDisplayClass::HidePuaseMenu()
 {
 	LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 	PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+	isPaused = false;
 }
 
 void AHUDDisplayClass::UnHidePasueMenu()
 {
 	LeaderBoard->SetVisibility(ESlateVisibility::Visible);
 	UpdateLeaderBoard();
+	isPaused = true;
 	PauseMenu->SetVisibility(ESlateVisibility::Visible);
 }
 
