@@ -50,18 +50,21 @@ void UGameOverMenu::ToggleEndMenu(bool isPaused)
 void UGameOverMenu::RestartButton()
 {
     // Restart the current level
+    ToggleEndMenu(false);
     UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()));
 }
 
 void UGameOverMenu::QuitButton()
 {
     // Quit the game
+    ToggleEndMenu(false);
     UKismetSystemLibrary::QuitGame(this, GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
 }
 
 void UGameOverMenu::MainMenuButton()
 {
     // Go to the main menu
+    ToggleEndMenu(false);
     UGameplayStatics::OpenLevel(this, FName("MainMenu"));
 }
 
