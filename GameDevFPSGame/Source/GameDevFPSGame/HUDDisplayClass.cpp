@@ -17,6 +17,9 @@
 void AHUDDisplayClass::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
+
 	FTimerHandle TimerHandle;
 GetWorldTimerManager().SetTimer(TimerHandle, this, &AHUDDisplayClass::Counter, 1.f, true, 0.0);
 isPaused = false;

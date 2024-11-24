@@ -2,6 +2,8 @@
 
 
 #include "MainMenuHUD.h"
+#include "MainMenu.h"
+#include "Blueprint/UserWidget.h"
 
 void AMainMenuHUD::BeginPlay()
 {

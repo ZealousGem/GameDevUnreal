@@ -13,4 +13,15 @@ UCLASS()
 class GAMEDEVFPSGAME_API UMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
+
+protected:
+
+    UFUNCTION()
+    void StartGameButton();
+
+    UFUNCTION()
+    void QuitGameButton();
+
+    virtual void NativeConstruct() override;
+
 };

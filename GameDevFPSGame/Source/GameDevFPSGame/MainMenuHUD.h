@@ -5,6 +5,7 @@
 #include "Blueprint/UserWidget.h"
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "MainMenu.h" 
 #include "MainMenuHUD.generated.h"
 
 /**
