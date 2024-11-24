@@ -369,6 +369,7 @@ void AHUDDisplayClass::HideGameOverMenu()
 {
 	if (GameOverMenu)
 	{
+		LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 		GameOverMenu->SetVisibility(ESlateVisibility::Hidden);
 
 	}
@@ -382,6 +383,8 @@ void AHUDDisplayClass::UnHideGameOverMenu()
 
 	if (GameOverMenu)
 	{
+		LeaderBoard->SetVisibility(ESlateVisibility::Visible);
+		UpdateLeaderBoard();
 		GameOverMenu->SetVisibility(ESlateVisibility::Visible);
 
 	}
