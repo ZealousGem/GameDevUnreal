@@ -3,6 +3,8 @@
 
 #include "MyGameModeBase.h"
 
+#include "MainMenuHUD.h"
+
 // sets the gamemode, will use this for part 2
 void AMyGameModeBase::BeginPlay()
 {
