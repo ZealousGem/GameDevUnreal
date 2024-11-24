@@ -10,6 +10,7 @@
 #include "Components/VerticalBox.h"
 #include "GameFrameWork/PlayerController.h"
 
+#include "GameOverMenu.h"
 
 
 
@@ -32,6 +33,9 @@ isPaused = false;
 		LeaderBoard = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass7);
 		Timer = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass8);
 		PauseMenu = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass9);
+		GameOverMenu= CreateWidget<UUserWidget>(GetWorld(), mywidgetClass10);
+
+		
 
 		if(CrossHair) // checks if widget has been added
 		{
@@ -93,6 +97,13 @@ if(Timer)
 			PauseMenu->AddToViewport(9);
 			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 		}
+		if (GameOverMenu)
+		{
+			OverPauseFunc = Cast<UGameOverMenu>(GameOverMenu);
+			OverPauseFunc->Frozen = false;
+			GameOverMenu->AddToViewport(10);
+			GameOverMenu->SetVisibility(ESlateVisibility::Hidden);
+		}
 		
 	}
 	
@@ -124,6 +135,13 @@ void AHUDDisplayClass::Counter()
 
 	else
 	{
+		APlayerControllerClass* PlayerController = Cast<APlayerControllerClass>(GetWorld()->GetFirstPlayerController());
+		if (PlayerController)
+		{
+			PlayerController->GameOver();
+
+		}
+		
 		/// will end game lol
 	}
 }
@@ -345,6 +363,40 @@ void AHUDDisplayClass::UnHidePasueMenu()
 	UpdateLeaderBoard();
 	isPaused = true;
 	PauseMenu->SetVisibility(ESlateVisibility::Visible);
+}
+
+void AHUDDisplayClass::HideGameOverMenu()
+{
+	if (GameOverMenu)
+	{
+		GameOverMenu->SetVisibility(ESlateVisibility::Hidden);
+
+	}
+
+	//GameOverMenu->SetVisibility(ESlateVisibility::Hidden);
+	isPaused = false;
+
+}
+void AHUDDisplayClass::UnHideGameOverMenu()
+{
+
+	if (GameOverMenu)
+	{
+		GameOverMenu->SetVisibility(ESlateVisibility::Visible);
+
+	}
+	GameOverMenu->SetVisibility(ESlateVisibility::Visible);
+	
+	isPaused = true;
+	//GameOverMenu->SetVisibility(ESlateVisibility::Visible);
+}
+
+void AHUDDisplayClass::GameOver()
+{
+	if (OverPauseFunc && OverPauseFunc->Frozen == false)
+	{
+		OverPauseFunc->ToggleEndMenu(true);
+	}
 }
 
 

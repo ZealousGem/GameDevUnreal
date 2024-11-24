@@ -8,6 +8,7 @@
 #include "K2Node_GetSubsystem.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 void APlayerControllerClass::OnPossess(APawn* InPawn)
@@ -220,6 +221,16 @@ void APlayerControllerClass::HideLeaderBoard()
 void APlayerControllerClass::PauseGame()
 {
 	display->PauseGame();
+}
+
+
+
+void APlayerControllerClass::GameOver()
+{
+	if (display)
+	{
+		display->GameOver();
+	}
 }
 
 

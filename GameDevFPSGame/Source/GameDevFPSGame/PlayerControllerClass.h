@@ -62,7 +62,7 @@ public:
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 
 	
-	
+	void GameOver();
 
 	
 
@@ -96,6 +96,8 @@ protected:
 	void HideLeaderBoard();
 
 	void PauseGame();
+
+	//void GameOver();
 	
 	
 private:
