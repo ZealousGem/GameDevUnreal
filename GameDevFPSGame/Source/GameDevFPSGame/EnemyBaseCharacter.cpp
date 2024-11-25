@@ -37,7 +37,7 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Block);
 	
-	
+	 // intialises statemanager
 
 
 	fpsexplosion= CreateDefaultSubobject<UParticleSystemComponent>(TEXT(" affect"));
@@ -88,7 +88,8 @@ void AEnemyBaseCharacter::Fire()
 void AEnemyBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
+	StateManager = NewObject<UStateManager>();
+	
 	if(PawnSensingComp)
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AEnemyBaseCharacter::PlayerCaught);
@@ -111,18 +112,22 @@ void AEnemyBaseCharacter::PlayerCaught(APawn* Pawn)
 
 void AEnemyBaseCharacter::setWalkAnimation(bool moving)
 {
+	UStateIdle* Idle = NewObject<UStateIdle>();
+	UStateWalk* Walk = NewObject<UStateWalk>();
 	UAnimInstance* Inctance = character->GetAnimInstance(); // will instatiate animation instance
 	checkf(Inctance,TEXT("Is not set"));
 	if(moving && WalkAnimation && !movement) // will only activate walk animation one character is moving
 	{
-		 character->PlayAnimation(WalkAnimation, true);
+		 //character->PlayAnimation(WalkAnimation, true);
+		StateManager->SetState(Walk, this);
 		movement = true;
 		
 	}
 
 	else if (!moving && IdleAnimation && movement) // will only activate idle animation whewn character is not moving
 	{
-		character->PlayAnimation(IdleAnimation,true);
+		//character->PlayAnimation(IdleAnimation,true);
+		StateManager->SetState(Idle, this);
 		movement = false;
 		
 	}

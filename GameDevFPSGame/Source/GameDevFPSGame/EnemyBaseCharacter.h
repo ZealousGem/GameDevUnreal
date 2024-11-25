@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "StateManager.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "GameFramework/Character.h"
 #include "Perception/PawnSensingComponent.h"
@@ -63,7 +64,16 @@ public:
 	void Fire();
 
 	void RoateToEnemy(AActor* Target);
-	
+
+	UAnimSequence* GetWalkAnimation() const // so state pattern can access walk animation
+	{
+		return WalkAnimation;
+	}
+
+	UAnimSequence* GetIdleAnimation() const
+	{
+		return IdleAnimation;
+	}
 	
 protected:
 	// Called when the game starts or when spawned
@@ -78,6 +88,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category= "Animations") // animation sequence for the character
 	UAnimSequence* IdleAnimation;
 
+	UPROPERTY()
+	UStateManager* StateManager;
 	void setWalkAnimation(bool moving); // handles animations
 
 	bool movement; // checks if ai is moving
