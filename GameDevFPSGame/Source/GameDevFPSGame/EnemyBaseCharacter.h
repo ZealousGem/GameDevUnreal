@@ -90,6 +90,12 @@ protected:
 
 	UPROPERTY()
 	UStateManager* StateManager;
+
+	UPROPERTY()
+	UStateWalk* Walk;
+
+	UPROPERTY()
+	UStateIdle* Idle;
 	void setWalkAnimation(bool moving); // handles animations
 
 	bool movement; // checks if ai is moving

@@ -48,6 +48,12 @@ AEnemyBaseCharacter::AEnemyBaseCharacter()
 	secExplosion->SetupAttachment(secWep);
 	check(secExplosion != nullptr);
 
+	StateManager = NewObject<UStateManager>();
+	checkf(StateManager != nullptr, TEXT("not loaded stateManager"));
+	Idle = NewObject<UStateIdle>();
+	checkf(Idle != nullptr,TEXT("not loaded idle"));
+	Walk = NewObject<UStateWalk>();
+	checkf(Walk != nullptr,TEXT("not loaded walk"));
 	
 	MaxHealth = 100.0f; // set max health
 	CurrentHealth = MaxHealth; //initialize current health
@@ -88,7 +94,8 @@ void AEnemyBaseCharacter::Fire()
 void AEnemyBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	StateManager = NewObject<UStateManager>();
+//	StateManager = NewObject<UStateManager>();
+	
 	
 	if(PawnSensingComp)
 	{
@@ -112,14 +119,40 @@ void AEnemyBaseCharacter::PlayerCaught(APawn* Pawn)
 
 void AEnemyBaseCharacter::setWalkAnimation(bool moving)
 {
-	UStateIdle* Idle = NewObject<UStateIdle>();
-	UStateWalk* Walk = NewObject<UStateWalk>();
+	if(!StateManager)
+	{
+		StateManager = NewObject<UStateManager>(this);
+	}
+
+	if(!Idle)
+	{
+		 Idle = NewObject<UStateIdle>(this);
+	}
+
+	if(!Walk)
+	{
+		 Walk = NewObject<UStateWalk>(this);
+	}
+	//UStateIdle* Idle = NewObject<UStateIdle>(this); // intialises idle state
+	//UStateWalk* Walk = NewObject<UStateWalk>(this); // intialises walk state
 	UAnimInstance* Inctance = character->GetAnimInstance(); // will instatiate animation instance
 	checkf(Inctance,TEXT("Is not set"));
 	if(moving && WalkAnimation && !movement) // will only activate walk animation one character is moving
 	{
 		 //character->PlayAnimation(WalkAnimation, true);
-		StateManager->SetState(Walk, this);
+		
+		if(StateManager)
+		{
+			StateManager->SetState(Walk, this);
+		}
+			else
+			{
+				character->PlayAnimation(WalkAnimation, true);
+				UE_LOG(LogTemp, Warning, TEXT("StateManager is invalid!"));
+			}
+			
+		
+		 // changes to walk state
 		movement = true;
 		
 	}
@@ -127,7 +160,17 @@ void AEnemyBaseCharacter::setWalkAnimation(bool moving)
 	else if (!moving && IdleAnimation && movement) // will only activate idle animation whewn character is not moving
 	{
 		//character->PlayAnimation(IdleAnimation,true);
-		StateManager->SetState(Idle, this);
+		if(StateManager)
+		{
+			StateManager->SetState(Idle, this);
+		}
+
+		else
+		{
+			character->PlayAnimation(IdleAnimation,true);
+			UE_LOG(LogTemp, Warning, TEXT("StateManager is invalid!"));
+		}
+		 // changes to idle state
 		movement = false;
 		
 	}

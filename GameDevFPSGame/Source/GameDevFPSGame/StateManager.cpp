@@ -3,18 +3,29 @@
 
 #include "StateManager.h"
 
-void UStateManager::SetState(UStatePattern* setState, UObject* object)
+void UStateManager::SetState(UStatePattern* setState, UObject* object) // changes old state to new one
 {
-	if(StateCurrent)
+	if(setState)
 	{
-		StateCurrent->EndState(object);
+		if(StateCurrent)
+		{
+			StateCurrent->EndState(object);
+		
+		}
+		StateCurrent = setState;
+		StateCurrent->CreateState(object);
+		
 	}
+	
 
-	StateCurrent = setState;
-	StateCurrent->CreateState(object);
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SetState called with a null setState"));
+	}
+	
 }
 
-void UStateManager::UpdateState(UObject* object)
+void UStateManager::UpdateState(UObject* object) // update state animation
 {
 	StateCurrent->UpdateState(object);
 }

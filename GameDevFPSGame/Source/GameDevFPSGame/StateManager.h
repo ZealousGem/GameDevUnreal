@@ -16,7 +16,7 @@ class GAMEDEVFPSGAME_API UStateManager : public UObject
 	GENERATED_BODY()
 
 private:
-	UStatePattern* StateCurrent;
+	UStatePattern* StateCurrent = nullptr;
 
 public:
 	void SetState(UStatePattern* setState, UObject* object);
