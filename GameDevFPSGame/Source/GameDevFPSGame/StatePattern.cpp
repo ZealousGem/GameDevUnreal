@@ -4,6 +4,11 @@
 #include "StatePattern.h"
 
 #include "EnemyBaseCharacter.h"
+#include "MyCharacter.h"
+#include "GameFramework/PawnMovementComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "PlayerControllerClass.h"
+
 
 void UStateIdle::CreateState(UObject* object) // creates idle state
 {
@@ -51,3 +56,94 @@ void UStateWalk::EndState(UObject* object) // ends the walk animation state crea
 		UE_LOG(LogTemp, Warning, TEXT("%s Walk Animation is finished"), *Char->GetName());
 	}
 }
+
+void UStateCrouch::CreateState(UObject* object)
+{
+//	Super::CreateState(object);
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		Player->GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
+	}
+}
+
+void UStateCrouch::EndState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s Player has stopped crouching"), *Player->GetName());
+	}
+	
+}
+
+void UStateUnCrouch::CreateState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		Player->GetMovementComponent()->IsCrouching() ? Player->UnCrouch(true) : Player->Crouch(false);
+	}
+}
+
+void UStateUnCrouch::EndState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s Player is crouching"), *Player->GetName());
+	}
+}
+
+void UStateSprint::CreateState(UObject* object)
+{
+//	Super::CreateState(object);
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		Player->GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
+	}
+}
+
+void UStateSprint::EndState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s Player has stopped sprinting"), *Player->GetName());
+	}
+}
+
+void UStateNoSprint::CreateState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		Player->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	}
+}
+
+void UStateNoSprint::EndState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s Player is Sprinting"), *Player->GetName());
+	}
+}
+
+void UStateJump::CreateState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		Player->Jump(); // uses jump function to lift player 
+		Player->UnCrouch();
+		
+		
+	}
+
+	
+	
+}
+
+void UStateJump::EndState(UObject* object)
+{
+	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s Player has stoped jumping"), *Player->GetName());
+	}
+	//Super::EndState(object);
+}
+

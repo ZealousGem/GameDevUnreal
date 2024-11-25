@@ -50,3 +50,73 @@ public:
 
 	virtual void EndState(UObject* object)override;
 };
+
+UCLASS()
+class GAMEDEVFPSGAME_API UStateCrouch : public UStatePattern
+{
+	GENERATED_BODY()
+
+public:
+
+	virtual void CreateState(UObject* object) override; // state creation and ending methods 
+
+	
+
+	virtual void EndState(UObject* object)override;
+};
+
+UCLASS()
+class GAMEDEVFPSGAME_API UStateUnCrouch : public UStatePattern
+{
+	GENERATED_BODY()
+
+public:
+
+	virtual void CreateState(UObject* object) override; // state creation and ending methods 
+
+	
+
+	virtual void EndState(UObject* object)override;
+};
+
+UCLASS()
+class GAMEDEVFPSGAME_API UStateSprint : public UStatePattern
+{
+	GENERATED_BODY()
+
+public:
+
+	virtual void CreateState(UObject* object) override; // state creation and ending methods 
+
+	
+
+	virtual void EndState(UObject* object)override;
+};
+
+UCLASS()
+class GAMEDEVFPSGAME_API UStateNoSprint : public UStatePattern
+{
+	GENERATED_BODY()
+
+public:
+
+	virtual void CreateState(UObject* object) override; // state creation and ending methods 
+
+	
+
+	virtual void EndState(UObject* object)override;
+};
+
+UCLASS()
+class GAMEDEVFPSGAME_API UStateJump : public UStatePattern
+{
+	GENERATED_BODY()
+
+public:
+
+	virtual void CreateState(UObject* object) override; // state creation and ending methods 
+
+	
+
+	virtual void EndState(UObject* object)override;
+};

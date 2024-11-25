@@ -33,7 +33,12 @@ void APlayerControllerClass::OnPossess(APawn* InPawn)
 
 	WeaponHandle->Activate(PlayerCharacter,display); // instantiates the character and hud class into the weapon class to activate weapon logic
 	
-	
+	StateManager = NewObject<UStateManager>();
+	Crouch = NewObject<UStateCrouch>();
+	UnCrouch = NewObject<UStateUnCrouch>();
+	Sprint = NewObject<UStateSprint>();
+	Stop = NewObject<UStateNoSprint>();
+	Jump = NewObject<UStateJump>();
 
 	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent); // instantiates the enchanced object
 	checkf(EnhancedInputComponent, TEXT("Uable to find a refernece to the EnchancecLocalPlayerSubsystem"))
@@ -116,14 +121,14 @@ void APlayerControllerClass::HandleCrouch() // uses the movementbase function to
 	{
 
 		
-     PlayerCharacter->GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
-		
+     //PlayerCharacter->GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
+		StateManager->SetState(Crouch, PlayerCharacter);
 		
 	}
 
-	PlayerCharacter->GetMovementComponent()->IsCrouching() ? PlayerCharacter->UnCrouch(true) : PlayerCharacter->Crouch(false);
+//	PlayerCharacter->GetMovementComponent()->IsCrouching() ? PlayerCharacter->UnCrouch(true) : PlayerCharacter->Crouch(false);
 		// will set the crouch to false if the player is using the crouching funbction
-		
+	StateManager->SetState(UnCrouch, PlayerCharacter);	
 	
 }
 
@@ -131,7 +136,8 @@ void APlayerControllerClass::HandleSprintOn()
 {
 if(PlayerCharacter && PlayerCharacter->GetCharacterMovement()) // changes the character's movemnt speed to Increspeed which is 1000 F
 {
-	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = IncSpeed;
+	//PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = IncSpeed;
+	StateManager->SetState(Sprint, PlayerCharacter);
 	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("on")));
 }
 
@@ -143,7 +149,8 @@ void APlayerControllerClass::HandleSprintOff()
 {
 if(PlayerCharacter && PlayerCharacter->GetCharacterMovement()) // changes the character speed back to normal character speed once unpressed
 {
-	PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	//PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	StateManager->SetState(Stop, PlayerCharacter);
 	
 	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("off")));
 }
@@ -179,8 +186,14 @@ void APlayerControllerClass::HandleJump()
 {
 	if(PlayerCharacter)
 	{
-		PlayerCharacter->Jump(); // uses jump function to lift player 
-		PlayerCharacter->UnCrouch(); //automatically uncrouches player if the pawn is set on crouch
+		//PlayerCharacter->Jump(); // uses jump function to lift player 
+		//PlayerCharacter->UnCrouch(); //automatically uncrouches player if the pawn is set on crouch
+		StateManager->SetState(Jump, PlayerCharacter);
+	}
+
+	if(!PlayerCharacter->GetMovementComponent()->IsFalling())
+	{
+		Jump->EndState(PlayerCharacter);
 	}
 }
 

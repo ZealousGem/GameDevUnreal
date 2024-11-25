@@ -114,6 +114,24 @@ private:
 	UPROPERTY()
 	UWeaponHandling* WeaponHandle;
 
+	UPROPERTY()
+	UStateManager* StateManager;
+
+	UPROPERTY()
+	UStateCrouch* Crouch;
+
+	UPROPERTY()
+	UStateUnCrouch* UnCrouch;
+	
+	UPROPERTY()
+	UStateJump* Jump;
+
+	UPROPERTY()
+	UStateSprint* Sprint;
+
+	UPROPERTY()
+	UStateNoSprint* Stop;
+
 	bool fireinframe = false; // use detect a shot has been made by a weapon
 
 	bool spint = false;
