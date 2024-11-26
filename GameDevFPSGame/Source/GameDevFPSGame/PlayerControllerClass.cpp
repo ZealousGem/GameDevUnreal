@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "AudioManager.h"
 
 
 void APlayerControllerClass::OnPossess(APawn* InPawn)
@@ -169,6 +170,8 @@ void APlayerControllerClass::HandleLookAround(const FInputActionValue& InputActi
 
 void APlayerControllerClass::HandleMove(const FInputActionValue& InputActionValue)
 {
+
+	//UAudioManager::GetInstance()->PlaySound2DByName("Footstep");
 	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
 
 	if(PlayerCharacter)
@@ -199,7 +202,7 @@ void APlayerControllerClass::HandleJump()
 
 void APlayerControllerClass::HandleSwitch()
 {
-	
+	UAudioManager::GetInstance()->PlaySound2DByName("SwitchWeapon");
 	WeaponHandle->SwitchWeapon(); // activate the switch function in the weaponhandling class
 	
 	

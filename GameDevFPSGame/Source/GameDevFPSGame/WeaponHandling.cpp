@@ -10,6 +10,7 @@
 #include "WeaponpPickUp.h"
 #include "DynamicMesh/DynamicMesh3.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include"AudioManager.h"
 
 
 UWeaponHandling::UWeaponHandling() : PlayerCharacter(nullptr), display(nullptr), aiG(nullptr) // sets the display and character objects to null if there is no casting
@@ -35,6 +36,7 @@ void UWeaponHandling::Tracing()
 		FVector startPoint;
         if(PlayerCharacter->fpsGun->IsVisible())
        {
+			UAudioManager::GetInstance()->PlaySound2DByName("PrimaryGun");
         	
         	FHitResult EndHit; // this will be the endpoint of the line trace that will be set once a collision is made
 	        startPoint = PlayerCharacter->fpsGun->GetComponentLocation();
@@ -84,6 +86,7 @@ void UWeaponHandling::Tracing()
 		{
 			if(PlayerCharacter->ammo > 0 && !FireInFrame) // checks if ammo is less than 0 and if it has not fired yet
 			{
+				UAudioManager::GetInstance()->PlaySound2DByName("Shotgun");
 				FHitResult EndHit; 
 				PlayerCharacter->ammo--;
 				display->UpdateAmmo(PlayerCharacter->ammo);// decreases ammo 

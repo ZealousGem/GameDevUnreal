@@ -70,15 +70,17 @@ void UAudioManager::RegisterAllSounds()
 	if (bIsInitialized) return;
 
 	bIsInitialized = true;
-
-	USoundCue* ExplosionSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/StarterContent/Audio/Explosion_Cue.Explosion_Cue"));
-	USoundCue* GunshotSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/StarterContent/Audio/Fire01_Cue.Fire01_Cue"));
-	USoundCue* FootstepSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/StarterContent/Audio/Footstep_Cue.Footstep_Cue"));
+	// Adjust the file paths to match your new sounds
+	USoundCue* FootstepSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/FootSteps_Cue.FootSteps_Cue"));
+	USoundCue* PrimaryGunSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/PrimaryGunSound_Cue.PrimaryGunSound_Cue"));
+	USoundCue* ShotgunSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/ShotGunSound_Cue.ShotGunSound_Cue"));
+	USoundCue* SwitchWeaponSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/SwitchWeapons_Cue.SwitchWeapons_Cue"));
 
 	// Add sounds to the map
-	if (ExplosionSound) SoundMap.Add("Explosion", ExplosionSound);
-	if (GunshotSound) SoundMap.Add("Gunshot", GunshotSound);
 	if (FootstepSound) SoundMap.Add("Footstep", FootstepSound);
+	if (PrimaryGunSound) SoundMap.Add("PrimaryGun", PrimaryGunSound);
+	if (ShotgunSound) SoundMap.Add("Shotgun", ShotgunSound);
+	if (SwitchWeaponSound) SoundMap.Add("SwitchWeapon", SwitchWeaponSound);
 
 	// Debug messages
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("AudioManager: Sounds Registered!"));

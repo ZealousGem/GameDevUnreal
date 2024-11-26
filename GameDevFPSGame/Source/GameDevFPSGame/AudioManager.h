@@ -37,9 +37,11 @@ public:
 	// Register a sound to the manager
 	void RegisterSound(const FString& SoundName, USoundCue* SoundCue);
 
+	
+
 	// Play a registered sound by name
 	UFUNCTION(BlueprintCallable, Category = "Audio")
-	void PlaySound2DByName(const FString& SoundName, float Volume = 1.0f);
+	void PlaySound2DByName(const FString& SoundName, float Volume = 0.10f);
 
 	// Play a 3D sound at a location
 	UFUNCTION(BlueprintCallable, Category = "Audio")
