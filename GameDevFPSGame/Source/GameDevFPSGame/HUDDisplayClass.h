@@ -49,6 +49,9 @@ protected:
 	UUserWidget* PauseMenu;
 
 	UPROPERTY()
+	UUserWidget* PickUp;
+
+	UPROPERTY()
 	ULeaderBoardManager* LeaderBoardManager = nullptr;
 
 	UPROPERTY()
@@ -94,6 +97,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
 	TSubclassOf<UUserWidget> mywidgetClass10; // For gameover menu
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	TSubclassOf<UUserWidget> mywidgetClass11; // For pickupUI
 
 	UUserWidget* getCrossDamage() const;
 
@@ -143,6 +149,10 @@ public:
 	void HideGameOverMenu();
 
 	void UnHideGameOverMenu();
+
+	void AmmoDisplay(bool show, FString pick);
+
+	void AmmoHidden();
 
 private:
 

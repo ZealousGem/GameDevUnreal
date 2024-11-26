@@ -33,8 +33,19 @@ void AHealthPickUp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+void AHealthPickUp::PickitUp()
+{
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(PlayerController->GetHUD());
+	FTimerHandle TimerHandle;
+	const FString ammo = "hp";
+	HUD->AmmoDisplay(true,ammo);
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, HUD, &AHUDDisplayClass::AmmoHidden, 1.0f, false);
+}
+
 void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	
 
@@ -44,10 +55,11 @@ void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 
 		if (AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
 		{
+			PickitUp();
 			// Check if the players current health is less than maximum health
 			if (PlayerCharacter->CurrentHealth < PlayerCharacter->MaxHealth)
 			{
-
+                 
 				PlayerCharacter->Heal(HealthAmount);
 			}
 

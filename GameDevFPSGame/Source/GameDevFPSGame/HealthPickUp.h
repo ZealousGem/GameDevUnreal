@@ -8,7 +8,7 @@
 #include "HealthPickUp.generated.h"
 
 UCLASS()
-class GAMEDEVFPSGAME_API AHealthPickUp : public APickUp
+class GAMEDEVFPSGAME_API AHealthPickUp : public APickUp, public IObserver
 {
 	GENERATED_BODY()
 
@@ -36,6 +36,10 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	bool PickedUp;
+
+	virtual void PickitUp() override;
 
 private:
 	FTimerHandle RespawnTimerHandle;

@@ -31,7 +31,7 @@ void AAmmoPickUp::Tick(float DeltaTime)
 void AAmmoPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	PickitUp();
+	
 	// overides parents overlap function
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 if(PickedUp)
@@ -39,7 +39,7 @@ if(PickedUp)
 	if(AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor))
 	{
 		AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(GetWorld()->GetFirstPlayerController()->GetHUD());
-
+		PickitUp();
 
 		// If the cast succeeds and it's the player character, give ammo
 		if(PlayerCharacter->Change)
@@ -79,7 +79,13 @@ void AAmmoPickUp::Respawn()
 
 void AAmmoPickUp::PickitUp()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Ammo Picked Up")));
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(PlayerController->GetHUD());
+	FTimerHandle TimerHandle;
+	const FString ammo = "ammo";
+	HUD->AmmoDisplay(true,ammo);
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, HUD, &AHUDDisplayClass::AmmoHidden, 1.0f, false);
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Ammo Picked Up")));
 }
 
 

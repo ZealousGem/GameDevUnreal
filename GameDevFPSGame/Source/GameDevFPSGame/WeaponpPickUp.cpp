@@ -28,7 +28,7 @@ void AWeaponpPickUp::Tick(float DeltaTime)
 void AWeaponpPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	PickitUp();
+	
 	// overides parents overlap function
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 	AMyCharacter* PlayerCharacter = Cast<AMyCharacter>(OtherActor);
@@ -37,7 +37,7 @@ void AWeaponpPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 		
 		if(!PlayerCharacter->Change) // if cast is done correclty once collision is made the boolean will be set to true which will allow the player to access the second gun
 		{
-			
+			PickitUp();
 			newWeapon();
 			PlayerCharacter->Change = change;
 			
@@ -50,7 +50,13 @@ void AWeaponpPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 
 void AWeaponpPickUp::PickitUp()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Shot Gun Picked Up")));
+//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("Shot Gun Picked Up")));
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	AHUDDisplayClass* HUD = Cast<AHUDDisplayClass>(PlayerController->GetHUD());
+	FTimerHandle TimerHandle;
+	const FString ammo = "wep";
+	HUD->AmmoDisplay(true,ammo);
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, HUD, &AHUDDisplayClass::AmmoHidden, 1.0f, false);
 	
 }
 

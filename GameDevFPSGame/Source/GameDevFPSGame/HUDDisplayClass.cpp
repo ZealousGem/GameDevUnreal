@@ -37,6 +37,7 @@ isPaused = false;
 		Timer = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass8);
 		PauseMenu = CreateWidget<UUserWidget>(GetWorld(), mywidgetClass9);
 		GameOverMenu= CreateWidget<UUserWidget>(GetWorld(), mywidgetClass10);
+		PickUp= CreateWidget<UUserWidget>(GetWorld(), mywidgetClass11);
 
 		
 
@@ -78,7 +79,7 @@ isPaused = false;
 		if(LeaderBoard)
 		{
 			 LeaderBoardManager = NewObject<ULeaderBoardManager>();
-			LeaderBoard->AddToViewport(8);
+			LeaderBoard->AddToViewport(9);
 			LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 			if(LeaderBoardManager)
 			{
@@ -97,15 +98,21 @@ if(Timer)
 		{
 			PauseFunc = Cast<UPauseMenu>(PauseMenu);
 			PauseFunc->Frozen = false;
-			PauseMenu->AddToViewport(9);
+			PauseMenu->AddToViewport(10);
 			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 		}
 		if (GameOverMenu)
 		{
 			OverPauseFunc = Cast<UGameOverMenu>(GameOverMenu);
 			OverPauseFunc->Frozen = false;
-			GameOverMenu->AddToViewport(10);
+			GameOverMenu->AddToViewport(11);
 			GameOverMenu->SetVisibility(ESlateVisibility::Hidden);
+		}
+
+		if(PickUp)
+		{
+			PickUp->AddToViewport(8);
+			PickUp->SetVisibility(ESlateVisibility::Hidden);
 		}
 		
 	}
@@ -395,6 +402,42 @@ void AHUDDisplayClass::UnHideGameOverMenu()
 	
 	isPaused = true;
 	//GameOverMenu->SetVisibility(ESlateVisibility::Visible);
+}
+
+void AHUDDisplayClass::AmmoDisplay(bool show, FString pick)
+{
+	PickUp->SetVisibility(show ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	UTextBlock* AmmoP = Cast<UTextBlock>(PickUp->GetWidgetFromName(TEXT("PickUp")));
+	if(pick =="ammo")
+	{
+		
+		AmmoP->SetText(FText::FromString(FString::Printf(TEXT("Ammo Picked Up"))));
+	}
+
+	else if(pick == "wep")
+	{
+		
+		AmmoP->SetText(FText::FromString(FString::Printf(TEXT("Weapon Picked Up"))));
+	}
+
+	else if(pick == "hp")
+	{
+		
+		AmmoP->SetText(FText::FromString(FString::Printf(TEXT("Health Picked Up"))));
+	}
+
+	else
+	{
+		AmmoP->SetText(FText::FromString(FString::Printf(TEXT(""))));
+	}
+	
+	
+}
+
+void AHUDDisplayClass::AmmoHidden()
+{
+    const FString blank = "";
+	AmmoDisplay(false, blank);
 }
 
 void AHUDDisplayClass::GameOver()
