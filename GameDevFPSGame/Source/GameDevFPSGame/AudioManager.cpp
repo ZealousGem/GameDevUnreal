@@ -3,10 +3,14 @@
 
 #include "AudioManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/AudioComponent.h"
 
+// Pointer to the currently playing theme audio
 
 
 UAudioManager* UAudioManager::Instance = nullptr;
+
+static UAudioComponent* GameThemeAudioComponent = nullptr;
 
 UAudioManager::UAudioManager()
 	: bIsInitialized(false)
@@ -23,6 +27,7 @@ UAudioManager* UAudioManager::GetInstance()
 		Instance->AddToRoot(); // Prevent garbage collection
 
 		Instance->RegisterAllSounds(); // Ensure sounds are registered when instance is created
+		
 	}
 	return Instance;
 
@@ -75,15 +80,52 @@ void UAudioManager::RegisterAllSounds()
 	USoundCue* PrimaryGunSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/PrimaryGunSound_Cue.PrimaryGunSound_Cue"));
 	USoundCue* ShotgunSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/ShotGunSound_Cue.ShotGunSound_Cue"));
 	USoundCue* SwitchWeaponSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/SwitchWeapons_Cue.SwitchWeapons_Cue"));
-
+	USoundCue* GameThemeSound = LoadObject<USoundCue>(nullptr, TEXT("/Game/Audio/GameTheme_Cue.GameTheme_Cue"));
+	
 	// Add sounds to the map
 	if (FootstepSound) SoundMap.Add("Footstep", FootstepSound);
 	if (PrimaryGunSound) SoundMap.Add("PrimaryGun", PrimaryGunSound);
 	if (ShotgunSound) SoundMap.Add("Shotgun", ShotgunSound);
 	if (SwitchWeaponSound) SoundMap.Add("SwitchWeapon", SwitchWeaponSound);
+	if (GameThemeSound) SoundMap.Add("GameTheme", GameThemeSound);
 
 	// Debug messages
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("AudioManager: Sounds Registered!"));
+
+}
+
+void UAudioManager::PlayGameTheme(const FString& SoundName, UObject* WorldContextObject, float Volume)
+{
+
+	if (SoundMap.Contains(SoundName))
+	{
+
+		if (GameThemeAudioComponent && GameThemeAudioComponent->IsPlaying())
+		{
+			GameThemeAudioComponent->Stop();
+
+		}
+		GameThemeAudioComponent = UGameplayStatics::SpawnSound2D(WorldContextObject, SoundMap[SoundName], Volume, 1.0f, 0.0f, nullptr, true);
+
+
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Sound '%s' not found!"), *SoundName));
+
+
+	}
+
+}
+
+void UAudioManager::StopGameTheme()
+{
+	if (GameThemeAudioComponent && GameThemeAudioComponent->IsPlaying())
+	{
+		GameThemeAudioComponent->Stop();
+		GameThemeAudioComponent = nullptr;
+
+	}
 
 }
 

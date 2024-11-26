@@ -48,7 +48,7 @@ void UPauseMenu::PauseToggle(bool isPaused)
 void UPauseMenu::ResumeButton()
 {
 	
-	UAudioManager::GetInstance()->PlaySound2DByName("Explosion", 1.0f);
+	
 	PauseToggle(false);
 }
 

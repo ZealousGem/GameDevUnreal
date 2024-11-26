@@ -47,4 +47,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Audio")
 	void PlaySoundAtLocation(const FString& SoundName, UObject* WorldContextObject, FVector Location, float Volume = 1.0f);
 
+
+	UFUNCTION(BlueprintCallable, Category = "Audio")
+	void PlayGameTheme(const FString& SoundName, UObject* WorldContextObject, float Volume = 1.0f);
+
+	UFUNCTION(BlueprintCallable, Category = "Audio")
+	void StopGameTheme();
 };

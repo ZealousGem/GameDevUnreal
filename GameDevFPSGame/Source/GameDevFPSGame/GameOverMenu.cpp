@@ -59,6 +59,7 @@ void UGameOverMenu::QuitButton()
     // Quit the game
     ToggleEndMenu(false);
     UKismetSystemLibrary::QuitGame(this, GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
+    //UGameplayStatics::OpenLevel(this, FName("MainMenu"));
 }
 
 void UGameOverMenu::MainMenuButton()
