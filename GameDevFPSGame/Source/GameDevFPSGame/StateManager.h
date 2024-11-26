@@ -16,11 +16,11 @@ class GAMEDEVFPSGAME_API UStateManager : public UObject
 	GENERATED_BODY()
 
 private:
-	UStatePattern* StateCurrent = nullptr;
+	UStatePattern* StateCurrent = nullptr; // currentstate statemanager is in
 
 public:
-	void SetState(UStatePattern* setState, UObject* object);
+	void SetState(UStatePattern* setState, UObject* object); // sets statcurrent to new state
 
-	void UpdateState(UObject* object);
+	void UpdateState(UObject* object); // updates speed of animation or input
 	
 };

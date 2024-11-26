@@ -18,11 +18,11 @@ class GAMEDEVFPSGAME_API UPauseMenu : public UUserWidget
 public:
 	UFUNCTION(BlueprintCallable)
 	void PauseToggle(bool
-		isPaused);
+		isPaused); // freezes game
 
 	UFUNCTION(BlueprintCallable)
-	void ResumeButton();
+	void ResumeButton(); // unfreezes game
 
-	virtual void NativeConstruct() override;
+	virtual void NativeConstruct() override; // instantites the buttons
 	bool Frozen;
 };

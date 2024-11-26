@@ -33,7 +33,7 @@ void ULeaderBoardManager::CreateLeaderBoard(UWorld* World)
 		{
 			FString BotName = FString::Printf(TEXT("Bot %d"), BotAmount);
 			Bot->Botname = BotName;// adds the bots state to the leader board
-			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Leaderboard made for %s"), *Bot->Botname));
+			//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("Leaderboard made for %s"), *Bot->Botname));
 			LeaderboardStarts.Add(FLeaderboardStart(BotName, 0));
 			BotAmount += 1;
 		}

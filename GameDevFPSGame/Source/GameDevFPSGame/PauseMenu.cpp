@@ -15,13 +15,13 @@ void UPauseMenu::PauseToggle(bool isPaused)
 	if(UWorld* World = GetWorld())
 	{
 		
-			UGameplayStatics::SetGamePaused(World, isPaused);
+			UGameplayStatics::SetGamePaused(World, isPaused); // function that freezes game
 		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 		if(PlayerController)
 		{
 			if(isPaused)
 			{
-				HUD->UnHidePasueMenu();
+				HUD->UnHidePasueMenu(); // sets the playercontroller to UI mode and displays the cursor
 				FInputModeGameOnly Input;
 				PlayerController->SetInputMode(Input);
 				PlayerController->DisableInput(PlayerController);
@@ -33,7 +33,7 @@ void UPauseMenu::PauseToggle(bool isPaused)
 			{
 				HUD->HidePuaseMenu();
 				
-				FInputModeGameOnly Input;
+				FInputModeGameOnly Input; // sets playercontroller to input mode and hides mouse cursor
 				PlayerController->SetInputMode(Input);
 				Frozen = false;
 				PlayerController->bShowMouseCursor = false; 
@@ -56,10 +56,10 @@ void UPauseMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 	
-	UButton* ResumeBut = Cast<UButton>(GetWidgetFromName(TEXT("Resume")));
+	UButton* ResumeBut = Cast<UButton>(GetWidgetFromName(TEXT("Resume"))); // finds resume button in the wdiget
 	if(ResumeBut)
 	{
-		ResumeBut->OnClicked.AddDynamic(this, &UPauseMenu::ResumeButton);
+		ResumeBut->OnClicked.AddDynamic(this, &UPauseMenu::ResumeButton); // instatites button
 	}
 }
 

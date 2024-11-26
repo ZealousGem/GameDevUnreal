@@ -63,7 +63,7 @@ void UWeaponHandling::Tracing()
         				display->UpdatePlayerCount();
         			}
         			//CharacterHit->ApplyDamage(10.f);
-        			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
+        			//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
         			if(display) // make sure the display object has been set
         			{
         				
@@ -76,7 +76,7 @@ void UWeaponHandling::Tracing()
         			}
         			if (GEngine)
         			{
-        				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
+        			//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
         			}
         		}
         	}
@@ -223,7 +223,7 @@ void UWeaponHandling::NPCFire()
 				
 					if (GEngine)
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
+						//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("You are hitting: %s , this has caused 3 damage"), *EndHit.GetActor()->GetName()));
 					}
 				
 				
@@ -306,7 +306,7 @@ void UWeaponHandling::NPCFire()
 			}
 			else
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
+			//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("you have run out of ammo")));
 			}
 			
 		}

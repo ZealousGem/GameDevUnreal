@@ -78,14 +78,13 @@ isPaused = false;
 
 		if(LeaderBoard)
 		{
-			 LeaderBoardManager = NewObject<ULeaderBoardManager>();
+			 LeaderBoardManager = NewObject<ULeaderBoardManager>(); // creates a leaderboard object
 			LeaderBoard->AddToViewport(9);
 			LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 			if(LeaderBoardManager)
 			{
-				LeaderBoardManager->CreateLeaderBoard(GetWorld());
-				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf
-					(TEXT("Leaderboard made")));
+				LeaderBoardManager->CreateLeaderBoard(GetWorld()); // creates the leaderboard array
+				
 			}
 		}
 		
@@ -96,14 +95,14 @@ if(Timer)
 
 		if(PauseMenu)
 		{
-			PauseFunc = Cast<UPauseMenu>(PauseMenu);
+			PauseFunc = Cast<UPauseMenu>(PauseMenu); // instaties the buttons in the pause menu
 			PauseFunc->Frozen = false;
 			PauseMenu->AddToViewport(10);
 			PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 		}
 		if (GameOverMenu)
 		{
-			OverPauseFunc = Cast<UGameOverMenu>(GameOverMenu);
+			OverPauseFunc = Cast<UGameOverMenu>(GameOverMenu); // instaties the buttons in the gameover menu
 			OverPauseFunc->Frozen = false;
 			GameOverMenu->AddToViewport(11);
 			GameOverMenu->SetVisibility(ESlateVisibility::Hidden);
@@ -126,14 +125,14 @@ UUserWidget* AHUDDisplayClass::getCrossDamage() const
 
 void AHUDDisplayClass::Counter()
 {
-	if(Seconds != 0)
+	if(Seconds != 0) // will minus seconds counter if seconds is not 0
 	{
 		UTextBlock* SecondsAmount = Cast<UTextBlock>(Timer->GetWidgetFromName(TEXT("Seconds")));
 		Seconds = Seconds - 1;
 		SecondsAmount->SetText(FText::FromString(FString::FromInt(Seconds)));
 	}
 
-	else if (Minutes != 0)
+	else if (Minutes != 0) // will minus minute counter if seconds is 0 nad minutes is not 0
 	{
 		UTextBlock* MinutesAmount = Cast<UTextBlock>(Timer->GetWidgetFromName(TEXT("Minutes")));
 		Minutes = Minutes - 1;
@@ -143,7 +142,7 @@ void AHUDDisplayClass::Counter()
 		SecondsAmount->SetText(FText::FromString(FString::FromInt(Seconds)));
 	}
 
-	else
+	else // will end the game if both minutes and seconds is 0
 	{
 		APlayerControllerClass* PlayerController = Cast<APlayerControllerClass>(GetWorld()->GetFirstPlayerController());
 		if (PlayerController)
@@ -240,7 +239,7 @@ void AHUDDisplayClass::displayDeath(bool hitt)
 	}
 }
 
-void AHUDDisplayClass::TimerDeath()
+void AHUDDisplayClass::TimerDeath() // will get rid of deathUI
 {
 	displayDeath(false);
 }
@@ -264,7 +263,7 @@ void AHUDDisplayClass::UpdateLeaderBoard()
 	}
 }
 
-void AHUDDisplayClass::ShowLeaderBoard()
+void AHUDDisplayClass::ShowLeaderBoard() // displays updated leaderboard if player clicks tab
 {
 	if(isPaused == false)
 	{
@@ -274,7 +273,7 @@ void AHUDDisplayClass::ShowLeaderBoard()
 	
 }
 
-void AHUDDisplayClass::HideLeaderBoard()
+void AHUDDisplayClass::HideLeaderBoard() // hides leaderboard
 {
 	if(isPaused == false)
 	{
@@ -291,9 +290,9 @@ void AHUDDisplayClass::UpdatePlayerCount()
 	UpdateLeaderBoard();
 }
 
-void AHUDDisplayClass::UpdateBotCount(FString Bot)
+void AHUDDisplayClass::UpdateBotCount(FString Bot) // will update the bots kill depending on which bot got a kill
 {
-	if(Bot == "Bot 1")
+	if(Bot == "Bot 1") 
 	{
 		LeaderBoardManager->UpdateBotKillCount(TEXT("Bot 1"), 1);
 		UpdateLeaderBoard();
@@ -348,7 +347,7 @@ void AHUDDisplayClass::PauseGame()
 	if(PauseFunc->Frozen == false)
 	{
 		
-		PauseFunc->PauseToggle(true);
+		PauseFunc->PauseToggle(true); // freezes game
 		
 	}
 
@@ -360,14 +359,14 @@ void AHUDDisplayClass::PauseGame()
 
 }
 
-void AHUDDisplayClass::HidePuaseMenu()
+void AHUDDisplayClass::HidePuaseMenu() // hides pause screen
 {
 	LeaderBoard->SetVisibility(ESlateVisibility::Hidden);
 	PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 	isPaused = false;
 }
 
-void AHUDDisplayClass::UnHidePasueMenu()
+void AHUDDisplayClass::UnHidePasueMenu() // displays pause screen
 {
 	LeaderBoard->SetVisibility(ESlateVisibility::Visible);
 	UpdateLeaderBoard();
@@ -375,7 +374,7 @@ void AHUDDisplayClass::UnHidePasueMenu()
 	PauseMenu->SetVisibility(ESlateVisibility::Visible);
 }
 
-void AHUDDisplayClass::HideGameOverMenu()
+void AHUDDisplayClass::HideGameOverMenu() // hides gameovermenu
 {
 	if (GameOverMenu)
 	{
@@ -388,7 +387,7 @@ void AHUDDisplayClass::HideGameOverMenu()
 	isPaused = false;
 
 }
-void AHUDDisplayClass::UnHideGameOverMenu()
+void AHUDDisplayClass::UnHideGameOverMenu() // displays gameovermenu
 {
 
 	if (GameOverMenu)
@@ -404,7 +403,7 @@ void AHUDDisplayClass::UnHideGameOverMenu()
 	//GameOverMenu->SetVisibility(ESlateVisibility::Visible);
 }
 
-void AHUDDisplayClass::AmmoDisplay(bool show, FString pick)
+void AHUDDisplayClass::AmmoDisplay(bool show, FString pick) // will displayPickUpUI depending on which pickup, the player collided to
 {
 	PickUp->SetVisibility(show ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 	UTextBlock* AmmoP = Cast<UTextBlock>(PickUp->GetWidgetFromName(TEXT("PickUp")));
@@ -434,13 +433,13 @@ void AHUDDisplayClass::AmmoDisplay(bool show, FString pick)
 	
 }
 
-void AHUDDisplayClass::AmmoHidden()
+void AHUDDisplayClass::AmmoHidden() // hides pickupUI
 {
     const FString blank = "";
 	AmmoDisplay(false, blank);
 }
 
-void AHUDDisplayClass::GameOver()
+void AHUDDisplayClass::GameOver() // freezes game to end the round
 {
 	if (OverPauseFunc && OverPauseFunc->Frozen == false)
 	{

@@ -11,23 +11,23 @@
  * 
  */
 
-USTRUCT()
+USTRUCT() // made to contain the data in the structure
 struct GAMEDEVFPSGAME_API FLeaderboardStart
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(Blueprintable)
-	FString Player;
+	FString Player; // variables
 
 	UPROPERTY(Blueprintable)
 	int32 Kills;
 
-	FLeaderboardStart()
-		: Player(TEXT("No Name")), Kills(0){}
+	FLeaderboardStart() // Default Constructor
+		: Player(TEXT("No Name")), Kills(0){} // default values when game loads
 
 	FLeaderboardStart(const FString& PlayerName, int32 KillCount) :
-	Player(PlayerName), Kills(KillCount){}
+	Player(PlayerName), Kills(KillCount){} // this will be the contrcutor that will create the names and killcount through the instanition 
 	
 };
 
@@ -38,13 +38,13 @@ class GAMEDEVFPSGAME_API ULeaderBoardManager : public UObject
 
 private:
 
-	TArray<FLeaderboardStart> LeaderboardStarts;
+	TArray<FLeaderboardStart> LeaderboardStarts; // array containing the player and kill count 
 
 public:
-	void CreateLeaderBoard(UWorld* World);
-	void UpdatePlayerKills(int32 KillsNew);
-	void UpdateBotKills(int32 KillsNew);
-	void UpdateBotKillCount(const FString& AiName, int32 KillCount);
-	const TArray<FLeaderboardStart>& GetLeaderBoard() const;
+	void CreateLeaderBoard(UWorld* World); // creates the leaderboard in the world
+	void UpdatePlayerKills(int32 KillsNew); // will update player's killcount
+	void UpdateBotKills(int32 KillsNew); 
+	void UpdateBotKillCount(const FString& AiName, int32 KillCount); // will update bots kill count
+	const TArray<FLeaderboardStart>& GetLeaderBoard() const; // will retrieve the leader through the accessor
 	
 };

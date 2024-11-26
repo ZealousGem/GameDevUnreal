@@ -62,7 +62,7 @@ void UStateCrouch::CreateState(UObject* object)
 //	Super::CreateState(object);
 	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
 	{
-		Player->GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
+		Player->GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true; 
 	}
 }
 
@@ -78,7 +78,7 @@ void UStateCrouch::EndState(UObject* object)
 void UStateUnCrouch::CreateState(UObject* object)
 {
 	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
-	{
+	{ // will set the crouch to false if the player is using the crouching funbction
 		Player->GetMovementComponent()->IsCrouching() ? Player->UnCrouch(true) : Player->Crouch(false);
 	}
 }
@@ -129,7 +129,7 @@ void UStateJump::CreateState(UObject* object)
 	if(AMyCharacter* Player = Cast<AMyCharacter>(object))
 	{
 		Player->Jump(); // uses jump function to lift player 
-		Player->UnCrouch();
+		Player->UnCrouch(); //automatically uncrouches player if the pawn is set on crouch
 		
 		
 	}

@@ -103,7 +103,7 @@ public:
 
 	UUserWidget* getCrossDamage() const;
 
-	int32 Minutes = 3;
+	int32 Minutes = 5;
 
 	int32 Seconds = 0;
 
@@ -125,34 +125,34 @@ public:
 
 	void SecWeapon(); // widget ui text changes to secondary weapon
 
-	void displayDeath(bool hitt);
+	void displayDeath(bool hitt); // will diplay death widget
 
-	void TimerDeath();
+	void TimerDeath(); // timer functions
 
-	void UpdateLeaderBoard();
-	void ShowLeaderBoard();
+	void UpdateLeaderBoard(); // updates leader everytime there is a kill
+	void ShowLeaderBoard(); // displays leaderboard
 
-	void HideLeaderBoard();
+	void HideLeaderBoard(); // hides leaderboard
 
-	void UpdatePlayerCount();
+	void UpdatePlayerCount(); // will update player's kills
 
-	void UpdateBotCount(FString Bot);
+	void UpdateBotCount(FString Bot); // will update bot's kills
 
-	void PauseGame();
+	void PauseGame(); // will pause the game
 
-	void HidePuaseMenu();
+	void HidePuaseMenu(); // hides the pause menu
 
-	void UnHidePasueMenu();
+	void UnHidePasueMenu(); // dipslays the pause menu
 
-	void GameOver();
+	void GameOver(); // will end the game
 
-	void HideGameOverMenu();
+	void HideGameOverMenu(); // hides menu
 
-	void UnHideGameOverMenu();
+	void UnHideGameOverMenu(); // displays menu
 
-	void AmmoDisplay(bool show, FString pick);
+	void AmmoDisplay(bool show, FString pick); // dipslays the pickupUI and will tell the player what they picked up
 
-	void AmmoHidden();
+	void AmmoHidden(); // hides pickup UI
 
 private:
 
