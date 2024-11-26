@@ -3,9 +3,11 @@
 
 #include "PauseMenu.h"
 
+
 #include "HUDDisplayClass.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "AudioManager.h"
 
 void UPauseMenu::PauseToggle(bool isPaused)
 {
@@ -46,7 +48,7 @@ void UPauseMenu::PauseToggle(bool isPaused)
 void UPauseMenu::ResumeButton()
 {
 	
-	
+	UAudioManager::GetInstance()->PlaySound2DByName("Explosion", 1.0f);
 	PauseToggle(false);
 }
 

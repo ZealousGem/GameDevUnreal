@@ -4,10 +4,13 @@
 #include "MainMenu.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/Button.h"
+#include "AudioManager.h"
 #include "GameFramework/PlayerController.h"
 
 void UMainMenu::StartGameButton()
 {
+
+	//UAudioManager::GetInstance()->PlaySound2DByName("Explosion", 1.0f);
 
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 
