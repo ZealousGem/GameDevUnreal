@@ -23,6 +23,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResumeButton(); // unfreezes game
 
+	UFUNCTION(Blueprintable)
+	void QuitGame();
+
 	virtual void NativeConstruct() override; // instantites the buttons
 	bool Frozen;
 };

@@ -52,14 +52,26 @@ void UPauseMenu::ResumeButton()
 	PauseToggle(false);
 }
 
+void UPauseMenu::QuitGame()
+{
+	PauseToggle(false);
+	UGameplayStatics::OpenLevel(this, FName("MainMenu"));
+}
+
 void UPauseMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 	
 	UButton* ResumeBut = Cast<UButton>(GetWidgetFromName(TEXT("Resume"))); // finds resume button in the wdiget
+	UButton* QuitBut = Cast<UButton>(GetWidgetFromName(TEXT("Quit")));
 	if(ResumeBut)
 	{
 		ResumeBut->OnClicked.AddDynamic(this, &UPauseMenu::ResumeButton); // instatites button
+	}
+
+	if(QuitBut)
+	{
+		QuitBut->OnClicked.AddDynamic(this, &UPauseMenu::QuitGame);
 	}
 }
 
