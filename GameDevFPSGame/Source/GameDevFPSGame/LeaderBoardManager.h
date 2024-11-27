@@ -12,7 +12,7 @@
  */
 
 USTRUCT() // made to contain the data in the structure
-struct GAMEDEVFPSGAME_API FLeaderboardStart
+struct GAMEDEVFPSGAME_API FLeaderboardStart  //  helps group variety of variable into a single unit for classes to access
 {
 	GENERATED_BODY()
 
